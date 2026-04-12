@@ -5,7 +5,8 @@
       "Bash(cmd /c \"schtasks /query /tn \\\\\"00981A_Download\\\\\" /fo LIST 2>&1\")",
       "Bash(powershell -Command ':*)",
       "Skill(schedule)",
-      "Skill(schedule:*)"
+      "Skill(schedule:*)",
+      "Bash(python -c ':*)"
     ]
   }
 }
