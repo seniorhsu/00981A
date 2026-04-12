@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>00981A 持股明細比較</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #eef2f7;
+      --bg2:       #ffffff;
+      --bg3:       #f1f5f9;
+      --border:    #cbd5e1;
+      --text:      #0f172a;
+      --muted:     #475569;
+      --accent:    #1d4ed8;
+      --green:     #15803d;
+      --green-bg:  #dcfce7;
+      --green-bd:  #86efac;
+      --red:       #b91c1c;
+      --red-bg:    #fee2e2;
+      --red-bd:    #fca5a5;
+      --orange:    #c2410c;
+      --orange-bg: #ffedd5;
+      --orange-bd: #fdba74;
+      --blue-bg:   #dbeafe;
+      --blue-bd:   #93c5fd;
+      --gray:      #475569;
+      --gray-bg:   #f1f5f9;
+      --gray-bd:   #cbd5e1;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 15px;
+      min-height: 100vh;
+    }
+
+    /* ── Topbar (controls only, no title bar) ── */
+    .topbar {
+      background: var(--bg2);
+      border-bottom: 2px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+    }
+    .etf-badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      border-radius: 6px;
+      padding: 4px 11px;
+      letter-spacing: 1px;
+      flex-shrink: 0;
+    }
+    .ctrl-group { display: flex; align-items: center; gap: 7px; }
+    .ctrl-label { font-size: 13px; color: var(--muted); white-space: nowrap; font-weight: 500; }
+    select {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      outline: none;
+    }
+    select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(29,78,216,0.12); }
+    .vsep { width: 1px; height: 26px; background: var(--border); }
+    .btn-group { display: flex; gap: 5px; }
+    .btn {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      padding: 5px 11px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.13s;
+      white-space: nowrap;
+    }
+    .btn:hover  { border-color: var(--accent); color: var(--accent); background: var(--blue-bg); }
+    .btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    #statusMsg  { font-size: 13px; color: var(--muted); font-weight: 500; }
+
+    /* ── Summary cards ── */
+    .summary {
+      padding: 12px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 16px;
+      min-width: 90px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .stat-value { font-size: 24px; font-weight: 800; }
+    .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; font-weight: 500; }
+    .stat-new  .stat-value { color: var(--accent); }
+    .stat-add  .stat-value { color: var(--green); }
+    .stat-dec  .stat-value { color: var(--orange); }
+    .stat-out  .stat-value { color: var(--red); }
+    .stat-same .stat-value { color: var(--gray); }
+
+    /* ── Filter bar ── */
+    .filter-bar {
+      padding: 8px 20px 6px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--bg2);
+      color: var(--muted);
+      transition: all 0.13s;
+    }
+    .filter-btn:hover          { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.f-all.active   { background: var(--accent);    border-color: var(--accent);    color: #fff; }
+    .filter-btn.f-new.active   { background: var(--blue-bg);   border-color: var(--accent);    color: var(--accent); }
+    .filter-btn.f-add.active   { background: var(--green-bg);  border-color: var(--green);     color: var(--green); }
+    .filter-btn.f-dec.active   { background: var(--orange-bg); border-color: var(--orange);    color: var(--orange); }
+    .filter-btn.f-out.active   { background: var(--red-bg);    border-color: var(--red);       color: var(--red); }
+    .filter-btn.f-same.active  { background: var(--gray-bg);   border-color: var(--gray);      color: var(--gray); }
+    .search-input {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 13px;
+      outline: none;
+      width: 150px;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: #aab4c4; }
+
+    /* ── Table ── */
+    .table-wrap { padding: 6px 20px 28px; overflow-x: auto; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+
+    /* Single header row (no rowspan tricks) */
+    thead th {
+      background: #e8edf5;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 8px 14px;
+      border-bottom: 2px solid #b0bdd0;
+      border-top: 1px solid var(--border);
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
+    thead th:hover  { color: var(--accent); background: #dde5f2; }
+    thead th.sorted { color: var(--accent); }
+    .sort-icon { margin-left: 3px; font-size: 10px; opacity: 0.45; }
+    thead th.sorted .sort-icon { opacity: 1; }
+
+    /* Group header row */
+    thead tr.group-row th {
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      padding: 5px 10px;
+      text-transform: none;
+      letter-spacing: 0;
+      border-bottom: 1px solid var(--border);
+      cursor: default;
+    }
+    thead tr.group-row th:hover { background: inherit; color: inherit; }
+
+    .grp-a { background: #dbeafe; color: #1e40af; border-left: 3px solid #60a5fa; }
+    .grp-b { background: #dcfce7; color: #166534; border-left: 3px solid #4ade80; }
+    .grp-c { background: #e8edf5; color: var(--muted); }
+    .col-a  { border-left: 3px solid #93c5fd; }
+    .col-b  { border-left: 3px solid #86efac; }
+
+    tbody tr { border-bottom: 1px solid #dde4ee; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #edf2fc !important; }
+
+    tbody tr.status-new  { background: #dbeafe; }
+    tbody tr.status-add  { background: #dcfce7; }
+    tbody tr.status-dec  { background: #ffedd5; }
+    tbody tr.status-out  { background: #fee2e2; }
+    tbody tr.status-same { background: var(--bg2); }
+
+    td { padding: 7px 14px; white-space: nowrap; vertical-align: middle; }
+
+    .td-code   { font-family: 'Courier New', monospace; font-weight: 800; color: var(--accent); font-size: 15px; }
+    .td-name   { font-weight: 600; color: var(--text); font-size: 15px; }
+    .td-pct    { text-align: right; font-family: 'Courier New', monospace; font-weight: 700; font-size: 15px; }
+    .td-shares { text-align: right; font-family: 'Courier New', monospace; color: var(--text); font-size: 15px; font-weight: 700; }
+    .td-num    { text-align: right; font-family: 'Courier New', monospace; font-size: 15px; font-weight: 700; color: var(--text); }
+
+    .chg-pos  { color: var(--green);  font-weight: 700; }
+    .chg-neg  { color: var(--red);    font-weight: 700; }
+    .chg-zero { color: #94a3b8; }
+    .no-data  { color: #b0bdd0; }
+
+    .badge {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 3px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1.5px solid transparent;
+    }
+    .badge-new  { background: var(--blue-bg);   color: var(--accent);  border-color: var(--blue-bd); }
+    .badge-add  { background: var(--green-bg);  color: var(--green);   border-color: var(--green-bd); }
+    .badge-dec  { background: var(--orange-bg); color: var(--orange);  border-color: var(--orange-bd); }
+    .badge-out  { background: var(--red-bg);    color: var(--red);     border-color: var(--red-bd); }
+    .badge-same { background: var(--gray-bg);   color: var(--gray);    border-color: var(--gray-bd); }
+
+    .empty   { padding: 56px; text-align: center; color: var(--muted); font-size: 15px; }
+    .loading { padding: 40px; text-align: center; color: var(--muted); }
+    .error   { color: var(--red); padding: 16px 20px; line-height: 1.7; font-size: 14px; }
+  </style>
+</head>
+<body>
+
+<!-- ── Top controls ── -->
+<div class="topbar">
+  <div class="etf-badge">00981A</div>
+  <div class="ctrl-group">
+    <span class="ctrl-label">目標日期</span>
+    <select id="selTarget"></select>
+  </div>
+  <div class="vsep"></div>
+  <div class="ctrl-group">
+    <span class="ctrl-label">比較日期</span>
+    <div class="btn-group">
+      <button class="btn" id="btnPrevDay"   onclick="setCompareQuick('prevDay')">前一個營業日</button>
+      <button class="btn" id="btnPrevWeek"  onclick="setCompareQuick('prevWeek')">前一週</button>
+      <button class="btn" id="btnPrevMonth" onclick="setCompareQuick('prevMonth')">前一個月</button>
+    </div>
+    <select id="selCompare">
+      <option value="">— 自選日期 —</option>
+    </select>
+  </div>
+  <div class="vsep"></div>
+  <span id="statusMsg">請選擇比較日期</span>
+</div>
+
+<!-- ── Summary ── -->
+<div class="summary" id="summary" style="display:none">
+  <div class="stat-card stat-new"><div class="stat-value" id="cnt-new">0</div><div class="stat-label">新增持股</div></div>
+  <div class="stat-card stat-add"><div class="stat-value" id="cnt-add">0</div><div class="stat-label">增加</div></div>
+  <div class="stat-card stat-dec"><div class="stat-value" id="cnt-dec">0</div><div class="stat-label">減少</div></div>
+  <div class="stat-card stat-out"><div class="stat-value" id="cnt-out">0</div><div class="stat-label">完全出清</div></div>
+  <div class="stat-card stat-same"><div class="stat-value" id="cnt-same">0</div><div class="stat-label">不變</div></div>
+  <div class="stat-card" style="min-width:140px">
+    <div class="stat-value" style="font-size:16px;color:var(--text)" id="cnt-total">0</div>
+    <div class="stat-label">持股總數 (目標／比較)</div>
+  </div>
+</div>
+
+<!-- ── Filter bar ── -->
+<div class="filter-bar" id="filterBar" style="display:none">
+  <input class="search-input" id="searchInput" placeholder="搜尋代號 / 名稱" oninput="renderTable()">
+  <button class="filter-btn f-all  active" onclick="setFilter('all',this)">全部</button>
+  <button class="filter-btn f-new"         onclick="setFilter('new',this)">新增持股</button>
+  <button class="filter-btn f-add"         onclick="setFilter('add',this)">增加</button>
+  <button class="filter-btn f-dec"         onclick="setFilter('dec',this)">減少</button>
+  <button class="filter-btn f-out"         onclick="setFilter('out',this)">完全出清</button>
+  <button class="filter-btn f-same"        onclick="setFilter('same',this)">不變</button>
+</div>
+
+<!-- ── Table ── -->
+<div class="table-wrap">
+  <div id="tableContainer"><div class="empty">請選擇目標日期與比較日期</div></div>
+</div>
+
+<script>
+// ── Dates ─────────────────────────────────────────────────────────────────
+const DATES = [
+  '20250829','20250905','20250909','20250910','20250911','20250912',
+  '20250915','20250916','20250917','20250918','20250919','20250922',
+  '20250923','20250924','20250925','20250926','20250930','20251001',
+  '20251002','20251003','20251007','20251008','20251009','20251013',
+  '20251014','20251015','20251016','20251017','20251020','20251021',
+  '20251022','20251023','20251027','20251028','20251029','20251030',
+  '20251031','20251103','20251104','20251105','20251106','20251107',
+  '20251110','20251111','20251112','20251113','20251114','20251117',
+  '20251118','20251119','20251120','20251121','20251124','20251125',
+  '20251126','20251127','20251128','20251201','20251202','20251203',
+  '20251204','20251205','20251208','20251209','20251210','20251211',
+  '20251212','20251215','20251216','20251217','20251218','20251219',
+  '20251222','20251223','20251224','20251226','20251229','20251230',
+  '20251231','20260102','20260105','20260106','20260107','20260108',
+  '20260109','20260112','20260113','20260114','20260115','20260116',
+  '20260119','20260120','20260121','20260122','20260123','20260126',
+  '20260127','20260128','20260129','20260130','20260202','20260203',
+  '20260204','20260205','20260206','20260209','20260210','20260211',
+  '20260223','20260224','20260225','20260226','20260302','20260303',
+  '20260304','20260305','20260306','20260309','20260310','20260311',
+  '20260312','20260313','20260316','20260317','20260318','20260319',
+  '20260320','20260323','20260324','20260325','20260326','20260327',
+  '20260330','20260331','20260401','20260402'
+].sort();
+
+// ── State ─────────────────────────────────────────────────────────────────
+let targetDate  = DATES[DATES.length - 1];
+let compareDate = null;
+let targetData  = null;
+let compareData = null;
+let currentFilter = 'all';
+let sortCol = 'weightA';
+let sortAsc = false;
+let activeQuick = null;
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+const fmtDate = d => `${d.slice(0,4)}/${d.slice(4,6)}/${d.slice(6,8)}`;
+
+function populateSelects() {
+  const selT = document.getElementById('selTarget');
+  const selC = document.getElementById('selCompare');
+  [...DATES].reverse().forEach(d => {
+    const opt = new Option(fmtDate(d), d);
+    if (d === targetDate) opt.selected = true;
+    selT.appendChild(opt);
+    selC.appendChild(new Option(fmtDate(d), d));
+  });
+}
+
+// ── Data ──────────────────────────────────────────────────────────────────
+async function loadFile(date) {
+  const resp = await fetch(`00981A_Data/00981A_${date}.txt?t=${Date.now()}`);
+  if (!resp.ok) throw new Error(`無法讀取 00981A_${date}.txt`);
+  return parseHoldings(await resp.text());
+}
+function parseHoldings(text) {
+  return text.trim().split('\n').slice(1).map(line => {
+    const p = line.trim().split(',');
+    return {
+      code:   p[0]?.trim(),
+      name:   p[1]?.trim(),
+      weight: parseFloat(p[2]?.replace('%','')) || 0,
+      shares: parseInt(p[3]?.replace(/,/g,'')) || 0,
+      price:  parseFloat(p[4]) || null
+    };
+  }).filter(r => r.code);
+}
+
+// ── Compare ───────────────────────────────────────────────────────────────
+function compareHoldings(target, compare) {
+  const tMap = Object.fromEntries(target.map(r => [r.code, r]));
+  const cMap = Object.fromEntries(compare.map(r => [r.code, r]));
+  return [...new Set([...Object.keys(tMap), ...Object.keys(cMap)])].map(code => {
+    const a = tMap[code], b = cMap[code];
+    const status = a && b ? (a.shares > b.shares ? 'add' : a.shares < b.shares ? 'dec' : 'same')
+                          : (a ? 'new' : 'out');
+    return {
+      code, name: (a||b).name,
+      weightA: a?.weight ?? null, sharesA: a?.shares ?? null, priceA: a?.price ?? null,
+      weightB: b?.weight ?? null, sharesB: b?.shares ?? null, priceB: b?.price ?? null,
+      sharesDiff: (a?.shares ?? 0) - (b?.shares ?? 0),
+      priceChgPct: (a?.price != null && b?.price != null && b.price !== 0)
+        ? ((a.price - b.price) / b.price * 100) : null,
+      status
+    };
+  });
+}
+
+// ── Quick compare ─────────────────────────────────────────────────────────
+function setCompareQuick(mode) {
+  const idx = DATES.indexOf(targetDate);
+  let result = null;
+  if (mode === 'prevDay') {
+    result = idx > 0 ? DATES[idx - 1] : null;
+  } else {
+    const tgt = new Date(+targetDate.slice(0,4), +targetDate.slice(4,6)-1, +targetDate.slice(6,8));
+    if (mode === 'prevWeek')  tgt.setDate(tgt.getDate() - 7);
+    if (mode === 'prevMonth') tgt.setMonth(tgt.getMonth() - 1);
+    const cands = DATES.slice(0, idx);
+    if (cands.length) {
+      const ms = tgt.getTime();
+      result = cands.reduce((best, d) => {
+        const da = new Date(+d.slice(0,4), +d.slice(4,6)-1, +d.slice(6,8));
+        const db = new Date(+best.slice(0,4), +best.slice(4,6)-1, +best.slice(6,8));
+        return Math.abs(da-ms) < Math.abs(db-ms) ? d : best;
+      }, cands[cands.length-1]);
+    }
+  }
+  activeQuick = mode;
+  ['btnPrevDay','btnPrevWeek','btnPrevMonth'].forEach(id =>
+    document.getElementById(id).classList.remove('active'));
+  document.getElementById({prevDay:'btnPrevDay',prevWeek:'btnPrevWeek',prevMonth:'btnPrevMonth'}[mode])
+    .classList.add('active');
+  if (result) {
+    compareDate = result;
+    document.getElementById('selCompare').value = result;
+    loadAndRender();
+  }
+}
+
+// ── Filter / Sort ─────────────────────────────────────────────────────────
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable();
+}
+function setSort(col) {
+  sortAsc = sortCol === col ? !sortAsc : false;
+  sortCol = col;
+  renderTable();
+}
+const si = col => {
+  if (sortCol !== col) return '<span class="sort-icon">↕</span>';
+  return `<span class="sort-icon">${sortAsc?'↑':'↓'}</span>`;
+};
+const th = (col, label, cls='') =>
+  `<th onclick="setSort('${col}')" class="${sortCol===col?'sorted':''} ${cls}">${label}${si(col)}</th>`;
+
+// ── Format helpers ────────────────────────────────────────────────────────
+const fmtW = w => w != null ? `${w.toFixed(2)}%` : '<span class="no-data">—</span>';
+const fmtS = s => s != null ? s.toLocaleString() : '<span class="no-data">—</span>';
+const fmtP = p => p != null ? p.toLocaleString(undefined, {minimumFractionDigits:1,maximumFractionDigits:2}) : '<span class="no-data">—</span>';
+const fmtDiff = v => {
+  if (v == null) return '';
+  const cls = v > 0 ? 'chg-pos' : v < 0 ? 'chg-neg' : 'chg-zero';
+  return `<span class="${cls}">${v>0?'+':''}${v.toLocaleString()}</span>`;
+};
+const fmtPctChg = v => {
+  if (v == null) return '<span class="no-data">—</span>';
+  const cls = v > 0 ? 'chg-pos' : v < 0 ? 'chg-neg' : 'chg-zero';
+  return `<span class="${cls}">${v>0?'+':''}${v.toFixed(2)}%</span>`;
+};
+const SL = { new:'新增持股', add:'增加', dec:'減少', out:'完全出清', same:'不變' };
+const SC = { new:'badge-new', add:'badge-add', dec:'badge-dec', out:'badge-out', same:'badge-same' };
+
+// ── Render ────────────────────────────────────────────────────────────────
+function renderTable() {
+  if (!targetData) return;
+  const container = document.getElementById('tableContainer');
+  if (!compareData) { renderSingleTable(container); return; }
+
+  const allRows = compareHoldings(targetData, compareData);
+  const search  = document.getElementById('searchInput').value.toLowerCase();
+  let rows = allRows.filter(r => {
+    if (search && !r.code.toLowerCase().includes(search) && !r.name.toLowerCase().includes(search)) return false;
+    return currentFilter === 'all' || r.status === currentFilter;
+  });
+
+  // Sort
+  rows.sort((a, b) => {
+    if (sortCol === 'code') return sortAsc ? a.code.localeCompare(b.code) : b.code.localeCompare(a.code);
+    if (sortCol === 'name') return sortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+    const k = { weightA:'weightA', sharesA:'sharesA', priceA:'priceA', weightB:'weightB', sharesB:'sharesB', priceB:'priceB', sharesDiff:'sharesDiff', priceChgPct:'priceChgPct' }[sortCol] || 'weightA';
+    const va = a[k] ?? -Infinity, vb = b[k] ?? -Infinity;
+    return sortAsc ? va - vb : vb - va;
+  });
+
+  // Summary counts
+  const cnt = {new:0,add:0,dec:0,out:0,same:0};
+  allRows.forEach(r => cnt[r.status]++);
+  ['new','add','dec','out','same'].forEach(k => document.getElementById(`cnt-${k}`).textContent = cnt[k]);
+  document.getElementById('cnt-total').textContent = `${targetData.length} / ${compareData.length}`;
+  document.getElementById('summary').style.display = 'flex';
+  document.getElementById('filterBar').style.display = 'flex';
+
+  let html = `<table><thead>
+    <tr class="group-row">
+      <th colspan="2" class="grp-c" style="cursor:default"></th>
+      <th colspan="3" class="grp-a">目標日期 &ensp;${fmtDate(targetDate)}</th>
+      <th colspan="3" class="grp-b">比較日期 &ensp;${fmtDate(compareDate)}</th>
+      <th colspan="2" class="grp-c">變化</th>
+      <th colspan="1" class="grp-c" style="cursor:default"></th>
+    </tr>
+    <tr>
+      ${th('code','代號')}
+      ${th('name','名稱')}
+      ${th('weightA','持股權重','col-a')}
+      ${th('sharesA','股數')}
+      ${th('priceA','收盤價')}
+      ${th('weightB','持股權重','col-b')}
+      ${th('sharesB','股數')}
+      ${th('priceB','收盤價')}
+      ${th('sharesDiff','股數差')}
+      ${th('priceChgPct','股價漲跌')}
+      <th style="text-align:center;cursor:default">狀態</th>
+    </tr>
+  </thead><tbody>`;
+
+  if (!rows.length) {
+    html += `<tr><td colspan="11" class="empty">無符合條件的資料</td></tr>`;
+  } else {
+    rows.forEach(r => {
+      html += `<tr class="status-${r.status}">
+        <td class="td-code">${r.code}</td>
+        <td class="td-name">${r.name}</td>
+        <td class="td-pct">${fmtW(r.weightA)}</td>
+        <td class="td-shares">${fmtS(r.sharesA)}</td>
+        <td class="td-num">${fmtP(r.priceA)}</td>
+        <td class="td-pct">${fmtW(r.weightB)}</td>
+        <td class="td-shares">${fmtS(r.sharesB)}</td>
+        <td class="td-num">${fmtP(r.priceB)}</td>
+        <td class="td-num">${r.sharesA!=null&&r.sharesB!=null ? fmtDiff(r.sharesDiff) : ''}</td>
+        <td class="td-num">${fmtPctChg(r.priceChgPct)}</td>
+        <td style="text-align:center"><span class="badge ${SC[r.status]}">${SL[r.status]}</span></td>
+      </tr>`;
+    });
+  }
+  html += `</tbody></table>`;
+  container.innerHTML = html;
+}
+
+function renderSingleTable(container) {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  let rows = targetData.filter(r =>
+    !search || r.code.toLowerCase().includes(search) || r.name.toLowerCase().includes(search)
+  );
+  rows.sort((a, b) => {
+    if (sortCol === 'code') return sortAsc ? a.code.localeCompare(b.code) : b.code.localeCompare(a.code);
+    if (sortCol === 'name') return sortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+    return sortAsc ? a.weight - b.weight : b.weight - a.weight;
+  });
+  document.getElementById('summary').style.display = 'none';
+  document.getElementById('filterBar').style.display = 'flex';
+
+  let html = `<table><thead>
+    <tr class="group-row">
+      <th colspan="2" class="grp-c" style="cursor:default"></th>
+      <th colspan="3" class="grp-a">目標日期 &ensp;${fmtDate(targetDate)}</th>
+    </tr>
+    <tr>
+      ${th('code','代號')}
+      ${th('name','名稱')}
+      ${th('weightA','持股權重','col-a')}
+      ${th('sharesA','股數')}
+      ${th('priceA','收盤價')}
+    </tr>
+  </thead><tbody>`;
+  rows.forEach(r => {
+    html += `<tr class="status-same">
+      <td class="td-code">${r.code}</td>
+      <td class="td-name">${r.name}</td>
+      <td class="td-pct">${r.weight.toFixed(2)}%</td>
+      <td class="td-shares">${r.shares.toLocaleString()}</td>
+      <td class="td-num">${fmtP(r.price)}</td>
+    </tr>`;
+  });
+  html += `</tbody></table>`;
+  container.innerHTML = html;
+}
+
+// ── Load ──────────────────────────────────────────────────────────────────
+async function loadAndRender() {
+  const msg = document.getElementById('statusMsg');
+  const container = document.getElementById('tableContainer');
+  msg.textContent = '載入中…';
+  container.innerHTML = '<div class="loading">載入資料中…</div>';
+  try {
+    targetData = await loadFile(targetDate);
+    if (compareDate && compareDate !== targetDate) {
+      compareData = await loadFile(compareDate);
+      msg.textContent = `比較：${fmtDate(targetDate)}  vs  ${fmtDate(compareDate)}`;
+    } else {
+      compareData = null;
+      msg.textContent = compareDate ? '請選擇不同的比較日期' : '顯示目標日期（未選比較日期）';
+    }
+  } catch(e) {
+    msg.textContent = '載入失敗';
+    container.innerHTML = `<div class="error">載入失敗：${e.message}<br>請透過 HTTP 伺服器開啟（例：python -m http.server 8080）</div>`;
+    return;
+  }
+  renderTable();
+}
+
+// ── Events ────────────────────────────────────────────────────────────────
+function resetFilter() {
+  currentFilter = 'all';
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.filter-btn.f-all').classList.add('active');
+}
+
+document.getElementById('selTarget').addEventListener('change', e => {
+  targetDate = e.target.value;
+  if (activeQuick) {
+    document.getElementById({prevDay:'btnPrevDay',prevWeek:'btnPrevWeek',prevMonth:'btnPrevMonth'}[activeQuick])
+      ?.classList.remove('active');
+    activeQuick = null;
+  }
+  resetFilter();
+  loadAndRender();
+});
+document.getElementById('selCompare').addEventListener('change', e => {
+  compareDate = e.target.value || null;
+  ['btnPrevDay','btnPrevWeek','btnPrevMonth'].forEach(id =>
+    document.getElementById(id).classList.remove('active'));
+  activeQuick = null;
+  resetFilter();
+  loadAndRender();
+});
+
+populateSelects();
+setCompareQuick('prevDay');
+</script>
+</body>
+</html>

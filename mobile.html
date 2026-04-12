@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>00981A 持股比較（手機版）</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f0f4f8;
+      --bg2:       #ffffff;
+      --bg3:       #f1f5f9;
+      --border:    #cbd5e1;
+      --text:      #0f172a;
+      --muted:     #475569;
+      --accent:    #1d4ed8;
+      --green:     #15803d;
+      --green-bg:  #dcfce7;
+      --green-bd:  #86efac;
+      --red:       #b91c1c;
+      --red-bg:    #fee2e2;
+      --red-bd:    #fca5a5;
+      --orange:    #c2410c;
+      --orange-bg: #ffedd5;
+      --orange-bd: #fdba74;
+      --blue-bg:   #dbeafe;
+      --blue-bd:   #93c5fd;
+      --gray:      #475569;
+      --gray-bg:   #f1f5f9;
+      --gray-bd:   #cbd5e1;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, 'Segoe UI', BlinkMacSystemFont, sans-serif;
+      font-size: 15px;
+      min-height: 100vh;
+      padding-bottom: 24px;
+    }
+
+    /* ── Topbar ── */
+    .topbar {
+      background: var(--bg2);
+      border-bottom: 2px solid var(--border);
+      padding: 10px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .topbar-row1 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .etf-badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      border-radius: 6px;
+      padding: 3px 9px;
+      letter-spacing: 1px;
+      flex-shrink: 0;
+    }
+    .topbar-title { font-size: 14px; font-weight: 600; color: var(--text); }
+
+    .topbar-row2 {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .ctrl-label { font-size: 12px; color: var(--muted); font-weight: 500; white-space: nowrap; }
+    select {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 5px 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      flex: 1;
+      min-width: 0;
+    }
+    select:focus { border-color: var(--accent); }
+
+    .topbar-row3 {
+      display: flex;
+      gap: 5px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.12s;
+      white-space: nowrap;
+    }
+    .btn:active, .btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    #statusMsg {
+      font-size: 12px;
+      color: var(--muted);
+      padding: 4px 0 0;
+      font-weight: 500;
+    }
+
+    /* ── Summary chips ── */
+    .summary {
+      display: flex;
+      gap: 6px;
+      padding: 10px 14px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .summary::-webkit-scrollbar { display: none; }
+    .chip {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 5px 13px;
+      white-space: nowrap;
+      text-align: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+    .chip .cv { font-size: 18px; font-weight: 800; }
+    .chip .cl { font-size: 11px; color: var(--muted); font-weight: 500; }
+    .chip-new  .cv { color: var(--accent); }
+    .chip-add  .cv { color: var(--green); }
+    .chip-dec  .cv { color: var(--orange); }
+    .chip-out  .cv { color: var(--red); }
+    .chip-same .cv { color: var(--gray); }
+    .chip.active { box-shadow: 0 0 0 2px var(--accent); border-color: var(--accent); }
+    .chip-new.active  { box-shadow: 0 0 0 2px var(--accent); }
+    .chip-add.active  { box-shadow: 0 0 0 2px var(--green);  border-color: var(--green); }
+    .chip-dec.active  { box-shadow: 0 0 0 2px var(--orange); border-color: var(--orange); }
+    .chip-out.active  { box-shadow: 0 0 0 2px var(--red);    border-color: var(--red); }
+    .chip-same.active { box-shadow: 0 0 0 2px var(--gray);   border-color: var(--gray); }
+    .chip-all  .cv { font-size: 14px; color: var(--accent); line-height: 1.8; }
+
+    /* ── Search ── */
+    .search-wrap { padding: 0 14px 8px; }
+    .search-input {
+      width: 100%;
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 14px;
+      outline: none;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: #aab4c4; }
+
+    /* ── Cards ── */
+    .card-list { padding: 0 14px; display: flex; flex-direction: column; gap: 8px; }
+
+    .card {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .card.status-new  { border-color: var(--blue-bd);   background: var(--blue-bg); }
+    .card.status-add  { border-color: var(--green-bd);  background: var(--green-bg); }
+    .card.status-dec  { border-color: var(--orange-bd); background: var(--orange-bg); }
+    .card.status-out  { border-color: var(--red-bd);    background: var(--red-bg); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .card-id {
+      display: flex;
+      align-items: baseline;
+      gap: 7px;
+    }
+    .card-code {
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .card-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .badge {
+      border-radius: 20px;
+      padding: 3px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1.5px solid transparent;
+      flex-shrink: 0;
+    }
+    .badge-new  { background: var(--blue-bg);   color: var(--accent); border-color: var(--blue-bd); }
+    .badge-add  { background: var(--green-bg);  color: var(--green);  border-color: var(--green-bd); }
+    .badge-dec  { background: var(--orange-bg); color: var(--orange); border-color: var(--orange-bd); }
+    .badge-out  { background: var(--red-bg);    color: var(--red);    border-color: var(--red-bd); }
+    .badge-same { background: var(--gray-bg);   color: var(--gray);   border-color: var(--gray-bd); }
+
+    /* Data grid inside card */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 8px;
+    }
+    .card-col {
+      background: rgba(255,255,255,0.6);
+      border-radius: 8px;
+      padding: 8px 10px;
+      border: 1px solid rgba(0,0,0,0.07);
+    }
+    .col-date {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 5px;
+    }
+    .col-date.is-a { color: #1e40af; }
+    .col-date.is-b { color: #166534; }
+    .col-row { display: flex; justify-content: space-between; align-items: baseline; }
+    .col-lbl { font-size: 11px; color: var(--muted); font-weight: 500; }
+    .col-val { font-size: 14px; font-weight: 800; font-family: 'Courier New', monospace; }
+    .col-val.muted { color: var(--muted); font-weight: 600; font-size: 13px; }
+
+    /* diff row */
+    .card-diff {
+      margin-top: 7px;
+      display: flex;
+      gap: 10px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.06);
+      align-items: center;
+    }
+    .diff-item { display: flex; align-items: baseline; gap: 5px; }
+    .diff-lbl  { font-size: 11px; color: var(--muted); }
+    .diff-val  { font-size: 14px; font-weight: 800; font-family: 'Courier New', monospace; }
+    .chg-pos  { color: var(--green); }
+    .chg-neg  { color: var(--red); }
+    .chg-zero { color: var(--gray); }
+    .no-data  { color: #b0bdd0; font-size: 13px; }
+
+    /* Single date card */
+    .card-single {
+      display: flex;
+      gap: 16px;
+    }
+    .single-item { flex: 1; }
+    .single-lbl { font-size: 11px; color: var(--muted); font-weight: 500; }
+    .single-val { font-size: 16px; font-weight: 800; font-family: 'Courier New', monospace; color: var(--text); }
+
+    .empty   { padding: 60px 20px; text-align: center; color: var(--muted); font-size: 15px; }
+    .loading { padding: 50px 20px; text-align: center; color: var(--muted); }
+    .error   { color: var(--red); padding: 16px; line-height: 1.7; font-size: 14px; }
+
+    .result-count {
+      padding: 4px 14px 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Topbar ── -->
+<div class="topbar">
+  <div class="topbar-row1">
+    <div class="etf-badge">00981A</div>
+    <div class="topbar-title">持股明細比較</div>
+  </div>
+  <div class="topbar-row2">
+    <span class="ctrl-label">目標</span>
+    <select id="selTarget"></select>
+    <span class="ctrl-label">比較</span>
+    <select id="selCompare"><option value="">— 自選 —</option></select>
+  </div>
+  <div class="topbar-row3">
+    <button class="btn" id="btnPrevDay"   onclick="setCompareQuick('prevDay')">前一營業日</button>
+    <button class="btn" id="btnPrevWeek"  onclick="setCompareQuick('prevWeek')">前一週</button>
+    <button class="btn" id="btnPrevMonth" onclick="setCompareQuick('prevMonth')">前一個月</button>
+  </div>
+  <div id="statusMsg"></div>
+</div>
+
+<!-- ── Summary chips ── -->
+<div class="summary" id="summary" style="display:none">
+  <div class="chip chip-all" id="chip-all" onclick="setFilter('all',this)">
+    <div class="cv">全部</div><div class="cl">顯示</div>
+  </div>
+  <div class="chip chip-new" id="chip-new" onclick="setFilter('new',this)">
+    <div class="cv" id="cnt-new">0</div><div class="cl">新增持股</div>
+  </div>
+  <div class="chip chip-add" id="chip-add" onclick="setFilter('add',this)">
+    <div class="cv" id="cnt-add">0</div><div class="cl">增加</div>
+  </div>
+  <div class="chip chip-dec" id="chip-dec" onclick="setFilter('dec',this)">
+    <div class="cv" id="cnt-dec">0</div><div class="cl">減少</div>
+  </div>
+  <div class="chip chip-out" id="chip-out" onclick="setFilter('out',this)">
+    <div class="cv" id="cnt-out">0</div><div class="cl">完全出清</div>
+  </div>
+  <div class="chip chip-same" id="chip-same" onclick="setFilter('same',this)">
+    <div class="cv" id="cnt-same">0</div><div class="cl">不變</div>
+  </div>
+</div>
+
+<!-- ── Search ── -->
+<div class="search-wrap" id="searchWrap" style="display:none">
+  <input class="search-input" id="searchInput" placeholder="搜尋股票代號 / 名稱" oninput="renderCards()">
+</div>
+
+<!-- ── Result count ── -->
+<div class="result-count" id="resultCount"></div>
+
+<!-- ── Cards ── -->
+<div id="cardContainer"><div class="empty">請選擇目標日期與比較日期</div></div>
+
+<script>
+// ── Force fresh load for LINE / in-app browsers ───────────────────────────
+(function() {
+  const p = new URLSearchParams(location.search);
+  if (!p.has('v')) {
+    location.replace(location.pathname + '?v=' + Date.now());
+  }
+})();
+
+// ── Dates ─────────────────────────────────────────────────────────────────
+const DATES = [
+  '20250829','20250905','20250909','20250910','20250911','20250912',
+  '20250915','20250916','20250917','20250918','20250919','20250922',
+  '20250923','20250924','20250925','20250926','20250930','20251001',
+  '20251002','20251003','20251007','20251008','20251009','20251013',
+  '20251014','20251015','20251016','20251017','20251020','20251021',
+  '20251022','20251023','20251027','20251028','20251029','20251030',
+  '20251031','20251103','20251104','20251105','20251106','20251107',
+  '20251110','20251111','20251112','20251113','20251114','20251117',
+  '20251118','20251119','20251120','20251121','20251124','20251125',
+  '20251126','20251127','20251128','20251201','20251202','20251203',
+  '20251204','20251205','20251208','20251209','20251210','20251211',
+  '20251212','20251215','20251216','20251217','20251218','20251219',
+  '20251222','20251223','20251224','20251226','20251229','20251230',
+  '20251231','20260102','20260105','20260106','20260107','20260108',
+  '20260109','20260112','20260113','20260114','20260115','20260116',
+  '20260119','20260120','20260121','20260122','20260123','20260126',
+  '20260127','20260128','20260129','20260130','20260202','20260203',
+  '20260204','20260205','20260206','20260209','20260210','20260211',
+  '20260223','20260224','20260225','20260226','20260302','20260303',
+  '20260304','20260305','20260306','20260309','20260310','20260311',
+  '20260312','20260313','20260316','20260317','20260318','20260319',
+  '20260320','20260323','20260324','20260325','20260326','20260327',
+  '20260330','20260331','20260401','20260402'
+].sort();
+
+// ── State ─────────────────────────────────────────────────────────────────
+let targetDate  = DATES[DATES.length - 1];
+let compareDate = null;
+let targetData  = null;
+let compareData = null;
+let currentFilter = 'all';
+let activeQuick   = null;
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+const fmtDate  = d => `${d.slice(0,4)}/${d.slice(4,6)}/${d.slice(6,8)}`;
+const fmtShort = d => `${d.slice(4,6)}/${d.slice(6,8)}`;
+
+function populateSelects() {
+  const selT = document.getElementById('selTarget');
+  const selC = document.getElementById('selCompare');
+  [...DATES].reverse().forEach(d => {
+    const o = new Option(fmtDate(d), d);
+    if (d === targetDate) o.selected = true;
+    selT.appendChild(o);
+    selC.appendChild(new Option(fmtDate(d), d));
+  });
+}
+
+// ── Data ──────────────────────────────────────────────────────────────────
+async function loadFile(date) {
+  const resp = await fetch(`00981A_Data/00981A_${date}.txt?t=${Date.now()}`, { cache: 'no-store' });
+  if (!resp.ok) throw new Error(`無法讀取 00981A_${date}.txt`);
+  return parseHoldings(await resp.text());
+}
+function parseHoldings(text) {
+  return text.trim().split('\n').slice(1).map(line => {
+    const p = line.trim().split(',');
+    return {
+      code:   p[0]?.trim(),
+      name:   p[1]?.trim(),
+      weight: parseFloat(p[2]?.replace('%','')) || 0,
+      shares: parseInt(p[3]?.replace(/,/g,'')) || 0
+    };
+  }).filter(r => r.code);
+}
+
+// ── Compare ───────────────────────────────────────────────────────────────
+function compareHoldings(target, compare) {
+  const tMap = Object.fromEntries(target.map(r => [r.code, r]));
+  const cMap = Object.fromEntries(compare.map(r => [r.code, r]));
+  return [...new Set([...Object.keys(tMap), ...Object.keys(cMap)])].map(code => {
+    const a = tMap[code], b = cMap[code];
+    const status = a && b ? (a.shares > b.shares ? 'add' : a.shares < b.shares ? 'dec' : 'same')
+                          : (a ? 'new' : 'out');
+    return {
+      code, name: (a||b).name,
+      weightA: a?.weight ?? null, sharesA: a?.shares ?? null,
+      weightB: b?.weight ?? null, sharesB: b?.shares ?? null,
+      sharesDiff: (a?.shares ?? 0) - (b?.shares ?? 0),
+      status
+    };
+  });
+}
+
+// ── Quick compare ─────────────────────────────────────────────────────────
+function setCompareQuick(mode) {
+  const idx = DATES.indexOf(targetDate);
+  let result = null;
+  if (mode === 'prevDay') {
+    result = idx > 0 ? DATES[idx - 1] : null;
+  } else {
+    const tgt = new Date(+targetDate.slice(0,4), +targetDate.slice(4,6)-1, +targetDate.slice(6,8));
+    if (mode === 'prevWeek')  tgt.setDate(tgt.getDate() - 7);
+    if (mode === 'prevMonth') tgt.setMonth(tgt.getMonth() - 1);
+    const cands = DATES.slice(0, idx);
+    if (cands.length) {
+      const ms = tgt.getTime();
+      result = cands.reduce((best, d) => {
+        const da = new Date(+d.slice(0,4), +d.slice(4,6)-1, +d.slice(6,8));
+        const db = new Date(+best.slice(0,4), +best.slice(4,6)-1, +best.slice(6,8));
+        return Math.abs(da-ms) < Math.abs(db-ms) ? d : best;
+      }, cands[cands.length-1]);
+    }
+  }
+  activeQuick = mode;
+  ['btnPrevDay','btnPrevWeek','btnPrevMonth'].forEach(id =>
+    document.getElementById(id).classList.remove('active'));
+  document.getElementById({prevDay:'btnPrevDay',prevWeek:'btnPrevWeek',prevMonth:'btnPrevMonth'}[mode])
+    .classList.add('active');
+  if (result) {
+    compareDate = result;
+    document.getElementById('selCompare').value = result;
+    loadAndRender();
+  }
+}
+
+// ── Filter ────────────────────────────────────────────────────────────────
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderCards();
+}
+
+function resetFilter() {
+  currentFilter = 'all';
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  document.getElementById('chip-all').classList.add('active');
+}
+
+// ── Format ────────────────────────────────────────────────────────────────
+const fmtW = w => w != null ? `${w.toFixed(2)}%` : '<span class="no-data">—</span>';
+const fmtS = s => s != null ? s.toLocaleString() : '<span class="no-data">—</span>';
+const fmtDiff = v => {
+  if (v == null) return '';
+  const cls = v > 0 ? 'chg-pos' : v < 0 ? 'chg-neg' : 'chg-zero';
+  return `<span class="diff-val ${cls}">${v>0?'+':''}${v.toLocaleString()}</span>`;
+};
+const SL = { new:'新增持股', add:'增加', dec:'減少', out:'完全出清', same:'不變' };
+const SC = { new:'badge-new', add:'badge-add', dec:'badge-dec', out:'badge-out', same:'badge-same' };
+
+// ── Render ────────────────────────────────────────────────────────────────
+function renderCards() {
+  const container = document.getElementById('cardContainer');
+  const rcEl      = document.getElementById('resultCount');
+
+  if (!targetData) return;
+  if (!compareData) { renderSingleCards(container, rcEl); return; }
+
+  const allRows = compareHoldings(targetData, compareData);
+  const search  = document.getElementById('searchInput').value.toLowerCase();
+  const rows    = allRows.filter(r => {
+    if (search && !r.code.toLowerCase().includes(search) && !r.name.toLowerCase().includes(search)) return false;
+    return currentFilter === 'all' || r.status === currentFilter;
+  });
+
+  // Sort: status-new first, then by weightA desc
+  const order = { new:0, add:1, dec:2, out:3, same:4 };
+  rows.sort((a, b) => order[a.status] - order[b.status] || (b.weightA??0) - (a.weightA??0));
+
+  // Update chips
+  const cnt = {new:0,add:0,dec:0,out:0,same:0};
+  allRows.forEach(r => cnt[r.status]++);
+  ['new','add','dec','out','same'].forEach(k =>
+    document.getElementById(`cnt-${k}`).textContent = cnt[k]);
+  document.getElementById('summary').style.display = 'flex';
+  document.getElementById('searchWrap').style.display = 'block';
+
+  rcEl.textContent = `共 ${rows.length} 檔 / 全部 ${allRows.length} 檔`;
+
+  if (!rows.length) {
+    container.innerHTML = '<div class="empty">無符合條件的資料</div>';
+    return;
+  }
+
+  const dateA = fmtShort(targetDate);
+  const dateB = fmtShort(compareDate);
+
+  container.innerHTML = '<div class="card-list">' + rows.map(r => `
+    <div class="card status-${r.status}">
+      <div class="card-header">
+        <div class="card-id">
+          <span class="card-code">${r.code}</span>
+          <span class="card-name">${r.name}</span>
+        </div>
+        <span class="badge ${SC[r.status]}">${SL[r.status]}</span>
+      </div>
+      <div class="card-grid">
+        <div class="card-col">
+          <div class="col-date is-a">${dateA} 目標</div>
+          <div class="col-row">
+            <span class="col-lbl">權重</span>
+            <span class="col-val">${r.weightA != null ? r.weightA.toFixed(2)+'%' : '—'}</span>
+          </div>
+          <div class="col-row">
+            <span class="col-lbl">股數</span>
+            <span class="col-val muted">${r.sharesA != null ? r.sharesA.toLocaleString() : '—'}</span>
+          </div>
+        </div>
+        <div class="card-col">
+          <div class="col-date is-b">${dateB} 比較</div>
+          <div class="col-row">
+            <span class="col-lbl">權重</span>
+            <span class="col-val">${r.weightB != null ? r.weightB.toFixed(2)+'%' : '—'}</span>
+          </div>
+          <div class="col-row">
+            <span class="col-lbl">股數</span>
+            <span class="col-val muted">${r.sharesB != null ? r.sharesB.toLocaleString() : '—'}</span>
+          </div>
+        </div>
+      </div>
+      ${r.sharesA != null && r.sharesB != null ? `
+      <div class="card-diff">
+        <span class="diff-lbl">股數差</span>
+        ${fmtDiff(r.sharesDiff)}
+      </div>` : ''}
+    </div>
+  `).join('') + '</div>';
+}
+
+function renderSingleCards(container, rcEl) {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const rows = targetData
+    .filter(r => !search || r.code.toLowerCase().includes(search) || r.name.toLowerCase().includes(search))
+    .sort((a, b) => b.weight - a.weight);
+
+  document.getElementById('summary').style.display = 'none';
+  document.getElementById('searchWrap').style.display = 'block';
+  rcEl.textContent = `共 ${rows.length} 檔`;
+
+  container.innerHTML = '<div class="card-list">' + rows.map(r => `
+    <div class="card status-same">
+      <div class="card-header">
+        <div class="card-id">
+          <span class="card-code">${r.code}</span>
+          <span class="card-name">${r.name}</span>
+        </div>
+      </div>
+      <div class="card-single">
+        <div class="single-item">
+          <div class="single-lbl">持股權重</div>
+          <div class="single-val">${r.weight.toFixed(2)}%</div>
+        </div>
+        <div class="single-item">
+          <div class="single-lbl">股數</div>
+          <div class="single-val">${r.shares.toLocaleString()}</div>
+        </div>
+      </div>
+    </div>
+  `).join('') + '</div>';
+}
+
+// ── Load ──────────────────────────────────────────────────────────────────
+async function loadAndRender() {
+  const msg = document.getElementById('statusMsg');
+  const container = document.getElementById('cardContainer');
+  msg.textContent = '載入中…';
+  container.innerHTML = '<div class="loading">載入資料中…</div>';
+  try {
+    targetData = await loadFile(targetDate);
+    if (compareDate && compareDate !== targetDate) {
+      compareData = await loadFile(compareDate);
+      msg.textContent = `${fmtDate(targetDate)}  vs  ${fmtDate(compareDate)}`;
+    } else {
+      compareData = null;
+      msg.textContent = compareDate ? '請選擇不同的比較日期' : fmtDate(targetDate);
+    }
+  } catch(e) {
+    msg.textContent = '載入失敗';
+    container.innerHTML = `<div class="error">載入失敗：${e.message}<br>請透過 HTTP 伺服器開啟（例：python -m http.server 8080）</div>`;
+    return;
+  }
+  renderCards();
+}
+
+// ── Events ────────────────────────────────────────────────────────────────
+document.getElementById('selTarget').addEventListener('change', e => {
+  targetDate = e.target.value;
+  if (activeQuick) {
+    document.getElementById({prevDay:'btnPrevDay',prevWeek:'btnPrevWeek',prevMonth:'btnPrevMonth'}[activeQuick])
+      ?.classList.remove('active');
+    activeQuick = null;
+  }
+  resetFilter();
+  loadAndRender();
+});
+document.getElementById('selCompare').addEventListener('change', e => {
+  compareDate = e.target.value || null;
+  ['btnPrevDay','btnPrevWeek','btnPrevMonth'].forEach(id =>
+    document.getElementById(id).classList.remove('active'));
+  activeQuick = null;
+  resetFilter();
+  loadAndRender();
+});
+
+// ── Start ─────────────────────────────────────────────────────────────────
+populateSelects();
+document.getElementById('chip-all').classList.add('active');
+setCompareQuick('prevDay');
+</script>
+</body>
+</html>
