@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmd /c \"C:\\\\ClaudeCode\\\\create_task.bat\")",
+      "Bash(cmd /c \"schtasks /query /tn \\\\\"00981A_Download\\\\\" /fo LIST 2>&1\")",
+      "Bash(powershell -Command ':*)",
+      "Skill(schedule)",
+      "Skill(schedule:*)"
+    ]
+  }
+}
