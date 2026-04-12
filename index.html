@@ -302,6 +302,12 @@
 </div>
 
 <script>
+// ── Force fresh load（防止 browser / LINE 快取舊 HTML）────────────────────
+(function() {
+  if (!new URLSearchParams(location.search).has('v'))
+    location.replace(location.pathname + '?v=' + Date.now());
+})();
+
 // ── State ─────────────────────────────────────────────────────────────────
 let DATES       = [];
 let targetDate  = null;
@@ -346,7 +352,7 @@ function populateSelects() {
 
 // ── Data ──────────────────────────────────────────────────────────────────
 async function loadFile(date) {
-  const resp = await fetch(`00981A_Data/00981A_${date}.txt?t=${Date.now()}`);
+  const resp = await fetch(`00981A_Data/00981A_${date}.txt?t=${Date.now()}`, { cache: 'no-store' });
   if (!resp.ok) throw new Error(`無法讀取 00981A_${date}.txt`);
   return parseHoldings(await resp.text());
 }
