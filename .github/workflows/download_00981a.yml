@@ -32,14 +32,13 @@ jobs:
         env:
           PYTHONIOENCODING: utf-8
 
-      - name: Commit new data file (if any)
+      - name: Commit data + log
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add 00981A_Data/
-          # 只有有新檔案才 commit
+          git add 00981A_Data/ dates.json download_log.txt || true
           if git diff --cached --quiet; then
-            echo "No new data file, skipping commit."
+            echo "Nothing to commit."
           else
             DATE=$(date -u +"%Y-%m-%d %H:%M UTC")
             git commit -m "data: 更新 00981A 持股資料 ($DATE)"
