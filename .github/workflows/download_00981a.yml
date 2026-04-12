@@ -1,0 +1,45 @@
+name: Download 00981A Holdings
+
+# 台灣時間 16:30–19:00，每 15 分鐘執行一次
+# 台灣 UTC+8，換算成 UTC：08:30–11:00
+on:
+  schedule:
+    - cron: '30,45 8 * * 1-5'       # 16:30, 16:45 TST
+    - cron: '0,15,30,45 9,10 * * 1-5' # 17:00–18:45 TST
+    - cron: '0 11 * * 1-5'           # 19:00 TST
+  workflow_dispatch:                 # 允許手動觸發
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install requests pandas openpyxl
+
+      - name: Run download script
+        run: python download_00981A.py
+
+      - name: Commit new data file (if any)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add 00981A_Data/
+          # 只有有新檔案才 commit
+          if git diff --cached --quiet; then
+            echo "No new data file, skipping commit."
+          else
+            DATE=$(date -u +"%Y-%m-%d %H:%M UTC")
+            git commit -m "data: 更新 00981A 持股資料 ($DATE)"
+            git push
+          fi
