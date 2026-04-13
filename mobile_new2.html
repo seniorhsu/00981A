@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>00981A 持股比較（手機版）</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── CSS Variables – Light ── */
+    :root {
+      --bg:          #f0f4f8;
+      --bg2:         #ffffff;
+      --bg3:         #f1f5f9;
+      --bg4:         #e8edf3;
+      --border:      #cbd5e1;
+      --border2:     #e2e8f0;
+      --text:        #0f172a;
+      --text2:       #1e293b;
+      --muted:       #475569;
+      --muted2:      #94a3b8;
+      --accent:      #1d4ed8;
+      --accent-bg:   #eff6ff;
+      --green:       #15803d;
+      --green-bg:    #dcfce7;
+      --green-bd:    #86efac;
+      --red:         #b91c1c;
+      --red-bg:      #fee2e2;
+      --red-bd:      #fca5a5;
+      --orange:      #c2410c;
+      --orange-bg:   #ffedd5;
+      --orange-bd:   #fdba74;
+      --blue-bg:     #dbeafe;
+      --blue-bd:     #93c5fd;
+      --gray:        #475569;
+      --gray-bg:     #f1f5f9;
+      --gray-bd:     #cbd5e1;
+      --purple:      #7c3aed;
+      --purple-bg:   #ede9fe;
+      --purple-bd:   #c4b5fd;
+      --card-inner:  rgba(255,255,255,0.65);
+      --card-inner-bd: rgba(0,0,0,0.07);
+      --diff-bg:     rgba(255,255,255,0.55);
+      --diff-bd:     rgba(0,0,0,0.06);
+      --shadow:      rgba(0,0,0,0.08);
+      --shadow2:     rgba(0,0,0,0.05);
+      --topbar-bg:   #ffffff;
+      --skeleton-base:  #e2e8f0;
+      --skeleton-shine: #f8fafc;
+    }
+
+    /* ── CSS Variables – Dark ── */
+    [data-theme="dark"] {
+      --bg:          #0f172a;
+      --bg2:         #1e293b;
+      --bg3:         #263348;
+      --bg4:         #1a2536;
+      --border:      #334155;
+      --border2:     #2d3f55;
+      --text:        #f1f5f9;
+      --text2:       #e2e8f0;
+      --muted:       #94a3b8;
+      --muted2:      #64748b;
+      --accent:      #60a5fa;
+      --accent-bg:   #1e3a5f;
+      --green:       #4ade80;
+      --green-bg:    #14532d;
+      --green-bd:    #166534;
+      --red:         #f87171;
+      --red-bg:      #450a0a;
+      --red-bd:      #7f1d1d;
+      --orange:      #fb923c;
+      --orange-bg:   #431407;
+      --orange-bd:   #7c2d12;
+      --blue-bg:     #1e3a5f;
+      --blue-bd:     #1d4ed8;
+      --gray:        #94a3b8;
+      --gray-bg:     #1e293b;
+      --gray-bd:     #334155;
+      --purple:      #a78bfa;
+      --purple-bg:   #2e1065;
+      --purple-bd:   #4c1d95;
+      --card-inner:  rgba(30,41,59,0.8);
+      --card-inner-bd: rgba(255,255,255,0.07);
+      --diff-bg:     rgba(15,23,42,0.6);
+      --diff-bd:     rgba(255,255,255,0.06);
+      --shadow:      rgba(0,0,0,0.35);
+      --shadow2:     rgba(0,0,0,0.25);
+      --topbar-bg:   #1e293b;
+      --skeleton-base:  #263348;
+      --skeleton-shine: #2d3f55;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, 'Segoe UI', BlinkMacSystemFont, sans-serif;
+      font-size: 15px;
+      min-height: 100vh;
+      padding-bottom: 32px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    /* ── Topbar ── */
+    .topbar {
+      background: var(--topbar-bg);
+      border-bottom: 2px solid var(--border);
+      padding: 10px 14px 8px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+    .topbar-row1 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .etf-badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      border-radius: 6px;
+      padding: 3px 9px;
+      letter-spacing: 1px;
+      flex-shrink: 0;
+    }
+    .topbar-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      flex: 1;
+    }
+    .btn-dark {
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 9px;
+      font-size: 16px;
+      cursor: pointer;
+      line-height: 1;
+      color: var(--text);
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .btn-dark:active { opacity: 0.7; }
+
+    /* share + view-toggle buttons（同 btn-dark 樣式） */
+    .btn-icon {
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 9px;
+      font-size: 15px;
+      cursor: pointer;
+      line-height: 1;
+      color: var(--text);
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .btn-icon:active { opacity: 0.7; }
+    .btn-icon.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* ── Compact list view ── */
+    .compact-list { display: flex; flex-direction: column; }
+    .cl-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border2);
+      border-left: 3px solid transparent;
+      background: var(--bg2);
+    }
+    .cl-row:last-child { border-bottom: none; }
+    .cl-row.status-new  { border-left-color: var(--blue-bd);   background: var(--blue-bg); }
+    .cl-row.status-add  { border-left-color: var(--green-bd);  background: var(--green-bg); }
+    .cl-row.status-dec  { border-left-color: var(--orange-bd); background: var(--orange-bg); }
+    .cl-row.status-out  { border-left-color: var(--red-bd);    background: var(--red-bg); }
+    .cl-code {
+      font-family: 'Courier New', monospace;
+      font-size: 13px; font-weight: 800;
+      color: var(--accent);
+      flex-shrink: 0; min-width: 38px;
+      cursor: pointer;
+      text-decoration: underline dotted;
+    }
+    .cl-name {
+      font-size: 13px; font-weight: 600;
+      color: var(--text);
+      flex: 1; min-width: 0;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .cl-weight {
+      font-family: 'Courier New', monospace;
+      font-size: 13px; font-weight: 700;
+      color: var(--text); flex-shrink: 0;
+      min-width: 52px; text-align: right;
+    }
+    .cl-diff {
+      font-family: 'Courier New', monospace;
+      font-size: 12px; font-weight: 700;
+      flex-shrink: 0; min-width: 52px; text-align: right;
+    }
+    .cl-badge { flex-shrink: 0; }
+    .cl-star {
+      background: none; border: none;
+      font-size: 15px; cursor: pointer;
+      padding: 0 2px; line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .topbar-row2 {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .ctrl-label { font-size: 12px; color: var(--muted); font-weight: 500; white-space: nowrap; }
+    select {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 5px 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      flex: 1;
+      min-width: 0;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      padding-right: 26px;
+    }
+    select:focus { border-color: var(--accent); }
+
+    .topbar-row3 {
+      display: flex;
+      gap: 5px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.12s;
+      white-space: nowrap;
+    }
+    .btn:active, .btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    #statusMsg {
+      font-size: 12px;
+      color: var(--muted);
+      padding: 4px 0 0;
+      font-weight: 500;
+      min-height: 16px;
+    }
+
+    /* ── Summary chips ── */
+    .summary {
+      display: flex;
+      gap: 6px;
+      padding: 10px 14px 4px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .summary::-webkit-scrollbar { display: none; }
+
+    .chip {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 5px 13px;
+      white-space: nowrap;
+      text-align: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.12s;
+      user-select: none;
+    }
+    .chip .cv { font-size: 18px; font-weight: 800; line-height: 1.2; }
+    .chip .cl { font-size: 11px; color: var(--muted); font-weight: 500; }
+    .chip-new  .cv { color: var(--accent); }
+    .chip-add  .cv { color: var(--green); }
+    .chip-dec  .cv { color: var(--orange); }
+    .chip-out  .cv { color: var(--red); }
+    .chip-same .cv { color: var(--gray); }
+    .chip-watch .cv { color: var(--purple); }
+    .chip-all  .cv { font-size: 14px; color: var(--accent); line-height: 1.8; }
+
+    .chip.active { box-shadow: 0 0 0 2px var(--accent); border-color: var(--accent); }
+    .chip-new.active  { box-shadow: 0 0 0 2px var(--accent);  border-color: var(--accent); }
+    .chip-add.active  { box-shadow: 0 0 0 2px var(--green);   border-color: var(--green); }
+    .chip-dec.active  { box-shadow: 0 0 0 2px var(--orange);  border-color: var(--orange); }
+    .chip-out.active  { box-shadow: 0 0 0 2px var(--red);     border-color: var(--red); }
+    .chip-same.active { box-shadow: 0 0 0 2px var(--gray);    border-color: var(--gray); }
+    .chip-watch.active{ box-shadow: 0 0 0 2px var(--purple);  border-color: var(--purple); }
+
+    /* ── Sort row ── */
+    .sort-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 14px 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      flex-wrap: nowrap;
+    }
+    .sort-row::-webkit-scrollbar { display: none; }
+    .sort-label { font-size: 12px; color: var(--muted); font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+    .sort-pill {
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      color: var(--muted);
+      border-radius: 20px;
+      padding: 4px 11px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.12s;
+      user-select: none;
+    }
+    .sort-pill.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .sort-pill.disabled { opacity: 0.35; pointer-events: none; }
+
+    /* ── Search ── */
+    .search-wrap { padding: 0 14px 8px; }
+    .search-input {
+      width: 100%;
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--muted2); }
+
+    /* ── Result count ── */
+    .result-count {
+      padding: 2px 14px 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ── Cards ── */
+    .card-list { padding: 0 14px; display: flex; flex-direction: column; gap: 8px; }
+
+    .card {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: 0 1px 4px var(--shadow2);
+      transition: background 0.2s, border-color 0.2s;
+      position: relative;
+      user-select: none;
+    }
+    .card.status-new  { border-color: var(--blue-bd);   background: var(--blue-bg); }
+    .card.status-add  { border-color: var(--green-bd);  background: var(--green-bg); }
+    .card.status-dec  { border-color: var(--orange-bd); background: var(--orange-bg); }
+    .card.status-out  { border-color: var(--red-bd);    background: var(--red-bg); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      gap: 6px;
+    }
+    .card-id {
+      display: flex;
+      align-items: baseline;
+      gap: 7px;
+      flex: 1;
+      min-width: 0;
+    }
+    .card-code {
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .card-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .card-header-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    /* Star button */
+    .star-btn {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 2px 4px;
+      line-height: 1;
+      color: var(--muted2);
+      transition: transform 0.15s;
+      flex-shrink: 0;
+    }
+    .star-btn:active { transform: scale(1.3); }
+    .star-btn.starred { color: #f59e0b; }
+
+    .badge {
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1.5px solid transparent;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .badge-new  { background: var(--blue-bg);   color: var(--accent); border-color: var(--blue-bd); }
+    .badge-add  { background: var(--green-bg);  color: var(--green);  border-color: var(--green-bd); }
+    .badge-dec  { background: var(--orange-bg); color: var(--orange); border-color: var(--orange-bd); }
+    .badge-out  { background: var(--red-bg);    color: var(--red);    border-color: var(--red-bd); }
+    .badge-same { background: var(--gray-bg);   color: var(--gray);   border-color: var(--gray-bd); }
+
+    /* Price change badge */
+    .badge-pchg {
+      border-radius: 6px;
+      padding: 2px 7px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .badge-pchg.pos { background: var(--green-bg); color: var(--green); }
+    .badge-pchg.neg { background: var(--red-bg);   color: var(--red); }
+    .badge-pchg.zero{ background: var(--gray-bg);  color: var(--gray); }
+
+    /* Data grid inside card */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 8px;
+    }
+    .card-col {
+      background: var(--card-inner);
+      border-radius: 8px;
+      padding: 8px 10px;
+      border: 1px solid var(--card-inner-bd);
+    }
+    .col-date {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 5px;
+    }
+    .col-date.is-a { color: #1e40af; }
+    .col-date.is-b { color: #166534; }
+    [data-theme="dark"] .col-date.is-a { color: #93c5fd; }
+    [data-theme="dark"] .col-date.is-b { color: #86efac; }
+
+    .col-row { display: flex; justify-content: space-between; align-items: baseline; margin-top: 2px; }
+    .col-lbl { font-size: 11px; color: var(--muted); font-weight: 500; }
+    .col-val { font-size: 14px; font-weight: 800; font-family: 'Courier New', monospace; color: var(--text); }
+    .col-val.muted { color: var(--muted); font-weight: 600; font-size: 12px; }
+    .col-val.price { color: var(--text2); font-size: 13px; }
+
+    /* diff row */
+    .card-diff {
+      margin-top: 7px;
+      display: flex;
+      gap: 10px;
+      padding: 7px 10px;
+      background: var(--diff-bg);
+      border-radius: 8px;
+      border: 1px solid var(--diff-bd);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .diff-item { display: flex; align-items: baseline; gap: 4px; }
+    .diff-lbl  { font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .diff-val  { font-size: 13px; font-weight: 800; font-family: 'Courier New', monospace; }
+    .chg-pos  { color: var(--green); }
+    .chg-neg  { color: var(--red); }
+    .chg-zero { color: var(--gray); }
+    .no-data  { color: var(--muted2); font-size: 13px; }
+
+    /* weight diff small text */
+    .wt-diff { font-size: 11px; font-weight: 700; margin-left: 2px; }
+    .wt-diff.pos { color: var(--green); }
+    .wt-diff.neg { color: var(--red); }
+    .wt-diff.zero{ color: var(--gray); }
+
+    /* Single date card */
+    .card-single {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .single-item { flex: 1; min-width: 70px; }
+    .single-lbl { font-size: 11px; color: var(--muted); font-weight: 500; }
+    .single-val { font-size: 16px; font-weight: 800; font-family: 'Courier New', monospace; color: var(--text); }
+    .single-val.price { font-size: 14px; color: var(--text2); }
+    .single-val.mktval { font-size: 14px; color: var(--accent); }
+
+    /* ── Loading skeleton ── */
+    @keyframes shimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position:  200% 0; }
+    }
+    .skeleton-card {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 14px;
+      box-shadow: 0 1px 4px var(--shadow2);
+      margin: 0 14px 8px;
+    }
+    .skel-line {
+      background: linear-gradient(90deg, var(--skeleton-base) 25%, var(--skeleton-shine) 50%, var(--skeleton-base) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 6px;
+    }
+    .skel-h { height: 14px; margin-bottom: 8px; }
+    .skel-row { display: flex; gap: 8px; margin-bottom: 6px; }
+    .skel-box { height: 60px; flex: 1; border-radius: 8px;
+      background: linear-gradient(90deg, var(--skeleton-base) 25%, var(--skeleton-shine) 50%, var(--skeleton-base) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite; }
+
+    .empty   { padding: 60px 20px; text-align: center; color: var(--muted); font-size: 15px; }
+    .error   { color: var(--red); padding: 16px; line-height: 1.7; font-size: 14px; }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      color: #e2e8f0;
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; }
+
+    /* ── Link sheet ── */
+    .sheet-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 800;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .sheet-overlay.open { opacity: 1; pointer-events: auto; }
+    .link-sheet {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--bg2);
+      border-radius: 18px 18px 0 0;
+      padding: 16px 16px 32px;
+      z-index: 801;
+      transform: translateY(100%);
+      transition: transform 0.25s cubic-bezier(0.32,0.72,0,1);
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+    }
+    .link-sheet.open { transform: translateY(0); }
+    .sheet-handle {
+      width: 36px; height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin: 0 auto 14px;
+    }
+    .sheet-title {
+      font-size: 15px; font-weight: 700;
+      color: var(--text); margin-bottom: 4px;
+      text-align: center;
+    }
+    .sheet-sub {
+      font-size: 12px; color: var(--muted);
+      text-align: center; margin-bottom: 14px;
+    }
+    .sheet-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .sheet-link {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 5px;
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 8px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13px; font-weight: 600;
+      transition: background 0.13s, border-color 0.13s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sheet-link:active { background: var(--blue-bg); border-color: var(--accent); }
+    .sheet-link-icon { font-size: 22px; line-height: 1; }
+    .sheet-link-name { font-size: 13px; font-weight: 700; color: var(--text); }
+    .sheet-link-desc { font-size: 11px; color: var(--muted); font-weight: 400; }
+
+    /* ── Share modal ── */
+    .share-modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      z-index: 300; opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .share-modal-backdrop.open { opacity: 1; pointer-events: auto; }
+    .share-modal {
+      position: fixed; left: 50%; top: 50%;
+      transform: translate(-50%, -50%) scale(0.95);
+      z-index: 301; width: min(92vw, 480px);
+      background: var(--bg2); border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+      padding: 18px 16px 14px;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: transform 0.2s, opacity 0.2s;
+      opacity: 0; pointer-events: none;
+    }
+    .share-modal.open { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; }
+    .share-modal-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    .share-modal textarea {
+      width: 100%; box-sizing: border-box;
+      min-height: 260px; resize: vertical;
+      background: var(--bg3); color: var(--text);
+      border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 10px 12px; font-size: 13px; line-height: 1.6;
+      font-family: monospace; outline: none;
+    }
+    .share-modal textarea:focus { border-color: var(--accent); }
+    .share-modal-btns { display: flex; gap: 8px; justify-content: flex-end; }
+    .share-modal-btns button {
+      padding: 8px 18px; border-radius: 20px; border: none;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+    }
+    .btn-cancel { background: var(--bg3); color: var(--muted); }
+    .btn-send   { background: var(--accent); color: #fff; }
+
+    /* ── Misc ── */
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<!-- ── Topbar ── -->
+<div class="topbar">
+  <div class="topbar-row1">
+    <div class="etf-badge">00981A</div>
+    <div class="topbar-title">持股明細比較</div>
+    <button class="btn-icon" id="btnShare" onclick="shareComparison()" title="分享">⬆️</button>
+    <button class="btn-icon" id="btnView"  onclick="toggleView()"      title="切換視圖">☰</button>
+    <button class="btn-dark" id="btnDark"  onclick="toggleDark()"      title="切換深色模式">🌙</button>
+  </div>
+  <div class="topbar-row2">
+    <span class="ctrl-label">目標</span>
+    <select id="selTarget"></select>
+    <span class="ctrl-label">比較</span>
+    <select id="selCompare"><option value="">— 自選 —</option></select>
+  </div>
+  <div class="topbar-row3">
+    <button class="btn" id="btnPrevDay"   onclick="setCompareQuick('prevDay')">前一營業日</button>
+    <button class="btn" id="btnPrevWeek"  onclick="setCompareQuick('prevWeek')">前一週</button>
+    <button class="btn" id="btnPrevMonth" onclick="setCompareQuick('prevMonth')">前一個月</button>
+  </div>
+  <div id="statusMsg"></div>
+</div>
+
+<!-- ── Summary chips ── -->
+<div class="summary" id="summary" style="display:none">
+  <div class="chip chip-all" id="chip-all" onclick="setFilter('all',this)">
+    <div class="cv">全部</div><div class="cl">顯示</div>
+  </div>
+  <div class="chip chip-new" id="chip-new" onclick="setFilter('new',this)">
+    <div class="cv" id="cnt-new">0</div><div class="cl">新增持股</div>
+  </div>
+  <div class="chip chip-add" id="chip-add" onclick="setFilter('add',this)">
+    <div class="cv" id="cnt-add">0</div><div class="cl">增加</div>
+  </div>
+  <div class="chip chip-dec" id="chip-dec" onclick="setFilter('dec',this)">
+    <div class="cv" id="cnt-dec">0</div><div class="cl">減少</div>
+  </div>
+  <div class="chip chip-out" id="chip-out" onclick="setFilter('out',this)">
+    <div class="cv" id="cnt-out">0</div><div class="cl">完全出清</div>
+  </div>
+  <div class="chip chip-same" id="chip-same" onclick="setFilter('same',this)">
+    <div class="cv" id="cnt-same">0</div><div class="cl">不變</div>
+  </div>
+  <div class="chip chip-watch" id="chip-watch" onclick="setFilter('watch',this)" style="display:none">
+    <div class="cv" id="cnt-watch">0</div><div class="cl">自選清單</div>
+  </div>
+</div>
+
+<!-- ── Sort row ── -->
+<div class="sort-row" id="sortRow" style="display:none">
+  <span class="sort-label">排序：</span>
+  <button class="sort-pill active" id="sp-weight" data-key="weight" onclick="setSort('weight')">權重↓</button>
+  <button class="sort-pill disabled" id="sp-chg"  data-key="chg"    onclick="setSort('chg')">變化量↓</button>
+  <button class="sort-pill disabled" id="sp-pchg" data-key="pchg"   onclick="setSort('pchg')">股價漲跌↓</button>
+  <button class="sort-pill" id="sp-name"          data-key="name"   onclick="setSort('name')">代號↑</button>
+</div>
+
+<!-- ── Search ── -->
+<div class="search-wrap" id="searchWrap" style="display:none">
+  <input class="search-input" id="searchInput" placeholder="搜尋股票代號 / 名稱" oninput="renderCards()">
+</div>
+
+<!-- ── Result count ── -->
+<div class="result-count" id="resultCount"></div>
+
+<!-- ── Cards ── -->
+<div id="cardContainer"><div class="empty">請選擇目標日期與比較日期</div></div>
+
+<!-- ── Toast ── -->
+<div class="toast" id="toast"></div>
+
+<!-- ── Share preview modal ── -->
+<div class="share-modal-backdrop" id="shareBackdrop" onclick="closeShareModal()"></div>
+<div class="share-modal" id="shareModal">
+  <div class="share-modal-title">預覽 / 編輯分享內容</div>
+  <textarea id="shareTextarea"></textarea>
+  <div class="share-modal-btns">
+    <button class="btn-cancel" onclick="closeShareModal()">取消</button>
+    <button class="btn-send"   onclick="doShare()">分享</button>
+  </div>
+</div>
+
+<!-- ── Link sheet ── -->
+<div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()"></div>
+<div class="link-sheet" id="linkSheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-title" id="sheetTitle"></div>
+  <div class="sheet-sub" id="sheetSub"></div>
+  <div class="sheet-links">
+    <a class="sheet-link" id="lnkYahoo" target="_blank" rel="noopener">
+      <span class="sheet-link-icon">📈</span>
+      <span class="sheet-link-name">Yahoo 股市</span>
+      <span class="sheet-link-desc">報價・新聞</span>
+    </a>
+<a class="sheet-link" id="lnkCmoney" target="_blank" rel="noopener">
+      <span class="sheet-link-icon">💹</span>
+      <span class="sheet-link-name">CMoney</span>
+      <span class="sheet-link-desc">財報・法人</span>
+    </a>
+    <a class="sheet-link" id="lnkMops" target="_blank" rel="noopener" style="grid-column:1/-1">
+      <span class="sheet-link-icon">🏛️</span>
+      <span class="sheet-link-name">公開觀測站</span>
+      <span class="sheet-link-desc">公告・財報</span>
+    </a>
+  </div>
+</div>
+
+<script>
+// ── Force fresh load for LINE / in-app browsers ───────────────────────────
+(function() {
+  const p = new URLSearchParams(location.search);
+  if (!p.has('v')) {
+    location.replace(location.pathname + '?v=' + Date.now());
+  }
+})();
+
+// ── Dark mode ─────────────────────────────────────────────────────────────
+(function initTheme() {
+  const saved = localStorage.getItem('theme_00981A_m');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = saved || (prefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('btnDark').textContent = theme === 'dark' ? '☀️' : '🌙';
+})();
+
+function toggleDark() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme_00981A_m', next);
+  document.getElementById('btnDark').textContent = next === 'dark' ? '☀️' : '🌙';
+}
+
+// ── Link sheet ────────────────────────────────────────────────────────────
+function openSheet(code, name) {
+  document.getElementById('sheetTitle').textContent = `${code}　${name}`;
+  document.getElementById('sheetSub').textContent = '選擇查詢網站';
+  document.getElementById('lnkYahoo').href   = `https://tw.stock.yahoo.com/quote/${code}`;
+  document.getElementById('lnkCmoney').href  = `https://www.cmoney.tw/finance/f00025.aspx?s=${code}`;
+  document.getElementById('lnkMops').href    = `https://mops.twse.com.tw/mops/web/t05st09?co_id=${code}`;
+  document.getElementById('sheetOverlay').classList.add('open');
+  document.getElementById('linkSheet').classList.add('open');
+}
+function closeSheet() {
+  document.getElementById('sheetOverlay').classList.remove('open');
+  document.getElementById('linkSheet').classList.remove('open');
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ── Dates (dynamic from dates.json) ───────────────────────────────────────
+let DATES = [];
+
+async function loadDates() {
+  try {
+    const resp = await fetch(`dates.json?t=${Date.now()}`, { cache: 'no-store' });
+    if (!resp.ok) throw new Error();
+    DATES = (await resp.json()).sort();
+    return true;
+  } catch {
+    document.getElementById('cardContainer').innerHTML =
+      '<div class="empty">無法載入 dates.json，請確認檔案存在。</div>';
+    return false;
+  }
+}
+
+// ── State ─────────────────────────────────────────────────────────────────
+let targetDate  = null;
+let compareDate = null;
+let targetData  = null;
+let compareData = null;
+let currentFilter = 'all';
+let activeQuick   = null;
+let currentSort   = 'weight';
+let sortDir       = 'desc';   // 'asc' | 'desc'
+const SORT_DEFAULT_DIR = { weight:'desc', chg:'desc', pchg:'desc', name:'asc' };
+let viewMode = localStorage.getItem('viewMode_00981A') || 'card'; // 'card' | 'list'
+(function initViewBtn() {
+  const btn = document.getElementById('btnView');
+  btn.textContent = viewMode === 'list' ? '⊞' : '☰';
+  btn.classList.toggle('active', viewMode === 'list');
+})();
+
+// ── Watchlist ─────────────────────────────────────────────────────────────
+let watchlist = new Set();
+
+function loadWatchlist() {
+  try {
+    const raw = localStorage.getItem('watchlist_00981A');
+    if (raw) watchlist = new Set(JSON.parse(raw));
+  } catch { watchlist = new Set(); }
+}
+
+function saveWatchlist() {
+  localStorage.setItem('watchlist_00981A', JSON.stringify([...watchlist]));
+}
+
+function toggleWatch(code) {
+  if (watchlist.has(code)) {
+    watchlist.delete(code);
+  } else {
+    watchlist.add(code);
+  }
+  saveWatchlist();
+  renderCards();
+}
+
+// ── Data cache ────────────────────────────────────────────────────────────
+const dataCache = new Map();
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+const fmtDate  = d => `${d.slice(0,4)}/${d.slice(4,6)}/${d.slice(6,8)}`;
+const fmtShort = d => `${d.slice(4,6)}/${d.slice(6,8)}`;
+
+function fmtMktVal(val) {
+  if (val == null || isNaN(val) || val <= 0) return null;
+  if (val >= 1e8) return (val / 1e8).toFixed(2) + '億';
+  return (val / 1e4).toFixed(0) + '萬';
+}
+
+function populateSelects() {
+  const selT = document.getElementById('selTarget');
+  const selC = document.getElementById('selCompare');
+  // Clear existing options except first of selC
+  while (selT.firstChild) selT.removeChild(selT.firstChild);
+  while (selC.children.length > 1) selC.removeChild(selC.lastChild);
+  [...DATES].reverse().forEach(d => {
+    const o1 = new Option(fmtDate(d), d);
+    if (d === targetDate) o1.selected = true;
+    selT.appendChild(o1);
+    const o2 = new Option(fmtDate(d), d);
+    if (d === compareDate) o2.selected = true;
+    selC.appendChild(o2);
+  });
+}
+
+// ── URL state ─────────────────────────────────────────────────────────────
+function pushURLState() {
+  const p = new URLSearchParams(location.search);
+  if (targetDate)  p.set('t', targetDate); else p.delete('t');
+  if (compareDate) p.set('c', compareDate); else p.delete('c');
+  if (currentFilter !== 'all') p.set('f', currentFilter); else p.delete('f');
+  history.replaceState(null, '', location.pathname + '?' + p.toString());
+}
+
+function readURLState() {
+  const p = new URLSearchParams(location.search);
+  const t = p.get('t');
+  const c = p.get('c');
+  const f = p.get('f');
+  if (t) targetDate  = t;
+  if (c) compareDate = c;
+  if (f) currentFilter = f;
+}
+
+// ── Data ──────────────────────────────────────────────────────────────────
+async function loadFile(date) {
+  if (dataCache.has(date)) return dataCache.get(date);
+  const resp = await fetch(`00981A_Data/00981A_${date}.txt?t=${Date.now()}`, { cache: 'no-store' });
+  if (!resp.ok) throw new Error(`無法讀取 00981A_${date}.txt`);
+  const data = parseHoldings(await resp.text());
+  dataCache.set(date, data);
+  return data;
+}
+
+function parseHoldings(text) {
+  return text.trim().split('\n').slice(1).map(line => {
+    const p = line.trim().split(',');
+    return {
+      code:   p[0]?.trim(),
+      name:   p[1]?.trim(),
+      weight: parseFloat(p[2]?.replace('%','')) || 0,
+      shares: parseInt(p[3]?.replace(/,/g,'')) || 0,
+      price:  parseFloat(p[4]) || null
+    };
+  }).filter(r => r.code);
+}
+
+// ── Compare ───────────────────────────────────────────────────────────────
+function compareHoldings(target, compare) {
+  const tMap = Object.fromEntries(target.map(r => [r.code, r]));
+  const cMap = Object.fromEntries(compare.map(r => [r.code, r]));
+  return [...new Set([...Object.keys(tMap), ...Object.keys(cMap)])].map(code => {
+    const a = tMap[code], b = cMap[code];
+    const status = a && b
+      ? (a.shares > b.shares ? 'add' : a.shares < b.shares ? 'dec' : 'same')
+      : (a ? 'new' : 'out');
+    const priceChgPct = (a?.price && b?.price && b.price !== 0)
+      ? (a.price - b.price) / b.price * 100
+      : null;
+    const weightDiff = (a?.weight ?? 0) - (b?.weight ?? 0);
+    return {
+      code,
+      name:       (a || b).name,
+      weightA:    a?.weight ?? null,
+      sharesA:    a?.shares ?? null,
+      priceA:     a?.price  ?? null,
+      weightB:    b?.weight ?? null,
+      sharesB:    b?.shares ?? null,
+      priceB:     b?.price  ?? null,
+      sharesDiff: (a?.shares ?? 0) - (b?.shares ?? 0),
+      weightDiff,
+      priceChgPct,
+      status
+    };
+  });
+}
+
+// ── Quick compare ─────────────────────────────────────────────────────────
+function setCompareQuick(mode) {
+  const idx = DATES.indexOf(targetDate);
+  let result = null;
+  if (mode === 'prevDay') {
+    result = idx > 0 ? DATES[idx - 1] : null;
+  } else {
+    const tgt = new Date(+targetDate.slice(0,4), +targetDate.slice(4,6)-1, +targetDate.slice(6,8));
+    if (mode === 'prevWeek')  tgt.setDate(tgt.getDate() - 7);
+    if (mode === 'prevMonth') tgt.setMonth(tgt.getMonth() - 1);
+    const cands = DATES.slice(0, idx);
+    if (cands.length) {
+      const ms = tgt.getTime();
+      result = cands.reduce((best, d) => {
+        const da = new Date(+d.slice(0,4), +d.slice(4,6)-1, +d.slice(6,8));
+        const db = new Date(+best.slice(0,4), +best.slice(4,6)-1, +best.slice(6,8));
+        return Math.abs(da - ms) < Math.abs(db - ms) ? d : best;
+      }, cands[cands.length - 1]);
+    }
+  }
+  activeQuick = mode;
+  ['btnPrevDay','btnPrevWeek','btnPrevMonth'].forEach(id =>
+    document.getElementById(id).classList.remove('active'));
+  document.getElementById({prevDay:'btnPrevDay',prevWeek:'btnPrevWeek',prevMonth:'btnPrevMonth'}[mode])
+    .classList.add('active');
+  if (result) {
+    compareDate = result;
+    document.getElementById('selCompare').value = result;
+    loadAndRender();
+  }
+}
+
+// ── Filter ────────────────────────────────────────────────────────────────
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  pushURLState();
+  renderCards();
+}
+
+function resetFilter() {
+  currentFilter = 'all';
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  document.getElementById('chip-all').classList.add('active');
+}
+
+// ── Sort ──────────────────────────────────────────────────────────────────
+const SORT_LABEL = { weight:'權重', chg:'變化量', pchg:'股價漲跌', name:'代號' };
+
+function updateSortPills() {
+  document.querySelectorAll('.sort-pill[data-key]').forEach(btn => {
+    const key = btn.dataset.key;
+    const isActive = key === currentSort;
+    btn.classList.toggle('active', isActive);
+    const arrow = isActive ? (sortDir === 'desc' ? '↓' : '↑') :
+      (SORT_DEFAULT_DIR[key] === 'desc' ? '↓' : '↑');
+    btn.textContent = SORT_LABEL[key] + arrow;
+  });
+}
+
+function setSort(s) {
+  if (currentSort === s) {
+    // 同一排序 → 切換方向
+    sortDir = sortDir === 'desc' ? 'asc' : 'desc';
+  } else {
+    // 換排序 → 採預設方向
+    currentSort = s;
+    sortDir = SORT_DEFAULT_DIR[s];
+  }
+  updateSortPills();
+  renderCards();
+}
+
+function applySortOrder(rows, isCompare) {
+  const order = { new:0, add:1, dec:2, out:3, same:4 };
+  const dir = sortDir === 'desc' ? -1 : 1;   // -1=降冪，1=升冪
+
+  // Watched stocks always float to the top (within same group)
+  function cmpWatchFirst(a, b) {
+    const wa = watchlist.has(a.code) ? 0 : 1;
+    const wb = watchlist.has(b.code) ? 0 : 1;
+    return wa - wb;
+  }
+
+  // 次要排序：數值相同時一律按代號升冪，確保穩定不亂跳
+  const byCode = (a, b) => (a.code || '').localeCompare(b.code || '');
+
+  if (currentSort === 'weight') {
+    rows.sort((a, b) => {
+      const wd = cmpWatchFirst(a, b);
+      if (wd !== 0) return wd;
+      // 出清股票 weightA = null，改用 weightB（比較日期的持股權重）
+      const va = a.weightA ?? a.weightB ?? a.weight ?? 0;
+      const vb = b.weightA ?? b.weightB ?? b.weight ?? 0;
+      const diff = dir * (va - vb);
+      return diff !== 0 ? diff : byCode(a, b);  // 同權重 → 代號排序
+    });
+  } else if (currentSort === 'chg' && isCompare) {
+    rows.sort((a, b) => {
+      const wd = cmpWatchFirst(a, b);
+      if (wd !== 0) return wd;
+      const va = a.sharesDiff ?? 0;
+      const vb = b.sharesDiff ?? 0;
+      const diff = dir * (va - vb);
+      return diff !== 0 ? diff : byCode(a, b);
+    });
+  } else if (currentSort === 'pchg' && isCompare) {
+    rows.sort((a, b) => {
+      const wd = cmpWatchFirst(a, b);
+      if (wd !== 0) return wd;
+      const va = a.priceChgPct ?? 0;
+      const vb = b.priceChgPct ?? 0;
+      const diff = dir * (va - vb);
+      return diff !== 0 ? diff : byCode(a, b);
+    });
+  } else if (currentSort === 'name') {
+    rows.sort((a, b) => {
+      const wd = cmpWatchFirst(a, b);
+      if (wd !== 0) return wd;
+      // 代號排序（數字字串比較）
+      return dir * (a.code || '').localeCompare(b.code || '');
+    });
+  }
+  return rows;
+}
+
+// ── Format ────────────────────────────────────────────────────────────────
+const fmtW = w => w != null ? `${w.toFixed(2)}%` : '<span class="no-data">—</span>';
+const fmtS = s => s != null ? s.toLocaleString() : '<span class="no-data">—</span>';
+const SL = { new:'新增持股', add:'增加', dec:'減少', out:'完全出清', same:'不變' };
+const SC = { new:'badge-new', add:'badge-add', dec:'badge-dec', out:'badge-out', same:'badge-same' };
+
+function fmtDiff(v) {
+  if (v == null) return '';
+  const cls = v > 0 ? 'chg-pos' : v < 0 ? 'chg-neg' : 'chg-zero';
+  const sign = v > 0 ? '+' : '';
+  return `<span class="diff-val ${cls}">${sign}${v.toLocaleString()}</span>`;
+}
+
+function fmtPriceChg(pct) {
+  if (pct == null) return '';
+  const cls = pct > 0 ? 'pos' : pct < 0 ? 'neg' : 'zero';
+  const sign = pct > 0 ? '+' : '';
+  return `<span class="badge-pchg ${cls}">${sign}${pct.toFixed(2)}%</span>`;
+}
+
+function fmtWtDiff(diff) {
+  if (diff == null || diff === 0) return '<span class="wt-diff zero">±0.00%</span>';
+  const cls = diff > 0 ? 'pos' : 'neg';
+  const sign = diff > 0 ? '+' : '';
+  return `<span class="wt-diff ${cls}">${sign}${diff.toFixed(2)}%</span>`;
+}
+
+function starBtn(code) {
+  const isStarred = watchlist.has(code);
+  return `<button class="star-btn${isStarred ? ' starred' : ''}" onclick="event.stopPropagation();toggleWatch('${code}')" title="加入自選">${isStarred ? '⭐' : '☆'}</button>`;
+}
+
+// ── Long-press copy ───────────────────────────────────────────────────────
+let longPressTimer = null;
+
+function attachLongPress(el, code, name) {
+  el.addEventListener('touchstart', () => {
+    longPressTimer = setTimeout(() => {
+      navigator.clipboard.writeText(`${code} ${name}`)
+        .then(() => showToast('已複製'))
+        .catch(() => showToast('複製失敗'));
+    }, 500);
+  }, { passive: true });
+  el.addEventListener('touchend',   () => clearTimeout(longPressTimer), { passive: true });
+  el.addEventListener('touchmove',  () => clearTimeout(longPressTimer), { passive: true });
+  el.addEventListener('touchcancel',() => clearTimeout(longPressTimer), { passive: true });
+}
+
+// ── View toggle ───────────────────────────────────────────────────────────
+function toggleView() {
+  viewMode = viewMode === 'card' ? 'list' : 'card';
+  localStorage.setItem('viewMode_00981A', viewMode);
+  const btn = document.getElementById('btnView');
+  btn.textContent = viewMode === 'list' ? '⊞' : '☰';
+  btn.classList.toggle('active', viewMode === 'list');
+  renderCards();
+}
+
+// ── Share ─────────────────────────────────────────────────────────────────
+function fmtLots(n) {
+  if (n == null) return '—';
+  const lots = Math.floor(n / 1000);
+  return lots.toLocaleString() + '張';
+}
+
+function buildShareText() {
+  if (!targetData) return '';
+  const dateA = targetDate  ? fmtDate(targetDate)  : '—';
+  const dateB = compareDate ? fmtDate(compareDate) : '—';
+  let lines = ['📊 00981A 持股比較'];
+
+  if (compareData) {
+    lines.push(`${dateA} vs ${dateB}`);
+    lines.push('');
+
+    const allRows = compareHoldings(targetData, compareData);
+    const cnt = { new:0, add:0, dec:0, out:0, same:0 };
+    allRows.forEach(r => cnt[r.status]++);
+    lines.push(`新增 ${cnt.new}　增加 ${cnt.add}　減少 ${cnt.dec}　出清 ${cnt.out}　不變 ${cnt.same}`);
+    lines.push('');
+
+    // 淨增加前10大（新增 + 增加，依 weightDiff 降序）
+    const netInc = allRows
+      .filter(r => r.status === 'new' || (r.weightDiff != null && r.weightDiff > 0))
+      .sort((a, b) => (b.weightDiff ?? b.weightA ?? 0) - (a.weightDiff ?? a.weightA ?? 0))
+      .slice(0, 10);
+    if (netInc.length) {
+      lines.push('▲ 淨增加前10大');
+      netInc.forEach(r => {
+        const diffStr = r.status === 'new'
+          ? `+${(r.weightA ?? 0).toFixed(2)}%（新增）`
+          : `+${r.weightDiff.toFixed(2)}%`;
+        const lotsStr = r.status === 'new'
+          ? fmtLots(r.sharesA)
+          : `${fmtLots(r.sharesB)}→${fmtLots(r.sharesA)}`;
+        lines.push(`  ${r.code} ${r.name}  ${diffStr}  ${lotsStr}`);
+      });
+      lines.push('');
+    }
+
+    // 淨減少前10大（出清 + 減少，依 weightDiff 升序）
+    const netDec = allRows
+      .filter(r => r.status === 'out' || (r.weightDiff != null && r.weightDiff < 0))
+      .sort((a, b) => (a.weightDiff ?? -(a.weightB ?? 0)) - (b.weightDiff ?? -(b.weightB ?? 0)))
+      .slice(0, 10);
+    if (netDec.length) {
+      lines.push('▼ 淨減少前10大');
+      netDec.forEach(r => {
+        const diffStr = r.status === 'out'
+          ? `-${(r.weightB ?? 0).toFixed(2)}%（出清）`
+          : `${r.weightDiff.toFixed(2)}%`;
+        const lotsStr = r.status === 'out'
+          ? `${fmtLots(r.sharesB)}→0張`
+          : `${fmtLots(r.sharesB)}→${fmtLots(r.sharesA)}`;
+        lines.push(`  ${r.code} ${r.name}  ${diffStr}  ${lotsStr}`);
+      });
+    }
+  } else {
+    lines.push(dateA);
+    lines.push('');
+    const top10 = [...targetData]
+      .sort((a, b) => (b.weight ?? 0) - (a.weight ?? 0))
+      .slice(0, 10);
+    lines.push('前10大持股');
+    top10.forEach((r, i) => {
+      lines.push(`  ${i+1}. ${r.code} ${r.name}  ${r.weight.toFixed(2)}%  ${fmtLots(r.shares)}`);
+    });
+  }
+  return lines.join('\n');
+}
+
+function shareComparison() {
+  if (!targetData) { showToast('請先載入資料'); return; }
+  document.getElementById('shareTextarea').value = buildShareText();
+  document.getElementById('shareBackdrop').classList.add('open');
+  document.getElementById('shareModal').classList.add('open');
+}
+
+function closeShareModal() {
+  document.getElementById('shareBackdrop').classList.remove('open');
+  document.getElementById('shareModal').classList.remove('open');
+}
+
+function doShare() {
+  const text = document.getElementById('shareTextarea').value;
+  closeShareModal();
+  const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+  if (isMobile && navigator.share) {
+    navigator.share({ title: '00981A 持股比較', text }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(text)
+      .then(() => showToast('已複製到剪貼板'))
+      .catch(() => showToast('分享失敗'));
+  }
+}
+
+// ── Compact list render ────────────────────────────────────────────────────
+function renderCompactList(rows, container) {
+  const SL2 = { new:'新增', add:'增加', dec:'減少', out:'出清', same:'不變' };
+  const isCompare = !!compareData;
+
+  const html = '<div class="compact-list">' + rows.map(r => {
+    const wt   = r.weightA ?? r.weight ?? r.weightB ?? 0;
+    const diff = (isCompare && r.weightDiff != null && r.weightDiff !== 0)
+      ? `<span class="cl-diff ${r.weightDiff > 0 ? 'chg-pos' : 'chg-neg'}">${r.weightDiff > 0 ? '+' : ''}${r.weightDiff.toFixed(2)}%</span>`
+      : '<span class="cl-diff chg-zero">—</span>';
+    const badge = isCompare
+      ? `<span class="badge ${SC[r.status]} cl-badge">${SL2[r.status]}</span>` : '';
+    const star = `<button class="cl-star" onclick="event.stopPropagation();toggleWatch('${r.code}')">${watchlist.has(r.code) ? '⭐' : '☆'}</button>`;
+    return `<div class="cl-row status-${r.status}">
+      <span class="cl-code" onclick="event.stopPropagation();openSheet('${r.code}','${escHtml(r.name)}')">${r.code}</span>
+      <span class="cl-name">${escHtml(r.name)}</span>
+      <span class="cl-weight">${wt.toFixed(2)}%</span>
+      ${diff}${badge}${star}
+    </div>`;
+  }).join('') + '</div>';
+
+  container.innerHTML = html;
+}
+
+// ── Skeleton ──────────────────────────────────────────────────────────────
+function showSkeleton() {
+  const container = document.getElementById('cardContainer');
+  container.innerHTML = [1,2,3,4].map(() => `
+    <div class="skeleton-card">
+      <div class="skel-row">
+        <div class="skel-line skel-h" style="width:40%"></div>
+        <div style="flex:1"></div>
+        <div class="skel-line skel-h" style="width:18%"></div>
+      </div>
+      <div class="skel-row">
+        <div class="skel-box"></div>
+        <div class="skel-box"></div>
+      </div>
+      <div class="skel-line skel-h" style="width:60%;margin-top:4px"></div>
+    </div>
+  `).join('');
+}
+
+// ── Render ────────────────────────────────────────────────────────────────
+function renderCards() {
+  const container = document.getElementById('cardContainer');
+  const rcEl      = document.getElementById('resultCount');
+  const isCompare = !!(compareData);
+
+  if (!targetData) return;
+  if (!compareData) { renderSingleCards(container, rcEl); return; }
+
+  // Enable/disable sort pills based on compare mode
+  document.getElementById('sp-chg').classList.toggle('disabled', !isCompare);
+  document.getElementById('sp-pchg').classList.toggle('disabled', !isCompare);
+
+  const allRows = compareHoldings(targetData, compareData);
+
+  // Watchlist chip count
+  const wCnt = allRows.filter(r => watchlist.has(r.code)).length;
+  document.getElementById('cnt-watch').textContent = wCnt;
+  document.getElementById('chip-watch').style.display = wCnt > 0 ? '' : 'none';
+
+  // Update status chips
+  const cnt = { new:0, add:0, dec:0, out:0, same:0 };
+  allRows.forEach(r => cnt[r.status]++);
+  ['new','add','dec','out','same'].forEach(k =>
+    document.getElementById(`cnt-${k}`).textContent = cnt[k]);
+  document.getElementById('summary').style.display = 'flex';
+  document.getElementById('sortRow').style.display  = 'flex';
+  // 比較模式：全部排序可用
+  document.getElementById('sp-chg').classList.remove('disabled');
+  document.getElementById('sp-pchg').classList.remove('disabled');
+  updateSortPills();
+  document.getElementById('searchWrap').style.display = 'block';
+
+  const search = document.getElementById('searchInput').value.toLowerCase();
+
+  let rows = allRows.filter(r => {
+    if (search && !r.code.toLowerCase().includes(search) && !r.name.toLowerCase().includes(search)) return false;
+    if (currentFilter === 'watch') return watchlist.has(r.code);
+    return currentFilter === 'all' || r.status === currentFilter;
+  });
+
+  rows = applySortOrder(rows, true);
+
+  rcEl.textContent = `共 ${rows.length} 檔 / 全部 ${allRows.length} 檔`;
+
+  if (!rows.length) {
+    container.innerHTML = '<div class="empty">無符合條件的資料</div>';
+    return;
+  }
+
+  if (viewMode === 'list') { renderCompactList(rows, container); return; }
+
+  const dateA = fmtShort(targetDate);
+  const dateB = fmtShort(compareDate);
+
+  const html = '<div class="card-list">' + rows.map(r => {
+    const pChgBadge = r.priceChgPct != null ? fmtPriceChg(r.priceChgPct) : '';
+    const wtDiffHtml = fmtWtDiff(r.weightDiff);
+
+    const colA = `
+      <div class="card-col">
+        <div class="col-date is-a">${dateA} 目標</div>
+        <div class="col-row">
+          <span class="col-lbl">權重</span>
+          <span class="col-val">${r.weightA != null ? r.weightA.toFixed(2)+'%' : '—'}</span>
+        </div>
+        <div class="col-row">
+          <span class="col-lbl">股數</span>
+          <span class="col-val muted">${r.sharesA != null ? r.sharesA.toLocaleString() : '—'}</span>
+        </div>
+        <div class="col-row">
+          <span class="col-lbl">股價</span>
+          <span class="col-val price">${r.priceA != null ? r.priceA.toFixed(2) : '—'}</span>
+        </div>
+      </div>`;
+
+    const colB = `
+      <div class="card-col">
+        <div class="col-date is-b">${dateB} 比較</div>
+        <div class="col-row">
+          <span class="col-lbl">權重</span>
+          <span class="col-val">${r.weightB != null ? r.weightB.toFixed(2)+'%' : '—'}</span>
+        </div>
+        <div class="col-row">
+          <span class="col-lbl">股數</span>
+          <span class="col-val muted">${r.sharesB != null ? r.sharesB.toLocaleString() : '—'}</span>
+        </div>
+        <div class="col-row">
+          <span class="col-lbl">股價</span>
+          <span class="col-val price">${r.priceB != null ? r.priceB.toFixed(2) : '—'}</span>
+        </div>
+      </div>`;
+
+    const diffRow = (r.sharesA != null && r.sharesB != null) ? `
+      <div class="card-diff">
+        <div class="diff-item"><span class="diff-lbl">股數差</span>${fmtDiff(r.sharesDiff)}</div>
+        <div class="diff-item"><span class="diff-lbl">權重Δ</span>${wtDiffHtml}</div>
+        ${r.priceChgPct != null ? `<div class="diff-item"><span class="diff-lbl">股價漲跌</span>${fmtPriceChg(r.priceChgPct)}</div>` : ''}
+      </div>` : '';
+
+    return `
+      <div class="card status-${r.status}" data-code="${r.code}" data-name="${escHtml(r.name)}">
+        <div class="card-header">
+          <div class="card-id">
+            <span class="card-code" onclick="event.stopPropagation();openSheet('${r.code}','${escHtml(r.name)}')" style="cursor:pointer;text-decoration:underline dotted">${r.code}</span>
+            <span class="card-name">${escHtml(r.name)}</span>
+          </div>
+          <div class="card-header-right">
+            ${pChgBadge}
+            <span class="badge ${SC[r.status]}">${SL[r.status]}</span>
+            ${starBtn(r.code)}
+          </div>
+        </div>
+        <div class="card-grid">${colA}${colB}</div>
+        ${diffRow}
+      </div>`;
+  }).join('') + '</div>';
+
+  container.innerHTML = html;
+
+  // Attach long-press listeners
+  container.querySelectorAll('.card[data-code]').forEach(el => {
+    attachLongPress(el, el.dataset.code, el.dataset.name);
+  });
+}
+
+function renderSingleCards(container, rcEl) {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+
+  document.getElementById('summary').style.display   = 'none';
+  // 單日模式只開放 weight / name 排序；停用 chg / pchg
+  document.getElementById('sortRow').style.display   = 'flex';
+  document.getElementById('sp-chg').classList.add('disabled');
+  document.getElementById('sp-pchg').classList.add('disabled');
+  if (currentSort === 'chg' || currentSort === 'pchg') {
+    currentSort = 'weight'; sortDir = 'desc';
+  }
+  updateSortPills();
+  document.getElementById('searchWrap').style.display = 'block';
+
+  let rows = targetData.filter(r =>
+    !search || r.code.toLowerCase().includes(search) || r.name.toLowerCase().includes(search)
+  );
+
+  // 套用排序（單日模式：把 weight/shares/price 對應至 weightA/sharesA 欄位）
+  rows = rows.map(r => ({ ...r, weightA: r.weight, sharesA: r.shares, status: 'same' }));
+  rows = applySortOrder(rows, false);
+
+  rcEl.textContent = `共 ${rows.length} 檔`;
+
+  if (viewMode === 'list') { renderCompactList(rows, container); return; }
+
+  const html = '<div class="card-list">' + rows.map(r => {
+    const mktVal = (r.shares && r.price) ? fmtMktVal(r.shares * r.price) : null;
+    return `
+      <div class="card status-same" data-code="${r.code}" data-name="${escHtml(r.name)}">
+        <div class="card-header">
+          <div class="card-id">
+            <span class="card-code" onclick="event.stopPropagation();openSheet('${r.code}','${escHtml(r.name)}')" style="cursor:pointer;text-decoration:underline dotted">${r.code}</span>
+            <span class="card-name">${escHtml(r.name)}</span>
+          </div>
+          <div class="card-header-right">
+            ${starBtn(r.code)}
+          </div>
+        </div>
+        <div class="card-single">
+          <div class="single-item">
+            <div class="single-lbl">持股權重</div>
+            <div class="single-val">${r.weight.toFixed(2)}%</div>
+          </div>
+          <div class="single-item">
+            <div class="single-lbl">股數</div>
+            <div class="single-val">${r.shares.toLocaleString()}</div>
+          </div>
+          ${r.price != null ? `<div class="single-item">
+            <div class="single-lbl">股價</div>
+            <div class="single-val price">${r.price.toFixed(2)}</div>
+          </div>` : ''}
+          ${mktVal ? `<div class="single-item">
+            <div class="single-lbl">持倉市值</div>
+            <div class="single-val mktval">${mktVal}</div>
+          </div>` : ''}
+        </div>
+      </div>`;
+  }).join('') + '</div>';
+
+  container.innerHTML = html;
+
+  container.querySelectorAll('.card[data-code]').forEach(el => {
+    attachLongPress(el, el.dataset.code, el.dataset.name);
+  });
+}
+
+// ── HTML escape ───────────────────────────────────────────────────────────
+function escHtml(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Load ──────────────────────────────────────────────────────────────────
+async function loadAndRender() {
+  const msg = document.getElementById('statusMsg');
+  showSkeleton();
+  msg.textContent = '載入中…';
+  try {
+    targetData = await loadFile(targetDate);
+    if (compareDate && compareDate !== targetDate) {
+      compareData = await loadFile(compareDate);
+      msg.textContent = `${fmtDate(targetDate)}  vs  ${fmtDate(compareDate)}`;
+    } else {
+      compareData = null;
+      msg.textContent = compareDate ? '請選擇不同的比較日期' : fmtDate(targetDate);
+    }
+  } catch(e) {
+    msg.textContent = '載入失敗';
+    document.getElementById('cardContainer').innerHTML =
+      `<div class="error">載入失敗：${escHtml(e.message)}<br>請透過 HTTP 伺服器開啟（例：python -m http.server 8080）</div>`;
+    return;
+  }
+  pushURLState();
+  renderCards();
+}
+
+// ── Events ────────────────────────────────────────────────────────────────
+document.getElementById('selTarget').addEventListener('change', e => {
+  targetDate = e.target.value;
+  if (activeQuick) {
+    document.getElementById({prevDay:'btnPrevDay',prevWeek:'btnPrevWeek',prevMonth:'btnPrevMonth'}[activeQuick])
+      ?.classList.remove('active');
+    activeQuick = null;
+  }
+  resetFilter();
+  loadAndRender();
+});
+
+document.getElementById('selCompare').addEventListener('change', e => {
+  compareDate = e.target.value || null;
+  ['btnPrevDay','btnPrevWeek','btnPrevMonth'].forEach(id =>
+    document.getElementById(id).classList.remove('active'));
+  activeQuick = null;
+  resetFilter();
+  loadAndRender();
+});
+
+// ── Start ─────────────────────────────────────────────────────────────────
+(async () => {
+  loadWatchlist();
+
+  const ok = await loadDates();
+  if (!ok || !DATES.length) return;
+
+  // Read URL state, then fall back to defaults
+  readURLState();
+
+  if (!targetDate || !DATES.includes(targetDate)) {
+    targetDate = DATES[DATES.length - 1];
+  }
+
+  populateSelects();
+  updateSortPills();
+
+  // Restore filter chip
+  const fChip = document.getElementById(`chip-${currentFilter}`);
+  if (fChip) {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    fChip.classList.add('active');
+  } else {
+    document.getElementById('chip-all').classList.add('active');
+  }
+
+  if (compareDate && DATES.includes(compareDate)) {
+    // URL had explicit compare date
+    loadAndRender();
+  } else {
+    setCompareQuick('prevDay');
+  }
+})();
+</script>
+</body>
+</html>
