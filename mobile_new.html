@@ -576,10 +576,10 @@
 <!-- ── Sort row ── -->
 <div class="sort-row" id="sortRow" style="display:none">
   <span class="sort-label">排序：</span>
-  <button class="sort-pill active" id="sp-weight"  onclick="setSort('weight',this)">權重↓</button>
-  <button class="sort-pill disabled" id="sp-chg"   onclick="setSort('chg',this)">變化量↓</button>
-  <button class="sort-pill disabled" id="sp-pchg"  onclick="setSort('pchg',this)">股價漲跌↓</button>
-  <button class="sort-pill" id="sp-name"           onclick="setSort('name',this)">名稱↑</button>
+  <button class="sort-pill active" id="sp-weight" data-key="weight" onclick="setSort('weight')">權重↓</button>
+  <button class="sort-pill disabled" id="sp-chg"  data-key="chg"    onclick="setSort('chg')">變化量↓</button>
+  <button class="sort-pill disabled" id="sp-pchg" data-key="pchg"   onclick="setSort('pchg')">股價漲跌↓</button>
+  <button class="sort-pill" id="sp-name"          data-key="name"   onclick="setSort('name')">名稱↑</button>
 </div>
 
 <!-- ── Search ── -->
@@ -656,6 +656,8 @@ let compareData = null;
 let currentFilter = 'all';
 let activeQuick   = null;
 let currentSort   = 'weight';
+let sortDir       = 'desc';   // 'asc' | 'desc'
+const SORT_DEFAULT_DIR = { weight:'desc', chg:'desc', pchg:'desc', name:'asc' };
 
 // ── Watchlist ─────────────────────────────────────────────────────────────
 let watchlist = new Set();
@@ -830,17 +832,37 @@ function resetFilter() {
 }
 
 // ── Sort ──────────────────────────────────────────────────────────────────
-function setSort(s, el) {
-  currentSort = s;
-  document.querySelectorAll('.sort-pill').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
+const SORT_LABEL = { weight:'權重', chg:'變化量', pchg:'股價漲跌', name:'名稱' };
+
+function updateSortPills() {
+  document.querySelectorAll('.sort-pill[data-key]').forEach(btn => {
+    const key = btn.dataset.key;
+    const isActive = key === currentSort;
+    btn.classList.toggle('active', isActive);
+    const arrow = isActive ? (sortDir === 'desc' ? '↓' : '↑') :
+      (SORT_DEFAULT_DIR[key] === 'desc' ? '↓' : '↑');
+    btn.textContent = SORT_LABEL[key] + arrow;
+  });
+}
+
+function setSort(s) {
+  if (currentSort === s) {
+    // 同一排序 → 切換方向
+    sortDir = sortDir === 'desc' ? 'asc' : 'desc';
+  } else {
+    // 換排序 → 採預設方向
+    currentSort = s;
+    sortDir = SORT_DEFAULT_DIR[s];
+  }
+  updateSortPills();
   renderCards();
 }
 
 function applySortOrder(rows, isCompare) {
   const order = { new:0, add:1, dec:2, out:3, same:4 };
+  const dir = sortDir === 'desc' ? -1 : 1;   // -1=降冪，1=升冪
 
-  // Within the same status group, watched stocks float up
+  // Watched stocks always float to the top (within same group)
   function cmpWatchFirst(a, b) {
     const wa = watchlist.has(a.code) ? 0 : 1;
     const wb = watchlist.has(b.code) ? 0 : 1;
@@ -849,29 +871,39 @@ function applySortOrder(rows, isCompare) {
 
   if (currentSort === 'weight') {
     rows.sort((a, b) => {
-      const sd = order[a.status] - order[b.status];
-      if (sd !== 0) return sd;
+      // 全部模式下先按狀態分組（新增→增加→減少→出清→不變）
+      if (currentFilter === 'all') {
+        const sd = order[a.status] - order[b.status];
+        if (sd !== 0) return sd;
+      }
       const wd = cmpWatchFirst(a, b);
       if (wd !== 0) return wd;
-      return (b.weightA ?? b.weight ?? 0) - (a.weightA ?? a.weight ?? 0);
+      const va = a.weightA ?? a.weight ?? 0;
+      const vb = b.weightA ?? b.weight ?? 0;
+      return dir * (vb - va);   // desc 預設：大→小
     });
   } else if (currentSort === 'chg' && isCompare) {
     rows.sort((a, b) => {
       const wd = cmpWatchFirst(a, b);
       if (wd !== 0) return wd;
-      return Math.abs(b.sharesDiff ?? 0) - Math.abs(a.sharesDiff ?? 0);
+      const va = a.sharesDiff ?? 0;
+      const vb = b.sharesDiff ?? 0;
+      return dir * (vb - va);   // desc = 增加最多在前；asc = 減少最多在前
     });
   } else if (currentSort === 'pchg' && isCompare) {
     rows.sort((a, b) => {
       const wd = cmpWatchFirst(a, b);
       if (wd !== 0) return wd;
-      return Math.abs(b.priceChgPct ?? 0) - Math.abs(a.priceChgPct ?? 0);
+      const va = a.priceChgPct ?? 0;
+      const vb = b.priceChgPct ?? 0;
+      return dir * (vb - va);   // desc = 漲最多；asc = 跌最多
     });
   } else if (currentSort === 'name') {
     rows.sort((a, b) => {
       const wd = cmpWatchFirst(a, b);
       if (wd !== 0) return wd;
-      return (a.name || '').localeCompare(b.name || '', 'zh-TW');
+      const cmp = (a.name || '').localeCompare(b.name || '', 'zh-TW');
+      return dir * cmp;         // asc 預設：A→Z；desc：Z→A
     });
   }
   return rows;
@@ -971,6 +1003,10 @@ function renderCards() {
     document.getElementById(`cnt-${k}`).textContent = cnt[k]);
   document.getElementById('summary').style.display = 'flex';
   document.getElementById('sortRow').style.display  = 'flex';
+  // 比較模式：全部排序可用
+  document.getElementById('sp-chg').classList.remove('disabled');
+  document.getElementById('sp-pchg').classList.remove('disabled');
+  updateSortPills();
   document.getElementById('searchWrap').style.display = 'block';
 
   const search = document.getElementById('searchInput').value.toLowerCase();
@@ -1068,20 +1104,23 @@ function renderSingleCards(container, rcEl) {
   const search = document.getElementById('searchInput').value.toLowerCase();
 
   document.getElementById('summary').style.display   = 'none';
-  document.getElementById('sortRow').style.display   = 'none';
+  // 單日模式只開放 weight / name 排序；停用 chg / pchg
+  document.getElementById('sortRow').style.display   = 'flex';
+  document.getElementById('sp-chg').classList.add('disabled');
+  document.getElementById('sp-pchg').classList.add('disabled');
+  if (currentSort === 'chg' || currentSort === 'pchg') {
+    currentSort = 'weight'; sortDir = 'desc';
+  }
+  updateSortPills();
   document.getElementById('searchWrap').style.display = 'block';
 
   let rows = targetData.filter(r =>
     !search || r.code.toLowerCase().includes(search) || r.name.toLowerCase().includes(search)
   );
 
-  // Watched float first, then by weight
-  rows.sort((a, b) => {
-    const wa = watchlist.has(a.code) ? 0 : 1;
-    const wb = watchlist.has(b.code) ? 0 : 1;
-    if (wa !== wb) return wa - wb;
-    return b.weight - a.weight;
-  });
+  // 套用排序（單日模式：把 weight/shares/price 對應至 weightA/sharesA 欄位）
+  rows = rows.map(r => ({ ...r, weightA: r.weight, sharesA: r.shares, status: 'same' }));
+  rows = applySortOrder(rows, false);
 
   rcEl.textContent = `共 ${rows.length} 檔`;
 
@@ -1191,6 +1230,7 @@ document.getElementById('selCompare').addEventListener('change', e => {
   }
 
   populateSelects();
+  updateSortPills();
 
   // Restore filter chip
   const fChip = document.getElementById(`chip-${currentFilter}`);
