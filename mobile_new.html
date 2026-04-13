@@ -869,6 +869,9 @@ function applySortOrder(rows, isCompare) {
     return wa - wb;
   }
 
+  // 次要排序：數值相同時一律按代號升冪，確保穩定不亂跳
+  const byCode = (a, b) => (a.code || '').localeCompare(b.code || '');
+
   if (currentSort === 'weight') {
     rows.sort((a, b) => {
       // 全部模式 + 降冪：先按狀態分組（新增→增加→減少→出清→不變）
@@ -882,7 +885,8 @@ function applySortOrder(rows, isCompare) {
       // 出清股票 weightA = null，改用 weightB（比較日期的持股權重）
       const va = a.weightA ?? a.weightB ?? a.weight ?? 0;
       const vb = b.weightA ?? b.weightB ?? b.weight ?? 0;
-      return dir * (vb - va);   // desc：大→小；asc：小→大
+      const diff = dir * (vb - va);
+      return diff !== 0 ? diff : byCode(a, b);  // 同權重 → 代號排序，避免 0% 亂跳
     });
   } else if (currentSort === 'chg' && isCompare) {
     rows.sort((a, b) => {
@@ -890,7 +894,8 @@ function applySortOrder(rows, isCompare) {
       if (wd !== 0) return wd;
       const va = a.sharesDiff ?? 0;
       const vb = b.sharesDiff ?? 0;
-      return dir * (vb - va);   // desc = 增加最多在前；asc = 減少最多在前
+      const diff = dir * (vb - va);
+      return diff !== 0 ? diff : byCode(a, b);
     });
   } else if (currentSort === 'pchg' && isCompare) {
     rows.sort((a, b) => {
@@ -898,14 +903,15 @@ function applySortOrder(rows, isCompare) {
       if (wd !== 0) return wd;
       const va = a.priceChgPct ?? 0;
       const vb = b.priceChgPct ?? 0;
-      return dir * (vb - va);   // desc = 漲最多；asc = 跌最多
+      const diff = dir * (vb - va);
+      return diff !== 0 ? diff : byCode(a, b);
     });
   } else if (currentSort === 'name') {
     rows.sort((a, b) => {
       const wd = cmpWatchFirst(a, b);
       if (wd !== 0) return wd;
-      const cmp = (a.name || '').localeCompare(b.name || '', 'zh-TW');
-      return dir * cmp;         // asc 預設：A→Z；desc：Z→A
+      // 名稱排序本身就是唯一鍵，不需要額外 tiebreaker
+      return dir * (a.name || '').localeCompare(b.name || '', 'zh-TW');
     });
   }
   return rows;
