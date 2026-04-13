@@ -871,16 +871,18 @@ function applySortOrder(rows, isCompare) {
 
   if (currentSort === 'weight') {
     rows.sort((a, b) => {
-      // 全部模式下先按狀態分組（新增→增加→減少→出清→不變）
-      if (currentFilter === 'all') {
+      // 全部模式 + 降冪：先按狀態分組（新增→增加→減少→出清→不變）
+      // 升冪時不分組，純按權重由小到大排
+      if (currentFilter === 'all' && sortDir === 'desc') {
         const sd = order[a.status] - order[b.status];
         if (sd !== 0) return sd;
       }
       const wd = cmpWatchFirst(a, b);
       if (wd !== 0) return wd;
-      const va = a.weightA ?? a.weight ?? 0;
-      const vb = b.weightA ?? b.weight ?? 0;
-      return dir * (vb - va);   // desc 預設：大→小
+      // 出清股票 weightA = null，改用 weightB（比較日期的持股權重）
+      const va = a.weightA ?? a.weightB ?? a.weight ?? 0;
+      const vb = b.weightA ?? b.weightB ?? b.weight ?? 0;
+      return dir * (vb - va);   // desc：大→小；asc：小→大
     });
   } else if (currentSort === 'chg' && isCompare) {
     rows.sort((a, b) => {
