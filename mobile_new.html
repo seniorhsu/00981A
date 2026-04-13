@@ -682,6 +682,20 @@
     .btn-cancel { background: var(--bg3); color: var(--muted); }
     .btn-send   { background: var(--accent); color: #fff; }
 
+    /* ── Disclaimer ── */
+    .disclaimer {
+      margin: 28px 16px 16px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.7;
+      text-align: center;
+    }
+    .disclaimer strong { color: var(--text); font-size: 11.5px; }
+
     /* ── Misc ── */
     a { color: var(--accent); }
   </style>
@@ -1611,5 +1625,13 @@ document.getElementById('selCompare').addEventListener('change', e => {
   }
 })();
 </script>
+
+<!-- ── Disclaimer ── -->
+<div class="disclaimer">
+  <strong>⚠️ 免責聲明</strong><br>
+  本工具為個人自用開發，所有數據均來自公開資料，僅供參考。<br>
+  任何投資決策請自行判斷，本人不對任何人因使用本工具所產生之損益負任何責任。<br>
+  <span style="font-size:10px;opacity:0.7">資料可能有誤差或延遲，不構成任何投資建議。</span>
+</div>
 </body>
 </html>
