@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>00981A 持股分析 Pro</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg:        #eef2f7;
+      --bg2:       #ffffff;
+      --bg3:       #f1f5f9;
+      --border:    #cbd5e1;
+      --text:      #0f172a;
+      --muted:     #475569;
+      --accent:    #1d4ed8;
+      --green:     #15803d;
+      --green-bg:  #dcfce7;
+      --green-bd:  #86efac;
+      --red:       #b91c1c;
+      --red-bg:    #fee2e2;
+      --red-bd:    #fca5a5;
+      --orange:    #c2410c;
+      --orange-bg: #ffedd5;
+      --orange-bd: #fdba74;
+      --blue-bg:   #dbeafe;
+      --blue-bd:   #93c5fd;
+      --gray:      #475569;
+      --shadow:    0 1px 4px rgba(0,0,0,0.07);
+    }
+    [data-theme="dark"] {
+      --bg:        #0f172a;
+      --bg2:       #1e293b;
+      --bg3:       #273549;
+      --border:    #334155;
+      --text:      #e2e8f0;
+      --muted:     #94a3b8;
+      --accent:    #60a5fa;
+      --green:     #4ade80;
+      --green-bg:  rgba(74,222,128,0.12);
+      --green-bd:  #166534;
+      --red:       #f87171;
+      --red-bg:    rgba(248,113,113,0.12);
+      --red-bd:    #991b1b;
+      --orange:    #fb923c;
+      --orange-bg: rgba(251,146,60,0.12);
+      --orange-bd: #9a3412;
+      --blue-bg:   rgba(96,165,250,0.12);
+      --blue-bd:   #1e40af;
+      --gray:      #94a3b8;
+      --shadow:    0 1px 6px rgba(0,0,0,0.3);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', -apple-system, sans-serif;
+      font-size: 14px;
+      min-height: 100vh;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    /* ── Topbar ── */
+    .topbar {
+      background: var(--bg2);
+      border-bottom: 2px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: var(--shadow);
+    }
+    .etf-badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      border-radius: 6px;
+      padding: 4px 11px;
+      letter-spacing: 1px;
+    }
+    .ctrl-group { display: flex; align-items: center; gap: 7px; }
+    .ctrl-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+    select {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      outline: none;
+    }
+    select:focus { border-color: var(--accent); }
+    .vsep { width: 1px; height: 26px; background: var(--border); }
+    .btn-group { display: flex; gap: 5px; }
+    .btn {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.13s;
+      white-space: nowrap;
+    }
+    .btn:hover  { border-color: var(--accent); color: var(--accent); }
+    .btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .topbar-right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+    .icon-btn {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      padding: 5px 9px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.13s;
+    }
+    .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+    #statusMsg { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+    /* ── Tab bar ── */
+    .tab-bar {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      display: flex;
+      gap: 0;
+    }
+    .tab-btn {
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.13s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Summary cards ── */
+    .summary {
+      padding: 12px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 16px;
+      min-width: 95px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      cursor: default;
+    }
+    .stat-card.clickable { cursor: pointer; transition: transform 0.1s; }
+    .stat-card.clickable:hover { transform: translateY(-1px); border-color: var(--accent); }
+    .stat-value { font-size: 22px; font-weight: 800; }
+    .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 500; }
+    .stat-new  .stat-value { color: var(--accent); }
+    .stat-add  .stat-value { color: var(--green); }
+    .stat-dec  .stat-value { color: var(--orange); }
+    .stat-out  .stat-value { color: var(--red); }
+    .stat-same .stat-value { color: var(--gray); }
+    .stat-sub  { font-size: 10px; color: var(--muted); margin-top: 1px; }
+
+    /* ── Filter bar ── */
+    .filter-bar {
+      padding: 6px 20px 8px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 13px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--bg2);
+      color: var(--muted);
+      transition: all 0.13s;
+    }
+    .filter-btn:hover            { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.f-all.active     { background: var(--accent);    border-color: var(--accent);    color: #fff; }
+    .filter-btn.f-new.active     { background: var(--blue-bg);   border-color: var(--accent);    color: var(--accent); }
+    .filter-btn.f-add.active     { background: var(--green-bg);  border-color: var(--green);     color: var(--green); }
+    .filter-btn.f-dec.active     { background: var(--orange-bg); border-color: var(--orange);    color: var(--orange); }
+    .filter-btn.f-out.active     { background: var(--red-bg);    border-color: var(--red);       color: var(--red); }
+    .filter-btn.f-same.active    { background: var(--bg3);       border-color: var(--gray);      color: var(--gray); }
+    .search-input {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 13px;
+      outline: none;
+      width: 160px;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--border); }
+    .filter-right { margin-left: auto; display: flex; gap: 6px; }
+
+    /* ── Table ── */
+    .table-wrap { padding: 4px 20px 28px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    thead th {
+      background: var(--bg3);
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 8px 12px;
+      border-bottom: 2px solid var(--border);
+      border-top: 1px solid var(--border);
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
+    thead th:hover  { color: var(--accent); }
+    thead th.sorted { color: var(--accent); }
+    .sort-icon { margin-left: 3px; font-size: 10px; opacity: 0.45; }
+    thead th.sorted .sort-icon { opacity: 1; }
+    .th-group-label {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-bottom: 1px solid var(--border);
+      text-transform: none;
+      letter-spacing: 0;
+      cursor: default;
+    }
+    .grp-a { background: var(--blue-bg);   color: var(--accent); border-left: 3px solid var(--blue-bd); }
+    .grp-b { background: var(--green-bg);  color: var(--green);  border-left: 3px solid var(--green-bd); }
+    .grp-c { background: var(--bg3); }
+    .col-a  { border-left: 3px solid var(--blue-bd); }
+    .col-b  { border-left: 3px solid var(--green-bd); }
+
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.08s; cursor: pointer; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--blue-bg) !important; }
+    tbody tr.status-new  { background: var(--blue-bg); }
+    tbody tr.status-add  { background: var(--green-bg); }
+    tbody tr.status-dec  { background: var(--orange-bg); }
+    tbody tr.status-out  { background: var(--red-bg); }
+    tbody tr.status-same { background: var(--bg2); }
+    tbody tr.pinned { outline: 2px solid var(--accent); outline-offset: -1px; }
+    tbody tr.expanded-row { background: var(--bg3) !important; cursor: default; }
+
+    td { padding: 7px 12px; white-space: nowrap; vertical-align: middle; }
+    .td-code   { font-family: 'Courier New', monospace; font-weight: 800; color: var(--accent); font-size: 14px; }
+    .td-name   { font-weight: 600; color: var(--text); }
+    .td-pct    { text-align: right; font-family: 'Courier New', monospace; font-weight: 700; }
+    .td-shares { text-align: right; font-family: 'Courier New', monospace; font-weight: 700; }
+    .td-num    { text-align: right; font-family: 'Courier New', monospace; font-weight: 700; }
+    .td-val    { text-align: right; font-family: 'Courier New', monospace; color: var(--muted); }
+
+    .chg-pos  { color: var(--green); }
+    .chg-neg  { color: var(--red); }
+    .chg-zero { color: var(--gray); }
+    .no-data  { color: var(--border); }
+
+    .badge {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1.5px solid transparent;
+    }
+    .badge-new  { background: var(--blue-bg);   color: var(--accent); border-color: var(--blue-bd); }
+    .badge-add  { background: var(--green-bg);  color: var(--green);  border-color: var(--green-bd); }
+    .badge-dec  { background: var(--orange-bg); color: var(--orange); border-color: var(--orange-bd); }
+    .badge-out  { background: var(--red-bg);    color: var(--red);    border-color: var(--red-bd); }
+    .badge-same { background: var(--bg3);       color: var(--gray);   border-color: var(--border); }
+
+    .star-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      padding: 0 4px;
+      color: var(--border);
+      transition: color 0.13s;
+    }
+    .star-btn.watched { color: #f59e0b; }
+
+    /* Expand sparkline */
+    .expand-panel {
+      background: var(--bg3);
+      padding: 12px 20px;
+      border-top: 1px solid var(--border);
+    }
+    .expand-title { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 8px; }
+    .sparkline-wrap { display: flex; align-items: flex-end; gap: 1px; height: 48px; }
+    .spark-bar {
+      flex: 1;
+      border-radius: 2px 2px 0 0;
+      min-width: 2px;
+      cursor: pointer;
+      transition: opacity 0.1s;
+    }
+    .spark-bar:hover { opacity: 0.7; }
+    .expand-meta { display: flex; gap: 20px; margin-top: 8px; font-size: 12px; color: var(--muted); }
+    .expand-meta span strong { color: var(--text); }
+
+    /* ── Chart tab ── */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 16px 20px;
+    }
+    @media (max-width: 900px) { .chart-grid { grid-template-columns: 1fr; } }
+    .chart-panel {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    .chart-panel.wide { grid-column: 1 / -1; }
+    .chart-panel-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chart-sub { font-size: 11px; color: var(--muted); font-weight: 400; }
+    .chart-container { position: relative; }
+
+    /* Attribution list */
+    .attr-list { display: flex; flex-direction: column; gap: 5px; }
+    .attr-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+    .attr-name { min-width: 80px; font-weight: 600; color: var(--text); }
+    .attr-bar-wrap { flex: 1; height: 14px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
+    .attr-bar { height: 100%; border-radius: 3px; }
+    .attr-val { min-width: 55px; text-align: right; font-family: 'Courier New', monospace; font-weight: 700; font-size: 11px; }
+
+    /* ── Trend tab ── */
+    .trend-wrap { padding: 16px 20px; }
+    .trend-controls {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .trend-input {
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      outline: none;
+      width: 180px;
+      font-family: 'Courier New', monospace;
+    }
+    .trend-input:focus { border-color: var(--accent); }
+    .trend-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .trend-chart-panel {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    .trend-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .tstat {
+      background: var(--bg3);
+      border-radius: 8px;
+      padding: 8px 14px;
+      text-align: center;
+    }
+    .tstat-val { font-size: 17px; font-weight: 800; color: var(--text); font-family: 'Courier New', monospace; }
+    .tstat-lbl { font-size: 11px; color: var(--muted); }
+
+    /* Keyboard shortcut modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      width: 340px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+    .modal-title { font-size: 15px; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+    .shortcut-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .shortcut-row:last-child { border-bottom: none; }
+    kbd {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 7px;
+      font-family: monospace;
+      font-size: 12px;
+    }
+    .modal-close { margin-top: 14px; width: 100%; padding: 8px; background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; color: var(--text); font-size: 13px; }
+
+    .empty   { padding: 56px; text-align: center; color: var(--muted); font-size: 15px; }
+    .loading { padding: 40px; text-align: center; color: var(--muted); }
+    .error   { color: var(--red); padding: 16px 20px; line-height: 1.7; }
+
+    /* Watchlist bar */
+    .watchlist-bar {
+      background: var(--blue-bg);
+      border-bottom: 1px solid var(--blue-bd);
+      padding: 6px 20px;
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+      display: none;
+    }
+    .watchlist-bar span { font-weight: 400; color: var(--muted); margin-left: 6px; }
+
+    /* Tooltip */
+    [title] { cursor: help; }
+  </style>
+</head>
+<body>
+
+<!-- ── Topbar ── -->
+<div class="topbar">
+  <div class="etf-badge">00981A</div>
+  <div class="ctrl-group">
+    <span class="ctrl-label">目標日期</span>
+    <select id="selTarget"></select>
+  </div>
+  <div class="vsep"></div>
+  <div class="ctrl-group">
+    <span class="ctrl-label">比較日期</span>
+    <div class="btn-group">
+      <button class="btn" id="btnPrevDay"   onclick="setCompareQuick('prevDay')">前一個營業日</button>
+      <button class="btn" id="btnPrevWeek"  onclick="setCompareQuick('prevWeek')">前一週</button>
+      <button class="btn" id="btnPrevMonth" onclick="setCompareQuick('prevMonth')">前一個月</button>
+    </div>
+    <select id="selCompare"><option value="">— 自選日期 —</option></select>
+  </div>
+  <div class="vsep"></div>
+  <span id="statusMsg">載入中…</span>
+  <div class="topbar-right">
+    <button class="icon-btn" onclick="exportCSV()" title="匯出 CSV">⬇ CSV</button>
+    <button class="icon-btn" onclick="toggleDark()" id="darkBtn" title="深色模式">🌙</button>
+    <button class="icon-btn" onclick="showShortcuts()" title="鍵盤快捷鍵">⌨</button>
+  </div>
+</div>
+
+<!-- ── Tab bar ── -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('compare',this)">📊 比較表格</button>
+  <button class="tab-btn" onclick="switchTab('charts',this)">📈 圖表分析</button>
+  <button class="tab-btn" onclick="switchTab('trend',this)">📉 趨勢追蹤</button>
+</div>
+
+<!-- ══════════ TAB 1: 比較表格 ══════════ -->
+<div class="tab-panel active" id="tab-compare">
+
+  <div class="watchlist-bar" id="watchlistBar"></div>
+
+  <div class="summary" id="summary" style="display:none">
+    <div class="stat-card stat-new clickable" onclick="setFilter('new',document.querySelector('.f-new'))">
+      <div class="stat-value" id="cnt-new">0</div><div class="stat-label">新增持股</div></div>
+    <div class="stat-card stat-add clickable" onclick="setFilter('add',document.querySelector('.f-add'))">
+      <div class="stat-value" id="cnt-add">0</div><div class="stat-label">增加</div></div>
+    <div class="stat-card stat-dec clickable" onclick="setFilter('dec',document.querySelector('.f-dec'))">
+      <div class="stat-value" id="cnt-dec">0</div><div class="stat-label">減少</div></div>
+    <div class="stat-card stat-out clickable" onclick="setFilter('out',document.querySelector('.f-out'))">
+      <div class="stat-value" id="cnt-out">0</div><div class="stat-label">完全出清</div></div>
+    <div class="stat-card stat-same clickable" onclick="setFilter('same',document.querySelector('.f-same'))">
+      <div class="stat-value" id="cnt-same">0</div><div class="stat-label">不變</div></div>
+    <div class="stat-card" style="min-width:130px">
+      <div class="stat-value" style="font-size:15px" id="cnt-total">0</div>
+      <div class="stat-label">持股總數 目標／比較</div></div>
+    <div class="stat-card" title="前5大持股合計權重">
+      <div class="stat-value" style="font-size:16px;color:var(--accent)" id="top5w">—</div>
+      <div class="stat-label">前5大佔比</div>
+      <div class="stat-sub" id="top5w-chg"></div></div>
+    <div class="stat-card" title="各持股權重×股價漲跌的加權估算">
+      <div class="stat-value" style="font-size:16px" id="weighted-ret">—</div>
+      <div class="stat-label">加權估算漲跌</div>
+      <div class="stat-sub">持倉加權，僅供參考</div></div>
+    <div class="stat-card" title="持倉股數×收盤價估算總市值">
+      <div class="stat-value" style="font-size:15px;color:var(--green)" id="total-mktval">—</div>
+      <div class="stat-label">估算總市值</div></div>
+  </div>
+
+  <div class="filter-bar" id="filterBar" style="display:none">
+    <input class="search-input" id="searchInput" placeholder="搜尋代號 / 名稱" oninput="renderTable()">
+    <button class="filter-btn f-all active" onclick="setFilter('all',this)">全部</button>
+    <button class="filter-btn f-new"        onclick="setFilter('new',this)">新增持股</button>
+    <button class="filter-btn f-add"        onclick="setFilter('add',this)">增加</button>
+    <button class="filter-btn f-dec"        onclick="setFilter('dec',this)">減少</button>
+    <button class="filter-btn f-out"        onclick="setFilter('out',this)">完全出清</button>
+    <button class="filter-btn f-same"       onclick="setFilter('same',this)">不變</button>
+    <div class="filter-right">
+      <span style="font-size:12px;color:var(--muted)" id="rowCount"></span>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <div id="tableContainer"><div class="empty">請選擇目標日期與比較日期</div></div>
+  </div>
+</div>
+
+<!-- ══════════ TAB 2: 圖表分析 ══════════ -->
+<div class="tab-panel" id="tab-charts">
+  <div class="chart-grid" id="chartGrid">
+    <div class="empty" style="grid-column:1/-1">請先在「比較表格」選擇日期</div>
+  </div>
+</div>
+
+<!-- ══════════ TAB 3: 趨勢追蹤 ══════════ -->
+<div class="tab-panel" id="tab-trend">
+  <div class="trend-wrap">
+    <div class="trend-controls">
+      <span class="ctrl-label">股票代號</span>
+      <input class="trend-input" id="trendCode" placeholder="例：2330" maxlength="6">
+      <select id="trendRange">
+        <option value="30">近一個月</option>
+        <option value="90">近三個月</option>
+        <option value="180">近六個月</option>
+        <option value="9999" selected>全部資料</option>
+      </select>
+      <button class="trend-btn" onclick="loadTrend()">查詢趨勢</button>
+      <span id="trendMsg" style="font-size:12px;color:var(--muted)"></span>
+    </div>
+    <div id="trendContent"><div class="empty">輸入股票代號後點擊查詢</div></div>
+  </div>
+</div>
+
+<!-- ── Keyboard shortcut modal ── -->
+<div class="modal-overlay" id="shortcutModal" style="display:none" onclick="hideShortcuts()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-title">⌨ 鍵盤快捷鍵</div>
+    <div class="shortcut-row"><span>前一個交易日</span><kbd>J</kbd></div>
+    <div class="shortcut-row"><span>後一個交易日</span><kbd>K</kbd></div>
+    <div class="shortcut-row"><span>篩選：全部</span><kbd>0</kbd></div>
+    <div class="shortcut-row"><span>篩選：新增/增加/減少/出清</span><kbd>1</kbd>–<kbd>4</kbd></div>
+    <div class="shortcut-row"><span>聚焦搜尋框</span><kbd>/</kbd></div>
+    <div class="shortcut-row"><span>清除搜尋</span><kbd>Esc</kbd></div>
+    <div class="shortcut-row"><span>匯出 CSV</span><kbd>E</kbd></div>
+    <div class="shortcut-row"><span>切換深色模式</span><kbd>D</kbd></div>
+    <div class="shortcut-row"><span>顯示此說明</span><kbd>?</kbd></div>
+    <button class="modal-close" onclick="hideShortcuts()">關閉</button>
+  </div>
+</div>
+
+<script>
+// ── Force fresh load ───────────────────────────────────────────────────────
+(function() {
+  if (!new URLSearchParams(location.search).has('v'))
+    location.replace(location.pathname + '?v=' + Date.now());
+})();
+
+// ── State ─────────────────────────────────────────────────────────────────
+let DATES       = [];
+let targetDate  = null;
+let compareDate = null;
+let targetData  = null;
+let compareData = null;
+let currentFilter = 'all';
+let sortCol = 'weightA';
+let sortAsc = false;
+let activeQuick = null;
+let expandedCode = null;
+let watchlist   = JSON.parse(localStorage.getItem('watchlist_00981A') || '[]');
+const dataCache = new Map();
+let chartInstances = {};
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+const fmtDate  = d => `${d.slice(0,4)}/${d.slice(4,6)}/${d.slice(6,8)}`;
+const fmtShort = d => `${d.slice(4,6)}/${d.slice(6,8)}`;
+const fmtN     = n => n != null ? n.toLocaleString() : '—';
+const fmtW     = w => w != null ? `${w.toFixed(2)}%` : '<span class="no-data">—</span>';
+const fmtP     = p => p != null ? p.toLocaleString(undefined,{minimumFractionDigits:1,maximumFractionDigits:2}) : '<span class="no-data">—</span>';
+
+// ── Dark mode ──────────────────────────────────────────────────────────────
+const savedTheme = localStorage.getItem('theme_00981A') ||
+  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+document.documentElement.setAttribute('data-theme', savedTheme);
+function toggleDark() {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme_00981A', next);
+  document.getElementById('darkBtn').textContent = next === 'dark' ? '☀️' : '🌙';
+  rebuildCharts();
+}
+if (savedTheme === 'dark') document.getElementById('darkBtn').textContent = '☀️';
+
+// ── URL state ─────────────────────────────────────────────────────────────
+function pushState() {
+  const p = new URLSearchParams(location.search);
+  if (targetDate)  p.set('t', targetDate);
+  if (compareDate) p.set('c', compareDate); else p.delete('c');
+  if (currentFilter !== 'all') p.set('f', currentFilter); else p.delete('f');
+  const q = document.getElementById('searchInput')?.value;
+  if (q) p.set('q', q); else p.delete('q');
+  history.replaceState(null, '', `${location.pathname}?${p}`);
+}
+function readState() {
+  const p = new URLSearchParams(location.search);
+  return { t: p.get('t'), c: p.get('c'), f: p.get('f'), q: p.get('q') };
+}
+
+// ── Load dates ─────────────────────────────────────────────────────────────
+async function loadDates() {
+  const resp = await fetch(`dates.json?t=${Date.now()}`, { cache: 'no-store' });
+  if (!resp.ok) throw new Error('dates.json 載入失敗');
+  DATES = (await resp.json()).sort();
+}
+
+// ── Populate selects ───────────────────────────────────────────────────────
+function populateSelects() {
+  const selT = document.getElementById('selTarget');
+  const selC = document.getElementById('selCompare');
+  selT.innerHTML = '';
+  selC.innerHTML = '<option value="">— 自選日期 —</option>';
+  [...DATES].reverse().forEach(d => {
+    const o = new Option(fmtDate(d), d);
+    if (d === targetDate) o.selected = true;
+    selT.appendChild(o);
+    selC.appendChild(new Option(fmtDate(d), d));
+  });
+  if (compareDate) document.getElementById('selCompare').value = compareDate;
+}
+
+// ── Data loading ───────────────────────────────────────────────────────────
+async function loadFile(date) {
+  if (dataCache.has(date)) return dataCache.get(date);
+  const resp = await fetch(`00981A_Data/00981A_${date}.txt?t=${Date.now()}`, { cache: 'no-store' });
+  if (!resp.ok) throw new Error(`無法讀取 ${date}`);
+  const data = parseHoldings(await resp.text());
+  dataCache.set(date, data);
+  return data;
+}
+function parseHoldings(text) {
+  return text.trim().split('\n').slice(1).map(line => {
+    const p = line.trim().split(',');
+    return {
+      code:   p[0]?.trim(),
+      name:   p[1]?.trim(),
+      weight: parseFloat(p[2]?.replace('%','')) || 0,
+      shares: parseInt(p[3]?.replace(/,/g,'')) || 0,
+      price:  parseFloat(p[4]) || null
+    };
+  }).filter(r => r.code);
+}
+
+// ── Compare ────────────────────────────────────────────────────────────────
+function compareHoldings(target, compare) {
+  const tMap = Object.fromEntries(target.map(r => [r.code, r]));
+  const cMap = Object.fromEntries(compare.map(r => [r.code, r]));
+  return [...new Set([...Object.keys(tMap), ...Object.keys(cMap)])].map(code => {
+    const a = tMap[code], b = cMap[code];
+    const status = a && b ? (a.shares > b.shares ? 'add' : a.shares < b.shares ? 'dec' : 'same')
+                          : (a ? 'new' : 'out');
+    const priceChgPct = (a?.price && b?.price && b.price !== 0)
+      ? (a.price - b.price) / b.price * 100 : null;
+    const mktValA = (a?.shares && a?.price) ? a.shares * a.price : null;
+    const mktValB = (b?.shares && b?.price) ? b.shares * b.price : null;
+    return {
+      code, name: (a||b).name,
+      weightA: a?.weight ?? null, sharesA: a?.shares ?? null, priceA: a?.price ?? null,
+      weightB: b?.weight ?? null, sharesB: b?.shares ?? null, priceB: b?.price ?? null,
+      sharesDiff: (a?.shares ?? 0) - (b?.shares ?? 0),
+      priceChgPct, mktValA, mktValB,
+      mktValDiff: (mktValA ?? 0) - (mktValB ?? 0),
+      contrib: (a?.weight != null && priceChgPct != null) ? a.weight * priceChgPct / 100 : null,
+      status
+    };
+  });
+}
+
+// ── Quick compare ──────────────────────────────────────────────────────────
+function setCompareQuick(mode) {
+  const idx = DATES.indexOf(targetDate);
+  let result = null;
+  if (mode === 'prevDay') {
+    result = idx > 0 ? DATES[idx - 1] : null;
+  } else {
+    const tgt = new Date(+targetDate.slice(0,4), +targetDate.slice(4,6)-1, +targetDate.slice(6,8));
+    if (mode === 'prevWeek')  tgt.setDate(tgt.getDate() - 7);
+    if (mode === 'prevMonth') tgt.setMonth(tgt.getMonth() - 1);
+    const cands = DATES.slice(0, idx);
+    if (cands.length) {
+      const ms = tgt.getTime();
+      result = cands.reduce((best, d) => {
+        const da = new Date(+d.slice(0,4),+d.slice(4,6)-1,+d.slice(6,8));
+        const db = new Date(+best.slice(0,4),+best.slice(4,6)-1,+best.slice(6,8));
+        return Math.abs(da-ms) < Math.abs(db-ms) ? d : best;
+      }, cands[cands.length-1]);
+    }
+  }
+  activeQuick = mode;
+  ['btnPrevDay','btnPrevWeek','btnPrevMonth'].forEach(id =>
+    document.getElementById(id).classList.remove('active'));
+  const btnId = {prevDay:'btnPrevDay',prevWeek:'btnPrevWeek',prevMonth:'btnPrevMonth'}[mode];
+  document.getElementById(btnId).classList.add('active');
+  if (result) {
+    compareDate = result;
+    document.getElementById('selCompare').value = result;
+    loadAndRender();
+  }
+}
+
+// ── Filter / Sort ──────────────────────────────────────────────────────────
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn?.classList.add('active');
+  pushState();
+  renderTable();
+}
+function resetFilter() {
+  currentFilter = 'all';
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.filter-btn.f-all')?.classList.add('active');
+}
+function setSort(col) {
+  sortAsc = sortCol === col ? !sortAsc : false;
+  sortCol = col;
+  renderTable();
+}
+const si = col => sortCol !== col
+  ? '<span class="sort-icon">↕</span>'
+  : `<span class="sort-icon">${sortAsc?'↑':'↓'}</span>`;
+const th = (col, label, cls='') =>
+  `<th onclick="setSort('${col}')" class="${sortCol===col?'sorted':''} ${cls}">${label}${si(col)}</th>`;
+
+// ── Watchlist ──────────────────────────────────────────────────────────────
+function toggleWatch(code, e) {
+  e.stopPropagation();
+  if (watchlist.includes(code)) watchlist = watchlist.filter(c => c !== code);
+  else watchlist.push(code);
+  localStorage.setItem('watchlist_00981A', JSON.stringify(watchlist));
+  renderTable();
+}
+function updateWatchlistBar(rows) {
+  const bar = document.getElementById('watchlistBar');
+  if (!watchlist.length) { bar.style.display = 'none'; return; }
+  const hits = rows.filter(r => watchlist.includes(r.code) && r.status !== 'same');
+  bar.style.display = 'block';
+  bar.innerHTML = `⭐ 觀察清單 (${watchlist.length} 支)${hits.length ? `，本次有 <strong>${hits.length}</strong> 支異動` : '，本次無異動'}`;
+}
+
+// ── Formats ────────────────────────────────────────────────────────────────
+const SL = { new:'新增持股', add:'增加', dec:'減少', out:'完全出清', same:'不變' };
+const SC = { new:'badge-new', add:'badge-add', dec:'badge-dec', out:'badge-out', same:'badge-same' };
+const fmtDiff = v => {
+  if (v == null) return '';
+  const cls = v > 0 ? 'chg-pos' : v < 0 ? 'chg-neg' : 'chg-zero';
+  return `<span class="${cls}">${v>0?'+':''}${v.toLocaleString()}</span>`;
+};
+const fmtPctChg = v => {
+  if (v == null) return '<span class="no-data">—</span>';
+  const cls = v > 0 ? 'chg-pos' : v < 0 ? 'chg-neg' : 'chg-zero';
+  return `<span class="${cls}">${v>0?'+':''}${v.toFixed(2)}%</span>`;
+};
+const fmtMktVal = v => {
+  if (v == null) return '—';
+  if (v >= 1e8) return `${(v/1e8).toFixed(2)}億`;
+  return `${(v/1e4).toFixed(0)}萬`;
+};
+
+// ── Summary metrics ────────────────────────────────────────────────────────
+function updateSummary(allRows) {
+  const cnt = {new:0,add:0,dec:0,out:0,same:0};
+  allRows.forEach(r => cnt[r.status]++);
+  ['new','add','dec','out','same'].forEach(k =>
+    document.getElementById(`cnt-${k}`).textContent = cnt[k]);
+  document.getElementById('cnt-total').textContent =
+    `${targetData.length} / ${compareData.length}`;
+
+  // Top 5 weight
+  const sorted = [...targetData].sort((a,b)=>b.weight-a.weight);
+  const top5A  = sorted.slice(0,5).reduce((s,r)=>s+r.weight,0);
+  document.getElementById('top5w').textContent = `${top5A.toFixed(1)}%`;
+  if (compareData) {
+    const sortedB = [...compareData].sort((a,b)=>b.weight-a.weight);
+    const top5B = sortedB.slice(0,5).reduce((s,r)=>s+r.weight,0);
+    const diff = top5A - top5B;
+    const el = document.getElementById('top5w-chg');
+    el.innerHTML = diff !== 0
+      ? `<span class="${diff>0?'chg-pos':'chg-neg'}">${diff>0?'+':''}${diff.toFixed(2)}%</span>`
+      : '';
+  }
+
+  // Weighted return estimate
+  const contribs = allRows.filter(r => r.contrib != null);
+  if (contribs.length) {
+    const totalRet = contribs.reduce((s,r) => s + r.contrib, 0);
+    const el = document.getElementById('weighted-ret');
+    el.innerHTML = `<span class="${totalRet>0?'chg-pos':totalRet<0?'chg-neg':'chg-zero'}">${totalRet>0?'+':''}${totalRet.toFixed(2)}%</span>`;
+  } else {
+    document.getElementById('weighted-ret').textContent = '—';
+  }
+
+  // Total market value
+  const mktVal = targetData.reduce((s,r) => r.price ? s + r.shares * r.price : s, 0);
+  document.getElementById('total-mktval').textContent =
+    mktVal > 0 ? `≈ ${fmtMktVal(mktVal)}` : '—';
+
+  document.getElementById('summary').style.display = 'flex';
+  document.getElementById('filterBar').style.display = 'flex';
+}
+
+// ── Render table ───────────────────────────────────────────────────────────
+function renderTable() {
+  if (!targetData) return;
+  const container = document.getElementById('tableContainer');
+  if (!compareData) { renderSingleTable(container); return; }
+
+  const allRows = compareHoldings(targetData, compareData);
+  updateSummary(allRows);
+  updateWatchlistBar(allRows);
+
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  let rows = allRows.filter(r => {
+    if (search && !r.code.toLowerCase().includes(search) && !r.name.toLowerCase().includes(search)) return false;
+    return currentFilter === 'all' || r.status === currentFilter;
+  });
+
+  // Sort: watched first, then by col
+  rows.sort((a, b) => {
+    const wa = watchlist.includes(a.code) ? 0 : 1;
+    const wb = watchlist.includes(b.code) ? 0 : 1;
+    if (wa !== wb) return wa - wb;
+    if (sortCol === 'code') return sortAsc ? a.code.localeCompare(b.code) : b.code.localeCompare(a.code);
+    if (sortCol === 'name') return sortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+    const kmap = { weightA:'weightA',sharesA:'sharesA',priceA:'priceA',
+                   weightB:'weightB',sharesB:'sharesB',priceB:'priceB',
+                   sharesDiff:'sharesDiff',priceChgPct:'priceChgPct',
+                   mktValA:'mktValA', contrib:'contrib' };
+    const k = kmap[sortCol] || 'weightA';
+    const va = a[k] ?? -Infinity, vb = b[k] ?? -Infinity;
+    return sortAsc ? va - vb : vb - va;
+  });
+
+  document.getElementById('rowCount').textContent = `${rows.length} / ${allRows.length} 筆`;
+  pushState();
+
+  let html = `<table><thead>
+    <tr class="group-row th-group-label">
+      <th colspan="3" class="grp-c" style="cursor:default;text-align:left"></th>
+      <th colspan="3" class="grp-a">目標日期 &ensp;${fmtDate(targetDate)}</th>
+      <th colspan="3" class="grp-b">比較日期 &ensp;${fmtDate(compareDate)}</th>
+      <th colspan="3" class="grp-c">變化</th>
+      <th class="grp-c" style="cursor:default"></th>
+    </tr>
+    <tr>
+      <th style="cursor:default;width:28px"></th>
+      ${th('code','代號')}
+      ${th('name','名稱')}
+      ${th('weightA','持股權重','col-a')}
+      ${th('sharesA','股數')}
+      ${th('priceA','收盤價')}
+      ${th('weightB','持股權重','col-b')}
+      ${th('sharesB','股數')}
+      ${th('priceB','收盤價')}
+      ${th('sharesDiff','股數差')}
+      ${th('priceChgPct','股價漲跌')}
+      ${th('mktValA','持倉市值')}
+      <th style="text-align:center;cursor:default">狀態</th>
+    </tr>
+  </thead><tbody>`;
+
+  if (!rows.length) {
+    html += `<tr><td colspan="13" class="empty">無符合條件的資料</td></tr>`;
+  } else {
+    rows.forEach(r => {
+      const isWatched = watchlist.includes(r.code);
+      const isExpanded = expandedCode === r.code;
+      html += `
+        <tr class="status-${r.status}${isWatched?' pinned':''}" onclick="toggleExpand('${r.code}',event)">
+          <td><button class="star-btn${isWatched?' watched':''}" onclick="toggleWatch('${r.code}',event)" title="${isWatched?'移出觀察清單':'加入觀察清單'}">${isWatched?'⭐':'☆'}</button></td>
+          <td class="td-code">${r.code}</td>
+          <td class="td-name">${r.name}</td>
+          <td class="td-pct">${fmtW(r.weightA)}</td>
+          <td class="td-shares">${r.sharesA != null ? r.sharesA.toLocaleString() : '<span class="no-data">—</span>'}</td>
+          <td class="td-num">${fmtP(r.priceA)}</td>
+          <td class="td-pct">${fmtW(r.weightB)}</td>
+          <td class="td-shares">${r.sharesB != null ? r.sharesB.toLocaleString() : '<span class="no-data">—</span>'}</td>
+          <td class="td-num">${fmtP(r.priceB)}</td>
+          <td class="td-num">${r.sharesA!=null&&r.sharesB!=null ? fmtDiff(r.sharesDiff) : ''}</td>
+          <td class="td-num">${fmtPctChg(r.priceChgPct)}</td>
+          <td class="td-val">${r.mktValA ? fmtMktVal(r.mktValA) : '—'}</td>
+          <td style="text-align:center"><span class="badge ${SC[r.status]}">${SL[r.status]}</span></td>
+        </tr>`;
+      if (isExpanded) {
+        html += `<tr class="expanded-row"><td colspan="13"><div class="expand-panel" id="expand-${r.code}"><div class="loading">載入歷史趨勢…</div></div></td></tr>`;
+      }
+    });
+  }
+  html += `</tbody></table>`;
+  container.innerHTML = html;
+
+  // Load sparkline for expanded row
+  if (expandedCode) {
+    const row = allRows.find(r => r.code === expandedCode);
+    if (row) loadSparkline(expandedCode, row.name);
+  }
+}
+
+// ── Row expand sparkline ───────────────────────────────────────────────────
+function toggleExpand(code, e) {
+  if (e.target.classList.contains('star-btn')) return;
+  expandedCode = expandedCode === code ? null : code;
+  renderTable();
+}
+
+async function loadSparkline(code, name) {
+  const panel = document.getElementById(`expand-${code}`);
+  if (!panel) return;
+  const last60 = DATES.slice(-60);
+  try {
+    const results = await Promise.all(last60.map(async d => {
+      const holdings = await loadFile(d);
+      const r = holdings.find(h => h.code === code);
+      return { date: d, shares: r?.shares ?? null, price: r?.price ?? null };
+    }));
+    const valid = results.filter(r => r.shares != null);
+    if (!valid.length) { panel.innerHTML = '<div class="expand-title">此期間無持倉資料</div>'; return; }
+    const max = Math.max(...valid.map(r => r.shares));
+    const min = Math.min(...valid.map(r => r.shares));
+    const latest = valid[valid.length-1];
+    const first  = valid[0];
+    const totalChg = latest.shares - first.shares;
+
+    const bars = results.map(r => {
+      if (r.shares == null) return `<div class="spark-bar" style="height:4px;background:var(--border)" title="${fmtDate(r.date)}: 未持有"></div>`;
+      const pct = max === min ? 50 : Math.round(((r.shares - min) / (max - min)) * 100);
+      const h = Math.max(6, pct);
+      const c = r.shares > (results.find((x,i) => i < results.indexOf(r) && x.shares != null)?.shares ?? r.shares)
+        ? 'var(--green)' : r.shares < (results.find((x,i) => i < results.indexOf(r) && x.shares != null)?.shares ?? r.shares)
+        ? 'var(--red)' : 'var(--gray)';
+      return `<div class="spark-bar" style="height:${h}%;background:${c}" title="${fmtDate(r.date)}: ${r.shares.toLocaleString()} 股${r.price?` / $${r.price}`:''}"></div>`;
+    }).join('');
+
+    panel.innerHTML = `
+      <div class="expand-title">${code} ${name} — 近 60 個交易日持股趨勢</div>
+      <div class="sparkline-wrap">${bars}</div>
+      <div class="expand-meta">
+        <span>最新 <strong>${latest.shares.toLocaleString()}</strong></span>
+        <span>最高 <strong>${max.toLocaleString()}</strong></span>
+        <span>最低 <strong>${min.toLocaleString()}</strong></span>
+        <span>期間變化 <strong class="${totalChg>0?'chg-pos':totalChg<0?'chg-neg':'chg-zero'}">${totalChg>0?'+':''}${totalChg.toLocaleString()}</strong></span>
+        ${latest.price ? `<span>現價 <strong>$${latest.price}</strong></span>` : ''}
+      </div>`;
+  } catch(e) {
+    panel.innerHTML = `<div class="expand-title" style="color:var(--red)">載入失敗：${e.message}</div>`;
+  }
+}
+
+// ── Single date table ──────────────────────────────────────────────────────
+function renderSingleTable(container) {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  let rows = targetData.filter(r =>
+    !search || r.code.toLowerCase().includes(search) || r.name.toLowerCase().includes(search)
+  ).sort((a,b) => b.weight - a.weight);
+  document.getElementById('summary').style.display = 'none';
+  document.getElementById('filterBar').style.display = 'flex';
+  let html = `<table><thead>
+    <tr class="group-row th-group-label">
+      <th colspan="3" class="grp-c" style="cursor:default"></th>
+      <th colspan="4" class="grp-a">目標日期 &ensp;${fmtDate(targetDate)}</th>
+    </tr>
+    <tr>
+      <th style="cursor:default;width:28px"></th>
+      ${th('code','代號')}${th('name','名稱')}
+      ${th('weightA','持股權重','col-a')}${th('sharesA','股數')}
+      ${th('priceA','收盤價')}
+      <th style="cursor:default">持倉市值</th>
+    </tr>
+  </thead><tbody>`;
+  rows.forEach(r => {
+    const mktVal = r.price ? r.shares * r.price : null;
+    const isW = watchlist.includes(r.code);
+    html += `<tr class="${isW?'pinned':''}">
+      <td><button class="star-btn${isW?' watched':''}" onclick="toggleWatch('${r.code}',event)">${isW?'⭐':'☆'}</button></td>
+      <td class="td-code">${r.code}</td>
+      <td class="td-name">${r.name}</td>
+      <td class="td-pct">${r.weight.toFixed(2)}%</td>
+      <td class="td-shares">${r.shares.toLocaleString()}</td>
+      <td class="td-num">${fmtP(r.price)}</td>
+      <td class="td-val">${mktVal ? fmtMktVal(mktVal) : '—'}</td>
+    </tr>`;
+  });
+  html += `</tbody></table>`;
+  container.innerHTML = html;
+}
+
+// ── Chart tab ─────────────────────────────────────────────────────────────
+function rebuildCharts() {
+  if (!targetData) return;
+  Object.values(chartInstances).forEach(c => c.destroy());
+  chartInstances = {};
+
+  const allRows = compareData ? compareHoldings(targetData, compareData) : null;
+  const isDark  = document.documentElement.getAttribute('data-theme') === 'dark';
+  const txtColor = isDark ? '#e2e8f0' : '#0f172a';
+  const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
+  Chart.defaults.color = txtColor;
+
+  const container = document.getElementById('chartGrid');
+
+  // ── Top 10 donut ──
+  const top10 = [...targetData].sort((a,b)=>b.weight-a.weight).slice(0,10);
+  const otherW = 100 - top10.reduce((s,r)=>s+r.weight,0);
+  const donutLabels = [...top10.map(r=>r.name), '其他'];
+  const donutData   = [...top10.map(r=>r.weight), Math.max(0, otherW)];
+  const palette = ['#3b82f6','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#84cc16','#f97316','#ec4899','#14b8a6','#cbd5e1'];
+
+  // ── Bar chart: weight comparison ──
+  const top15 = [...targetData].sort((a,b)=>b.weight-a.weight).slice(0,15);
+  const barLabels = top15.map(r=>r.name.length>4?r.name.slice(0,4)+'…':r.name);
+  const barA = top15.map(r=>r.weight);
+  const barB = top15.map(r => {
+    if (!compareData) return 0;
+    return compareData.find(c=>c.code===r.code)?.weight ?? 0;
+  });
+
+  // ── Attribution ──
+  let attrHTML = '<div class="empty" style="padding:20px">無比較資料</div>';
+  if (allRows) {
+    const withContrib = allRows.filter(r=>r.contrib!=null)
+      .sort((a,b)=>Math.abs(b.contrib)-Math.abs(a.contrib)).slice(0,12);
+    const maxAbs = Math.max(...withContrib.map(r=>Math.abs(r.contrib)));
+    attrHTML = `<div class="attr-list">` + withContrib.map(r=>`
+      <div class="attr-item">
+        <span class="attr-name">${r.name.length>5?r.name.slice(0,5)+'…':r.name}</span>
+        <div class="attr-bar-wrap">
+          <div class="attr-bar" style="width:${Math.abs(r.contrib)/maxAbs*100}%;background:${r.contrib>=0?'#10b981':'#ef4444'}"></div>
+        </div>
+        <span class="attr-val ${r.contrib>=0?'chg-pos':'chg-neg'}">${r.contrib>0?'+':''}${r.contrib.toFixed(3)}%</span>
+      </div>`).join('') + `</div>`;
+  }
+
+  // ── Market value bars ──
+  let mktRows = allRows
+    ? allRows.filter(r=>r.mktValA).sort((a,b)=>b.mktValA-a.mktValA).slice(0,10)
+    : targetData.filter(r=>r.price).sort((a,b)=>b.shares*b.price-a.shares*a.price).slice(0,10);
+
+  container.innerHTML = `
+    <div class="chart-panel">
+      <div class="chart-panel-title">前10大持股權重 <span class="chart-sub">甜甜圈圖 (目標日期)</span></div>
+      <div class="chart-container" style="height:240px"><canvas id="chartDonut"></canvas></div>
+    </div>
+    <div class="chart-panel">
+      <div class="chart-panel-title">前15大持股權重比較 <span class="chart-sub">橫條圖</span></div>
+      <div class="chart-container" style="height:240px"><canvas id="chartBar"></canvas></div>
+    </div>
+    <div class="chart-panel">
+      <div class="chart-panel-title">個股貢獻度排行 <span class="chart-sub">持股權重 × 股價漲跌</span></div>
+      ${attrHTML}
+    </div>
+    <div class="chart-panel">
+      <div class="chart-panel-title">前10大持倉市值 <span class="chart-sub">股數 × 收盤價 (目標日期)</span></div>
+      <div class="chart-container" style="height:240px"><canvas id="chartMktVal"></canvas></div>
+    </div>
+  `;
+
+  // Donut
+  chartInstances.donut = new Chart(document.getElementById('chartDonut'), {
+    type: 'doughnut',
+    data: { labels: donutLabels, datasets: [{ data: donutData, backgroundColor: palette, borderWidth: 1, borderColor: isDark?'#1e293b':'#fff' }] },
+    options: { plugins: { legend: { position:'right', labels:{ font:{size:11}, boxWidth:12, color:txtColor } },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed.toFixed(2)}%` } } },
+      cutout: '55%', responsive: true, maintainAspectRatio: false }
+  });
+
+  // Horizontal bar
+  chartInstances.bar = new Chart(document.getElementById('chartBar'), {
+    type: 'bar',
+    data: { labels: barLabels, datasets: [
+      { label: fmtDate(targetDate),  data: barA, backgroundColor: 'rgba(59,130,246,0.75)', borderRadius: 3 },
+      { label: compareDate ? fmtDate(compareDate) : '比較', data: barB, backgroundColor: 'rgba(16,185,129,0.65)', borderRadius: 3 }
+    ]},
+    options: { indexAxis:'y', responsive: true, maintainAspectRatio:false,
+      scales: { x: { grid:{ color:gridColor }, ticks:{color:txtColor,callback:v=>`${v}%`} }, y:{ticks:{color:txtColor,font:{size:11}}} },
+      plugins: { legend:{ labels:{ color:txtColor } }, tooltip:{ callbacks:{ label: ctx=>`${ctx.dataset.label}: ${ctx.parsed.x.toFixed(2)}%` } } } }
+  });
+
+  // Market value
+  const mktLabels = mktRows.map(r=>r.name.length>4?r.name.slice(0,4)+'…':r.name);
+  const mktVals   = mktRows.map(r=>r.mktValA ?? (r.shares*(r.price||0)));
+  chartInstances.mktval = new Chart(document.getElementById('chartMktVal'), {
+    type: 'bar',
+    data: { labels: mktLabels, datasets: [
+      { label: '持倉市值', data: mktVals, backgroundColor: 'rgba(139,92,246,0.75)', borderRadius: 3 }
+    ]},
+    options: { indexAxis:'y', responsive: true, maintainAspectRatio:false,
+      scales: { x:{ grid:{color:gridColor}, ticks:{ color:txtColor, callback: v => fmtMktVal(v) } }, y:{ticks:{color:txtColor,font:{size:11}}} },
+      plugins: { legend:{ labels:{color:txtColor} }, tooltip:{ callbacks:{ label: ctx=>`${fmtMktVal(ctx.parsed.x)}` } } } }
+  });
+}
+
+// ── Trend tab ─────────────────────────────────────────────────────────────
+async function loadTrend() {
+  const code  = document.getElementById('trendCode').value.trim().toUpperCase();
+  const days  = parseInt(document.getElementById('trendRange').value);
+  const msg   = document.getElementById('trendMsg');
+  const content = document.getElementById('trendContent');
+  if (!code) { msg.textContent = '請輸入股票代號'; return; }
+  msg.textContent = '查詢中…';
+  content.innerHTML = '<div class="loading">載入中…</div>';
+
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - days);
+  const dates = days >= 9999 ? DATES : DATES.filter(d => {
+    const dt = new Date(+d.slice(0,4),+d.slice(4,6)-1,+d.slice(6,8));
+    return dt >= cutoff;
+  });
+  if (!dates.length) { msg.textContent = '無資料'; return; }
+
+  try {
+    const results = await Promise.all(dates.map(async d => {
+      const holdings = await loadFile(d);
+      const r = holdings.find(h => h.code === code);
+      return { date:d, shares: r?.shares??null, price: r?.price??null, name: r?.name };
+    }));
+    const name = results.find(r=>r.name)?.name || code;
+    const valid = results.filter(r=>r.shares!=null);
+    if (!valid.length) { msg.textContent=''; content.innerHTML=`<div class="empty">此期間 ${code} 未在 00981A 持倉中</div>`; return; }
+    msg.textContent = '';
+
+    const max    = Math.max(...valid.map(r=>r.shares));
+    const min    = Math.min(...valid.map(r=>r.shares));
+    const latest = valid[valid.length-1];
+    const first  = valid[0];
+    const totalChg = latest.shares - first.shares;
+
+    // Destroy old trend chart
+    if (chartInstances.trend) { chartInstances.trend.destroy(); delete chartInstances.trend; }
+
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const txtColor = isDark ? '#e2e8f0' : '#0f172a';
+    const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
+
+    content.innerHTML = `
+      <div class="trend-chart-panel">
+        <div class="chart-panel-title">${code} ${name} — 持股股數歷史趨勢</div>
+        <div class="trend-stats">
+          <div class="tstat"><div class="tstat-val">${latest.shares.toLocaleString()}</div><div class="tstat-lbl">最新股數</div></div>
+          <div class="tstat"><div class="tstat-val ${totalChg>0?'chg-pos':totalChg<0?'chg-neg':'chg-zero'}">${totalChg>0?'+':''}${totalChg.toLocaleString()}</div><div class="tstat-lbl">期間總變化</div></div>
+          <div class="tstat"><div class="tstat-val">${max.toLocaleString()}</div><div class="tstat-lbl">期間最高</div></div>
+          <div class="tstat"><div class="tstat-val">${min.toLocaleString()}</div><div class="tstat-lbl">期間最低</div></div>
+          <div class="tstat"><div class="tstat-val">${valid.length}</div><div class="tstat-lbl">持倉交易日</div></div>
+          ${latest.price ? `<div class="tstat"><div class="tstat-val">$${latest.price}</div><div class="tstat-lbl">最新收盤價</div></div>` : ''}
+        </div>
+        <div class="chart-container" style="height:280px"><canvas id="chartTrend"></canvas></div>
+      </div>`;
+
+    const labels = results.map(r => fmtShort(r.date));
+    const sharesData = results.map(r => r.shares);
+    const priceData  = results.map(r => r.price);
+    const hasPrices  = priceData.some(p => p != null);
+
+    Chart.defaults.color = txtColor;
+    const datasets = [{
+      label: '股數',
+      data: sharesData,
+      borderColor: '#3b82f6',
+      backgroundColor: 'rgba(59,130,246,0.12)',
+      borderWidth: 2,
+      pointRadius: results.length > 60 ? 0 : 3,
+      spanGaps: false,
+      yAxisID: 'y',
+      tension: 0.3,
+      fill: true
+    }];
+    if (hasPrices) datasets.push({
+      label: '收盤價',
+      data: priceData,
+      borderColor: '#f59e0b',
+      backgroundColor: 'transparent',
+      borderWidth: 1.5,
+      pointRadius: 0,
+      spanGaps: false,
+      yAxisID: 'y2',
+      tension: 0.3,
+      borderDash: [4,3]
+    });
+
+    chartInstances.trend = new Chart(document.getElementById('chartTrend'), {
+      type: 'line',
+      data: { labels, datasets },
+      options: {
+        responsive: true, maintainAspectRatio: false, interaction: { mode:'index', intersect:false },
+        scales: {
+          x: { ticks:{ color:txtColor, maxTicksLimit:12, maxRotation:0 }, grid:{ color:gridColor } },
+          y: { ticks:{ color:'#3b82f6', callback: v => v ? v.toLocaleString() : v }, grid:{ color:gridColor }, title:{ display:true, text:'股數', color:'#3b82f6' } },
+          ...(hasPrices ? { y2:{ position:'right', ticks:{ color:'#f59e0b', callback: v=>`$${v}` }, grid:{ drawOnChartArea:false }, title:{ display:true, text:'收盤價', color:'#f59e0b' } } } : {})
+        },
+        plugins: {
+          legend:{ labels:{ color:txtColor } },
+          tooltip:{ callbacks:{ label: ctx => ctx.dataset.label==='股數' ? ` ${ctx.parsed.y != null ? ctx.parsed.y.toLocaleString() : '未持有'} 股` : ` $${ctx.parsed.y}` } }
+        }
+      }
+    });
+  } catch(e) {
+    msg.textContent = '';
+    content.innerHTML = `<div class="error">載入失敗：${e.message}</div>`;
+  }
+}
+
+// ── Tab switch ────────────────────────────────────────────────────────────
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`tab-${id}`).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'charts') rebuildCharts();
+}
+
+// ── CSV Export ─────────────────────────────────────────────────────────────
+function exportCSV() {
+  if (!targetData) return;
+  const allRows = compareData ? compareHoldings(targetData, compareData) : targetData.map(r=>({...r,status:'same',weightA:r.weight,sharesA:r.shares,priceA:r.price,weightB:null,sharesB:null,priceB:null,sharesDiff:null,priceChgPct:null}));
+  const header = '代號,名稱,目標持股權重,目標股數,目標收盤價,比較持股權重,比較股數,比較收盤價,股數差,股價漲跌%,狀態';
+  const rows = allRows.map(r =>
+    `${r.code},${r.name},${r.weightA??''},${r.sharesA??''},${r.priceA??''},${r.weightB??''},${r.sharesB??''},${r.priceB??''},${r.sharesDiff??''},${r.priceChgPct!=null?r.priceChgPct.toFixed(2):''},${SL[r.status]}`
+  );
+  const csv = '\uFEFF' + [header, ...rows].join('\n');
+  const a = Object.assign(document.createElement('a'), {
+    href: URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8'})),
+    download: `00981A_${targetDate}${compareDate?'_vs_'+compareDate:''}.csv`
+  });
+  a.click();
+}
+
+// ── Shortcuts ─────────────────────────────────────────────────────────────
+function showShortcuts() { document.getElementById('shortcutModal').style.display = 'flex'; }
+function hideShortcuts() { document.getElementById('shortcutModal').style.display = 'none'; }
+document.addEventListener('keydown', e => {
+  if (['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName)) {
+    if (e.key === 'Escape') { e.target.blur(); document.getElementById('searchInput').value = ''; renderTable(); }
+    return;
+  }
+  const idx = DATES.indexOf(targetDate);
+  if (e.key === 'j' || e.key === 'J') {
+    if (idx > 0) { targetDate = DATES[idx-1]; document.getElementById('selTarget').value = targetDate; resetFilter(); loadAndRender(); }
+  } else if (e.key === 'k' || e.key === 'K') {
+    if (idx < DATES.length-1) { targetDate = DATES[idx+1]; document.getElementById('selTarget').value = targetDate; resetFilter(); loadAndRender(); }
+  } else if (e.key === '0') { setFilter('all', document.querySelector('.f-all')); }
+  else if (e.key === '1') { setFilter('new', document.querySelector('.f-new')); }
+  else if (e.key === '2') { setFilter('add', document.querySelector('.f-add')); }
+  else if (e.key === '3') { setFilter('dec', document.querySelector('.f-dec')); }
+  else if (e.key === '4') { setFilter('out', document.querySelector('.f-out')); }
+  else if (e.key === '/') { e.preventDefault(); document.getElementById('searchInput').focus(); }
+  else if (e.key === 'e' || e.key === 'E') { exportCSV(); }
+  else if (e.key === 'd' || e.key === 'D') { toggleDark(); }
+  else if (e.key === '?') { showShortcuts(); }
+  else if (e.key === 'Escape') { hideShortcuts(); }
+});
+
+// ── Load & render ──────────────────────────────────────────────────────────
+async function loadAndRender() {
+  const msg = document.getElementById('statusMsg');
+  const container = document.getElementById('tableContainer');
+  msg.textContent = '載入中…';
+  container.innerHTML = '<div class="loading">載入資料中…</div>';
+  expandedCode = null;
+  try {
+    targetData = await loadFile(targetDate);
+    if (compareDate && compareDate !== targetDate) {
+      compareData = await loadFile(compareDate);
+      msg.textContent = `${fmtDate(targetDate)}  vs  ${fmtDate(compareDate)}`;
+    } else {
+      compareData = null;
+      msg.textContent = compareDate ? '請選擇不同的比較日期' : fmtDate(targetDate);
+    }
+  } catch(e) {
+    msg.textContent = '載入失敗';
+    container.innerHTML = `<div class="error">載入失敗：${e.message}</div>`;
+    return;
+  }
+  renderTable();
+  // Rebuild charts if on chart tab
+  if (document.getElementById('tab-charts').classList.contains('active')) rebuildCharts();
+}
+
+// ── Events ────────────────────────────────────────────────────────────────
+document.getElementById('selTarget').addEventListener('change', e => {
+  targetDate = e.target.value;
+  if (activeQuick) {
+    document.getElementById({prevDay:'btnPrevDay',prevWeek:'btnPrevWeek',prevMonth:'btnPrevMonth'}[activeQuick])?.classList.remove('active');
+    activeQuick = null;
+  }
+  resetFilter();
+  loadAndRender();
+});
+document.getElementById('selCompare').addEventListener('change', e => {
+  compareDate = e.target.value || null;
+  ['btnPrevDay','btnPrevWeek','btnPrevMonth'].forEach(id => document.getElementById(id).classList.remove('active'));
+  activeQuick = null;
+  resetFilter();
+  loadAndRender();
+});
+document.getElementById('searchInput')?.addEventListener('input', () => {
+  pushState();
+  renderTable();
+});
+document.getElementById('trendCode').addEventListener('keydown', e => {
+  if (e.key === 'Enter') loadTrend();
+});
+
+// ── Start ─────────────────────────────────────────────────────────────────
+(async () => {
+  try {
+    await loadDates();
+    if (!DATES.length) throw new Error('dates.json 無資料');
+    // Read URL state
+    const state = readState();
+    targetDate  = (state.t && DATES.includes(state.t)) ? state.t : DATES[DATES.length-1];
+    compareDate = (state.c && DATES.includes(state.c)) ? state.c : null;
+    if (state.f) currentFilter = state.f;
+    populateSelects();
+    if (state.q) { document.getElementById('searchInput').value = state.q; }
+    if (compareDate) {
+      await loadAndRender();
+      if (state.f) setFilter(state.f, document.querySelector(`.f-${state.f}`));
+    } else {
+      setCompareQuick('prevDay');
+    }
+  } catch(e) {
+    document.getElementById('tableContainer').innerHTML =
+      `<div class="error">初始化失敗：${e.message}<br>請透過 HTTP 伺服器開啟（python -m http.server 8080）</div>`;
+  }
+})();
+</script>
+</body>
+</html>
