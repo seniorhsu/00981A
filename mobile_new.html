@@ -50,6 +50,12 @@
       --topbar-bg:   #ffffff;
       --skeleton-base:  #e2e8f0;
       --skeleton-shine: #f8fafc;
+      /* ── 重疊分析專用 ── */
+      --cx-both-bg:   #f0fdf4; --cx-both-bd:   #22c55e; --cx-both-txt:  #15803d;
+      --cx-a-bg:      #fff7ed; --cx-a-bd:      #f97316; --cx-a-txt:     #c2410c;
+      --cx-b-bg:      #faf5ff; --cx-b-bd:      #a855f7; --cx-b-txt:     #7c3aed;
+      --cx-wA:        #16a34a;
+      --cx-wB:        #7c3aed;
     }
 
     /* ── CSS Variables – Dark ── */
@@ -92,6 +98,12 @@
       --topbar-bg:   #1e293b;
       --skeleton-base:  #263348;
       --skeleton-shine: #2d3f55;
+      /* ── 重疊分析專用 ── */
+      --cx-both-bg:   #052e16; --cx-both-bd:   #22c55e; --cx-both-txt:  #4ade80;
+      --cx-a-bg:      #431407; --cx-a-bd:      #fb923c; --cx-a-txt:     #fdba74;
+      --cx-b-bg:      #2e1065; --cx-b-bd:      #a855f7; --cx-b-txt:     #c4b5fd;
+      --cx-wA:        #4ade80;
+      --cx-wB:        #c4b5fd;
     }
 
     body {
@@ -200,6 +212,18 @@
     }
     .cross-filter.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
+    /* ── 重疊分析 row 配色 ── */
+    .cx-row { display:flex; align-items:center; gap:6px; padding:9px 14px; border-bottom:1px solid var(--border2); border-left:3px solid transparent; }
+    .cx-row:last-child { border-bottom:none; }
+    .cx-both { border-left-color:var(--cx-both-bd); background:var(--cx-both-bg); }
+    .cx-a    { border-left-color:var(--cx-a-bd);    background:var(--cx-a-bg); }
+    .cx-b    { border-left-color:var(--cx-b-bd);    background:var(--cx-b-bg); }
+    .cx-badge-both { display:inline-block; padding:2px 7px; border-radius:10px; font-size:11px; font-weight:700; border:1.5px solid var(--cx-both-bd); background:var(--cx-both-bg); color:var(--cx-both-txt); flex-shrink:0; }
+    .cx-badge-a    { display:inline-block; padding:2px 7px; border-radius:10px; font-size:11px; font-weight:700; border:1.5px solid var(--cx-a-bd);    background:var(--cx-a-bg);    color:var(--cx-a-txt);    flex-shrink:0; }
+    .cx-badge-b    { display:inline-block; padding:2px 7px; border-radius:10px; font-size:11px; font-weight:700; border:1.5px solid var(--cx-b-bd);    background:var(--cx-b-bg);    color:var(--cx-b-txt);    flex-shrink:0; }
+    .cx-wA { font-family:'Courier New',monospace; font-size:13px; font-weight:700; color:var(--cx-wA); flex-shrink:0; min-width:52px; text-align:right; }
+    .cx-wB { font-family:'Courier New',monospace; font-size:13px; font-weight:700; color:var(--cx-wB); flex-shrink:0; min-width:52px; text-align:right; }
+
     /* ── Compact list view ── */
     .compact-list { display: flex; flex-direction: column; }
     .cl-row {
@@ -227,7 +251,7 @@
     .cl-name {
       font-size: 13px; font-weight: 600;
       color: var(--text);
-      flex: 1; min-width: 0; max-width: 80px;
+      flex: 1; min-width: 0; max-width: 110px;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
     .cl-weight {
@@ -783,9 +807,9 @@
   <!-- Filter tabs -->
   <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;" id="crossFilterRow">
     <button class="cross-filter active" id="cf-all"    onclick="setCrossFilter('all')">全部持股</button>
-    <button class="cross-filter" id="cf-both"   onclick="setCrossFilter('both')">✅ 兩檔共有</button>
-    <button class="cross-filter" id="cf-a_only" onclick="setCrossFilter('a_only')">🅰 僅00981A</button>
-    <button class="cross-filter" id="cf-b_only" onclick="setCrossFilter('b_only')">🅱 僅00992A</button>
+    <button class="cross-filter" id="cf-both"   onclick="setCrossFilter('both')">✅ 兩檔都有</button>
+    <button class="cross-filter" id="cf-a_only" onclick="setCrossFilter('a_only')">🅰 只在00981A</button>
+    <button class="cross-filter" id="cf-b_only" onclick="setCrossFilter('b_only')">🅱 只在00992A</button>
   </div>
   <!-- Sort pills -->
   <div style="display:flex; gap:6px; margin-top:6px; flex-wrap:wrap; align-items:center;">
@@ -886,7 +910,7 @@ const FUNDS = {
   '00981A': { label: '00981A', dir: '00981A_Data', datesJson: 'dates.json' },
   '00992A': { label: '00992A', dir: '00992A_Data', datesJson: '00992A_dates.json' },
 };
-let currentFund = localStorage.getItem('fund_selected') || '00981A';
+let currentFund = '00981A'; // 每次開啟固定預設 00981A
 
 // ── Mode state ────────────────────────────────────────────────────────────
 let appMode = 'time'; // 'time' | 'cross'
@@ -1016,20 +1040,31 @@ function fmtMktVal(val) {
   return (val / 1e4).toFixed(0) + '萬';
 }
 
+function buildGroupedOptions(dates, selectedVal) {
+  // 按年月分組，最新在上
+  const groups = new Map();
+  [...dates].reverse().forEach(d => {
+    const ym = d.slice(0, 4) + '/' + d.slice(4, 6);
+    if (!groups.has(ym)) groups.set(ym, []);
+    groups.get(ym).push(d);
+  });
+  let html = '';
+  groups.forEach((ds, ym) => {
+    html += `<optgroup label="${ym}">`;
+    ds.forEach(d => {
+      const sel = d === selectedVal ? ' selected' : '';
+      html += `<option value="${d}"${sel}>${fmtDate(d)}</option>`;
+    });
+    html += '</optgroup>';
+  });
+  return html;
+}
+
 function populateSelects() {
   const selT = document.getElementById('selTarget');
   const selC = document.getElementById('selCompare');
-  // Clear existing options except first of selC
-  while (selT.firstChild) selT.removeChild(selT.firstChild);
-  while (selC.children.length > 1) selC.removeChild(selC.lastChild);
-  [...DATES].reverse().forEach(d => {
-    const o1 = new Option(fmtDate(d), d);
-    if (d === targetDate) o1.selected = true;
-    selT.appendChild(o1);
-    const o2 = new Option(fmtDate(d), d);
-    if (d === compareDate) o2.selected = true;
-    selC.appendChild(o2);
-  });
+  selT.innerHTML = buildGroupedOptions(DATES, targetDate);
+  selC.innerHTML = '<option value="">— 自選 —</option>' + buildGroupedOptions(DATES, compareDate);
 }
 
 // ── URL state ─────────────────────────────────────────────────────────────
@@ -1691,7 +1726,6 @@ async function loadAndRender() {
 function switchFund(code) {
   if (code === currentFund) return;
   currentFund = code;
-  localStorage.setItem('fund_selected', code);
   // reset data state
   targetData = null; compareData = null;
   targetDate = null; compareDate = null;
@@ -1773,14 +1807,15 @@ async function populateCrossDates() {
     ]);
     const [dates981, dates992] = await Promise.all([r1.json(), r2.json()]);
     const set992 = new Set(dates992);
-    const common = dates981.filter(d => set992.has(d)).reverse(); // newest first
+    const common = dates981.filter(d => set992.has(d)); // ascending，交給 buildGroupedOptions 反轉
+    const latest = common[common.length - 1]; // 最新日期
     const sel = document.getElementById('crossDateSel');
-    sel.innerHTML = common.map(d => `<option value="${d}">${fmtDate(d)}</option>`).join('');
+    sel.innerHTML = buildGroupedOptions(common, latest);
     // 自動選最新日期並載入
-    if (common.length) {
-      sel.value = common[0];
-      crossDate = common[0];
-      loadCrossData(common[0]);
+    if (latest) {
+      sel.value = latest;
+      crossDate = latest;
+      loadCrossData(latest);
     }
   } catch(e) {
     showToast('載入日期失敗');
@@ -1864,6 +1899,15 @@ function renderCross() {
     rows.sort((a, b) => (b.weightA ?? 0) - (a.weightA ?? 0) || (b.weightB ?? 0) - (a.weightB ?? 0));
   }
 
+  // 統計（用全部 rows，不受 filter 影響）
+  const allRows2 = [];
+  allCodes.forEach(code => {
+    const a = map981.get(code), b = map992.get(code);
+    allRows2.push({ status: a && b ? 'both' : a ? 'a_only' : 'b_only' });
+  });
+  const cnt = { both: 0, a_only: 0, b_only: 0 };
+  allRows2.forEach(r => cnt[r.status]++);
+
   rcEl.textContent = `共 ${rows.length} 檔`;
 
   if (!rows.length) {
@@ -1871,32 +1915,39 @@ function renderCross() {
     return;
   }
 
-  const statusColor = { both: 'status-same', a_only: 'status-add', b_only: 'status-new' };
-  const statusLabel = { both: '共同', a_only: '獨有A', b_only: '獨有B' };
+  const summary = `<div style="display:flex;gap:10px;padding:8px 14px;background:var(--bg3);border-bottom:1px solid var(--border2);font-size:12px;font-weight:600;flex-wrap:wrap;">
+    <span class="cx-badge-both">兩檔都有 ${cnt.both}檔</span>
+    <span class="cx-badge-a">只在00981A ${cnt.a_only}檔</span>
+    <span class="cx-badge-b">只在00992A ${cnt.b_only}檔</span>
+  </div>`;
+
+  const rowCls   = { both: 'cx-row cx-both', a_only: 'cx-row cx-a', b_only: 'cx-row cx-b' };
+  const badgeCls = { both: 'cx-badge-both',  a_only: 'cx-badge-a',  b_only: 'cx-badge-b' };
+  const badgeTxt = { both: '兩檔都有',        a_only: '只在00981A',    b_only: '只在00992A' };
 
   const header = `<div style="display:flex;gap:6px;padding:6px 14px;font-size:11px;color:var(--muted);background:var(--bg3);border-bottom:1px solid var(--border2);">
     <span style="min-width:38px">代號</span>
-    <span style="flex:1;max-width:80px">名稱</span>
-    <span style="min-width:48px;text-align:right;color:var(--green-bd)">00981A</span>
-    <span style="min-width:48px;text-align:right;color:var(--blue-bd)">00992A</span>
+    <span style="flex:1;max-width:110px">名稱</span>
+    <span style="min-width:52px;text-align:right;color:var(--cx-wA)">00981A</span>
+    <span style="min-width:52px;text-align:right;color:var(--cx-wB)">00992A</span>
     <span style="min-width:40px"></span>
   </div>`;
 
   const html = '<div class="compact-list">' + rows.map(r => {
-    const wA = r.weightA != null ? r.weightA.toFixed(2) + '%' : '—';
-    const wB = r.weightB != null ? r.weightB.toFixed(2) + '%' : '—';
-    const badge = `<span class="badge ${statusColor[r.status] === 'status-same' ? 'badge-same' : statusColor[r.status] === 'status-add' ? 'badge-add' : 'badge-new'}">${statusLabel[r.status]}</span>`;
-    const star = `<button class="cl-star" onclick="event.stopPropagation();toggleWatch('${r.code}')">${watchlist.has(r.code) ? '⭐' : '☆'}</button>`;
-    return `<div class="cl-row ${statusColor[r.status]}">
+    const wA  = r.weightA != null ? r.weightA.toFixed(2) + '%' : '—';
+    const wB  = r.weightB != null ? r.weightB.toFixed(2) + '%' : '—';
+    const badge = `<span class="${badgeCls[r.status]}">${badgeTxt[r.status]}</span>`;
+    const star  = `<button class="cl-star" onclick="event.stopPropagation();toggleWatch('${r.code}')">${watchlist.has(r.code) ? '⭐' : '☆'}</button>`;
+    return `<div class="${rowCls[r.status]}">
       <span class="cl-code" onclick="event.stopPropagation();openSheet('${r.code}','${escHtml(r.name)}')">${r.code}</span>
       <span class="cl-name">${escHtml(r.name)}</span>
-      <span class="cl-weight" style="color:var(--green-bd)">${wA}</span>
-      <span class="cl-weight" style="color:var(--blue-bd)">${wB}</span>
+      <span class="cx-wA">${wA}</span>
+      <span class="cx-wB">${wB}</span>
       ${badge}${star}
     </div>`;
   }).join('') + '</div>';
 
-  container.innerHTML = header + html;
+  container.innerHTML = summary + header + html;
 }
 
 // ── Events ────────────────────────────────────────────────────────────────
