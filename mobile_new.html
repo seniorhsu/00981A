@@ -1743,6 +1743,8 @@ function setMode(mode) {
     searchWrap.style.display = 'none';
     summary.style.display = 'none';
     fundSelectorRow.style.display = 'none';
+    document.getElementById('btnView').style.display = 'none';
+    document.getElementById('btnShare').style.display = 'none';
     document.getElementById('cardContainer').innerHTML = '<div class="empty">請選擇日期</div>';
     document.getElementById('resultCount').textContent = '';
     populateCrossDates();
@@ -1750,6 +1752,8 @@ function setMode(mode) {
     topbarRow2.style.display = 'flex';
     crossBar.style.display = 'none';
     fundSelectorRow.style.display = 'flex';
+    document.getElementById('btnView').style.display = '';
+    document.getElementById('btnShare').style.display = '';
     document.getElementById('cardContainer').innerHTML = '<div class="empty">請選擇目標日期與比較日期</div>';
     document.getElementById('resultCount').textContent = '';
   }
