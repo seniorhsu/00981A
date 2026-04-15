@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>ETF 持股比較</title>
+  <title>00981A 持股比較（手機版）</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -165,40 +165,6 @@
     }
     .btn-icon:active { opacity: 0.7; }
     .btn-icon.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-
-    .fund-selector-row {
-      display: flex; gap: 8px; padding: 6px 16px 2px;
-      background: var(--bg2);
-    }
-    .fund-pill {
-      padding: 5px 16px; border-radius: 20px; border: 1.5px solid var(--border);
-      background: var(--bg3); color: var(--muted);
-      font-size: 13px; font-weight: 700; cursor: pointer;
-      transition: all 0.15s;
-    }
-    .fund-pill.active {
-      background: var(--accent); color: #fff; border-color: var(--accent);
-    }
-
-    .mode-row {
-      display: flex; gap: 8px; padding: 4px 16px 4px;
-      background: var(--bg2); border-bottom: 1px solid var(--border2);
-    }
-    .mode-pill {
-      padding: 4px 14px; border-radius: 16px;
-      border: 1.5px solid var(--border);
-      background: var(--bg3); color: var(--muted);
-      font-size: 13px; font-weight: 700; cursor: pointer;
-      transition: all 0.15s;
-    }
-    .mode-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-
-    .cross-filter {
-      padding: 4px 10px; border-radius: 14px; border: 1.5px solid var(--border);
-      background: var(--bg3); color: var(--muted);
-      font-size: 12px; font-weight: 600; cursor: pointer;
-    }
-    .cross-filter.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
     /* ── Compact list view ── */
     .compact-list { display: flex; flex-direction: column; }
@@ -744,21 +710,13 @@
 <!-- ── Topbar ── -->
 <div class="topbar">
   <div class="topbar-row1">
-    <div class="etf-badge" id="etfBadge">00981A</div>
+    <div class="etf-badge">00981A</div>
     <div class="topbar-title">持股明細比較</div>
     <button class="btn-icon" id="btnShare" onclick="shareComparison()" title="分享">⬆️</button>
     <button class="btn-icon" id="btnView"  onclick="toggleView()"      title="切換視圖">☰</button>
     <button class="btn-dark" id="btnDark"  onclick="toggleDark()"      title="切換深色模式">🌙</button>
   </div>
-  <div class="fund-selector-row" id="fundSelectorRow">
-    <button class="fund-pill active" id="fp-00981A" onclick="switchFund('00981A')">00981A</button>
-    <button class="fund-pill" id="fp-00992A" onclick="switchFund('00992A')">00992A</button>
-  </div>
-  <div class="mode-row" id="modeRow">
-    <button class="mode-pill active" id="mp-time" onclick="setMode('time')">📅 持股變化</button>
-    <button class="mode-pill" id="mp-cross" onclick="setMode('cross')">🔀 重疊分析</button>
-  </div>
-  <div class="topbar-row2" id="topbarRow2">
+  <div class="topbar-row2">
     <span class="ctrl-label">目標</span>
     <select id="selTarget"></select>
     <span class="ctrl-label">比較</span>
@@ -770,30 +728,6 @@
     <button class="btn" id="btnPrevMonth" onclick="setCompareQuick('prevMonth')">前一個月</button>
   </div>
   <div id="statusMsg"></div>
-</div>
-
-<!-- Cross-fund date selector -->
-<div id="crossBar" style="display:none; padding:10px 16px; background:var(--bg2); border-bottom:1px solid var(--border2);">
-  <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-    <span style="font-size:13px; color:var(--muted); flex-shrink:0;">日期</span>
-    <select id="crossDateSel" style="flex:1; min-width:120px; padding:6px 10px; border-radius:8px; border:1.5px solid var(--border); background:var(--bg3); color:var(--text); font-size:14px; font-weight:600;" onchange="onCrossDateChange()">
-      <option value="">選擇日期</option>
-    </select>
-  </div>
-  <!-- Filter tabs -->
-  <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;" id="crossFilterRow">
-    <button class="cross-filter active" id="cf-all"    onclick="setCrossFilter('all')">全部持股</button>
-    <button class="cross-filter" id="cf-both"   onclick="setCrossFilter('both')">✅ 兩檔共有</button>
-    <button class="cross-filter" id="cf-a_only" onclick="setCrossFilter('a_only')">🅰 僅00981A</button>
-    <button class="cross-filter" id="cf-b_only" onclick="setCrossFilter('b_only')">🅱 僅00992A</button>
-  </div>
-  <!-- Sort pills -->
-  <div style="display:flex; gap:6px; margin-top:6px; flex-wrap:wrap; align-items:center;">
-    <span style="font-size:11px; color:var(--muted);">排序：</span>
-    <button class="cross-filter active" id="cs-wA" onclick="setCrossSort('wA')">00981A權重↓</button>
-    <button class="cross-filter"        id="cs-wB" onclick="setCrossSort('wB')">00992A權重↓</button>
-    <button class="cross-filter"        id="cs-code" onclick="setCrossSort('code')">代號↑</button>
-  </div>
 </div>
 
 <!-- ── Summary chips ── -->
@@ -881,21 +815,6 @@
 </div>
 
 <script>
-// ── Fund configuration ────────────────────────────────────────────────────
-const FUNDS = {
-  '00981A': { label: '00981A', dir: '00981A_Data', datesJson: 'dates.json' },
-  '00992A': { label: '00992A', dir: '00992A_Data', datesJson: '00992A_dates.json' },
-};
-let currentFund = localStorage.getItem('fund_selected') || '00981A';
-
-// ── Mode state ────────────────────────────────────────────────────────────
-let appMode = 'time'; // 'time' | 'cross'
-let crossDate = null;
-let crossData981 = null;
-let crossData992 = null;
-let crossFilter = 'all'; // 'all' | 'both' | 'a_only' | 'b_only'
-let crossSort   = 'wA';  // 'wA' | 'wB' | 'code'
-
 // ── Force fresh load for LINE / in-app browsers ───────────────────────────
 (function() {
   const p = new URLSearchParams(location.search);
@@ -951,7 +870,7 @@ let DATES = [];
 
 async function loadDates() {
   try {
-    const resp = await fetch(`${FUNDS[currentFund].datesJson}?t=${Date.now()}`, { cache: 'no-store' });
+    const resp = await fetch(`dates.json?t=${Date.now()}`, { cache: 'no-store' });
     if (!resp.ok) throw new Error();
     DATES = (await resp.json()).sort();
     return true;
@@ -972,7 +891,7 @@ let activeQuick   = null;
 let currentSort   = 'weight';
 let sortDir       = 'desc';   // 'asc' | 'desc'
 const SORT_DEFAULT_DIR = { weight:'desc', chg:'desc', pchg:'desc', name:'asc' };
-let viewMode = localStorage.getItem('viewMode_mobile') || 'card'; // 'card' | 'list'
+let viewMode = localStorage.getItem('viewMode_00981A') || 'card'; // 'card' | 'list'
 (function initViewBtn() {
   const btn = document.getElementById('btnView');
   btn.textContent = viewMode === 'list' ? '⊞' : '☰';
@@ -984,13 +903,13 @@ let watchlist = new Set();
 
 function loadWatchlist() {
   try {
-    const raw = localStorage.getItem('watchlist_' + currentFund);
-    return raw ? new Set(JSON.parse(raw)) : new Set();
-  } catch { return new Set(); }
+    const raw = localStorage.getItem('watchlist_00981A');
+    if (raw) watchlist = new Set(JSON.parse(raw));
+  } catch { watchlist = new Set(); }
 }
 
 function saveWatchlist() {
-  localStorage.setItem('watchlist_' + currentFund, JSON.stringify([...watchlist]));
+  localStorage.setItem('watchlist_00981A', JSON.stringify([...watchlist]));
 }
 
 function toggleWatch(code) {
@@ -1004,7 +923,7 @@ function toggleWatch(code) {
 }
 
 // ── Data cache ────────────────────────────────────────────────────────────
-const fileCache = new Map();
+const dataCache = new Map();
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 const fmtDate  = d => `${d.slice(0,4)}/${d.slice(4,6)}/${d.slice(6,8)}`;
@@ -1052,15 +971,12 @@ function readURLState() {
 }
 
 // ── Data ──────────────────────────────────────────────────────────────────
-async function loadFile(date, fundCode) {
-  const fc = fundCode || currentFund;
-  const cacheKey = fc + '_' + date;
-  if (fileCache.has(cacheKey)) return fileCache.get(cacheKey);
-  const path = `${FUNDS[fc].dir}/${fc}_${date}.txt`;
-  const resp = await fetch(`${path}?t=${Date.now()}`, { cache: 'no-store' });
-  if (!resp.ok) throw new Error(`無法讀取 ${fc}_${date}.txt`);
+async function loadFile(date) {
+  if (dataCache.has(date)) return dataCache.get(date);
+  const resp = await fetch(`00981A_Data/00981A_${date}.txt?t=${Date.now()}`, { cache: 'no-store' });
+  if (!resp.ok) throw new Error(`無法讀取 00981A_${date}.txt`);
   const data = parseHoldings(await resp.text());
-  fileCache.set(cacheKey, data);
+  dataCache.set(date, data);
   return data;
 }
 
@@ -1285,7 +1201,7 @@ function attachLongPress(el, code, name) {
 // ── View toggle ───────────────────────────────────────────────────────────
 function toggleView() {
   viewMode = viewMode === 'card' ? 'list' : 'card';
-  localStorage.setItem('viewMode_mobile', viewMode);
+  localStorage.setItem('viewMode_00981A', viewMode);
   const btn = document.getElementById('btnView');
   btn.textContent = viewMode === 'list' ? '⊞' : '☰';
   btn.classList.toggle('active', viewMode === 'list');
@@ -1303,7 +1219,7 @@ function buildShareText() {
   if (!targetData) return '';
   const dateA = targetDate  ? fmtDate(targetDate)  : '—';
   const dateB = compareDate ? fmtDate(compareDate) : '—';
-  let lines = [`📊 ${currentFund} 持股比較`];
+  let lines = ['📊 00981A 持股比較'];
 
   if (compareData) {
     lines.push(`${dateA} vs ${dateB}`);
@@ -1386,7 +1302,7 @@ function doShare() {
   closeShareModal();
   const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
   if (isMobile && navigator.share) {
-    navigator.share({ title: `${currentFund} 持股比較`, text }).catch(() => {});
+    navigator.share({ title: '00981A 持股比較', text }).catch(() => {});
   } else {
     navigator.clipboard.writeText(text)
       .then(() => showToast('已複製到剪貼板'))
@@ -1687,204 +1603,6 @@ async function loadAndRender() {
   renderCards();
 }
 
-// ── Fund switching ────────────────────────────────────────────────────────
-function switchFund(code) {
-  if (code === currentFund) return;
-  currentFund = code;
-  localStorage.setItem('fund_selected', code);
-  // reset data state
-  targetData = null; compareData = null;
-  targetDate = null; compareDate = null;
-  fileCache.clear();
-  // reload watchlist for new fund
-  watchlist = loadWatchlist();
-  // update UI
-  document.getElementById('etfBadge').textContent = code;
-  document.getElementById('cardContainer').innerHTML = '<div class="empty">請選擇目標日期與比較日期</div>';
-  document.getElementById('resultCount').textContent = '';
-  document.getElementById('summary').style.display = 'none';
-  document.getElementById('sortRow').style.display = 'none';
-  document.getElementById('searchWrap').style.display = 'none';
-  updateFundPills();
-  loadDates().then(ok => {
-    if (!ok || !DATES.length) return;
-    targetDate = DATES[DATES.length - 1];
-    populateSelects();
-    updateSortPills();
-    document.getElementById('chip-all').classList.add('active');
-    setCompareQuick('prevDay');
-  });
-}
-
-function updateFundPills() {
-  Object.keys(FUNDS).forEach(code => {
-    const btn = document.getElementById('fp-' + code);
-    if (btn) btn.classList.toggle('active', code === currentFund);
-  });
-}
-
-// ── Mode switching ────────────────────────────────────────────────────────
-function setMode(mode) {
-  appMode = mode;
-  document.getElementById('mp-time').classList.toggle('active', mode === 'time');
-  document.getElementById('mp-cross').classList.toggle('active', mode === 'cross');
-
-  const topbarRow2 = document.getElementById('topbarRow2');
-  const crossBar = document.getElementById('crossBar');
-  const sortRow = document.getElementById('sortRow');
-  const searchWrap = document.getElementById('searchWrap');
-  const summary = document.getElementById('summary');
-  const fundSelectorRow = document.getElementById('fundSelectorRow');
-
-  if (mode === 'cross') {
-    topbarRow2.style.display = 'none';
-    crossBar.style.display = 'block';
-    sortRow.style.display = 'none';
-    searchWrap.style.display = 'none';
-    summary.style.display = 'none';
-    fundSelectorRow.style.display = 'none';
-    document.getElementById('cardContainer').innerHTML = '<div class="empty">請選擇日期</div>';
-    document.getElementById('resultCount').textContent = '';
-    populateCrossDates();
-  } else {
-    topbarRow2.style.display = 'flex';
-    crossBar.style.display = 'none';
-    fundSelectorRow.style.display = 'flex';
-    document.getElementById('cardContainer').innerHTML = '<div class="empty">請選擇目標日期與比較日期</div>';
-    document.getElementById('resultCount').textContent = '';
-  }
-}
-
-// ── Cross-fund: populate date selector ───────────────────────────────────
-async function populateCrossDates() {
-  try {
-    const [r1, r2] = await Promise.all([
-      fetch(`dates.json?t=${Date.now()}`, { cache: 'no-store' }),
-      fetch(`00992A_dates.json?t=${Date.now()}`, { cache: 'no-store' })
-    ]);
-    const [dates981, dates992] = await Promise.all([r1.json(), r2.json()]);
-    const set992 = new Set(dates992);
-    const common = dates981.filter(d => set992.has(d)).reverse(); // newest first
-    const sel = document.getElementById('crossDateSel');
-    sel.innerHTML = '<option value="">選擇日期</option>' +
-      common.map(d => `<option value="${d}">${fmtDate(d)}</option>`).join('');
-  } catch(e) {
-    showToast('載入日期失敗');
-  }
-}
-
-// ── Cross-fund: date change ───────────────────────────────────────────────
-function onCrossDateChange() {
-  const date = document.getElementById('crossDateSel').value;
-  if (!date) return;
-  crossDate = date;
-  loadCrossData(date);
-}
-
-async function loadCrossData(date) {
-  document.getElementById('cardContainer').innerHTML = '<div class="empty">載入中...</div>';
-  try {
-    const [data981, data992] = await Promise.all([
-      loadFile(date, '00981A'),
-      loadFile(date, '00992A')
-    ]);
-    crossData981 = data981;
-    crossData992 = data992;
-    renderCross();
-  } catch(e) {
-    document.getElementById('cardContainer').innerHTML = `<div class="error">載入失敗：${escHtml(e.message)}</div>`;
-  }
-}
-
-// ── Cross-fund: filter ────────────────────────────────────────────────────
-function setCrossFilter(f) {
-  crossFilter = f;
-  ['all','both','a_only','b_only'].forEach(k => {
-    document.getElementById('cf-' + k).classList.toggle('active', k === f);
-  });
-  renderCross();
-}
-
-function setCrossSort(s) {
-  crossSort = s;
-  ['wA','wB','code'].forEach(k => {
-    document.getElementById('cs-' + k).classList.toggle('active', k === s);
-  });
-  renderCross();
-}
-
-// ── Cross-fund: render ────────────────────────────────────────────────────
-function renderCross() {
-  if (!crossData981 || !crossData992) return;
-  const container = document.getElementById('cardContainer');
-  const rcEl = document.getElementById('resultCount');
-
-  // Build map: code -> {code, name, weightA, weightB, status}
-  const map981 = new Map(crossData981.map(r => [r.code, r]));
-  const map992 = new Map(crossData992.map(r => [r.code, r]));
-  const allCodes = new Set([...map981.keys(), ...map992.keys()]);
-
-  let rows = [];
-  allCodes.forEach(code => {
-    const a = map981.get(code);
-    const b = map992.get(code);
-    const status = a && b ? 'both' : a ? 'a_only' : 'b_only';
-    rows.push({
-      code,
-      name: (a || b).name,
-      weightA: a ? a.weight : null,
-      weightB: b ? b.weight : null,
-      status
-    });
-  });
-
-  // Apply filter
-  if (crossFilter !== 'all') rows = rows.filter(r => r.status === crossFilter);
-
-  // Sort
-  if (crossSort === 'wB') {
-    rows.sort((a, b) => (b.weightB ?? 0) - (a.weightB ?? 0) || (b.weightA ?? 0) - (a.weightA ?? 0));
-  } else if (crossSort === 'code') {
-    rows.sort((a, b) => a.code.localeCompare(b.code));
-  } else {
-    rows.sort((a, b) => (b.weightA ?? 0) - (a.weightA ?? 0) || (b.weightB ?? 0) - (a.weightB ?? 0));
-  }
-
-  rcEl.textContent = `共 ${rows.length} 檔`;
-
-  if (!rows.length) {
-    container.innerHTML = '<div class="empty">無資料</div>';
-    return;
-  }
-
-  const statusColor = { both: 'status-same', a_only: 'status-add', b_only: 'status-new' };
-  const statusLabel = { both: '共同', a_only: '獨有A', b_only: '獨有B' };
-
-  const header = `<div style="display:flex;gap:6px;padding:6px 14px;font-size:11px;color:var(--muted);background:var(--bg3);border-bottom:1px solid var(--border2);">
-    <span style="min-width:38px">代號</span>
-    <span style="flex:1;max-width:80px">名稱</span>
-    <span style="min-width:48px;text-align:right;color:var(--green-bd)">00981A</span>
-    <span style="min-width:48px;text-align:right;color:var(--blue-bd)">00992A</span>
-    <span style="min-width:40px"></span>
-  </div>`;
-
-  const html = '<div class="compact-list">' + rows.map(r => {
-    const wA = r.weightA != null ? r.weightA.toFixed(2) + '%' : '—';
-    const wB = r.weightB != null ? r.weightB.toFixed(2) + '%' : '—';
-    const badge = `<span class="badge ${statusColor[r.status] === 'status-same' ? 'badge-same' : statusColor[r.status] === 'status-add' ? 'badge-add' : 'badge-new'}">${statusLabel[r.status]}</span>`;
-    const star = `<button class="cl-star" onclick="event.stopPropagation();toggleWatch('${r.code}')">${watchlist.has(r.code) ? '⭐' : '☆'}</button>`;
-    return `<div class="cl-row ${statusColor[r.status]}">
-      <span class="cl-code" onclick="event.stopPropagation();openSheet('${r.code}','${escHtml(r.name)}')">${r.code}</span>
-      <span class="cl-name">${escHtml(r.name)}</span>
-      <span class="cl-weight" style="color:var(--green-bd)">${wA}</span>
-      <span class="cl-weight" style="color:var(--blue-bd)">${wB}</span>
-      ${badge}${star}
-    </div>`;
-  }).join('') + '</div>';
-
-  container.innerHTML = header + html;
-}
-
 // ── Events ────────────────────────────────────────────────────────────────
 document.getElementById('selTarget').addEventListener('change', e => {
   targetDate = e.target.value;
@@ -1908,9 +1626,7 @@ document.getElementById('selCompare').addEventListener('change', e => {
 
 // ── Start ─────────────────────────────────────────────────────────────────
 (async () => {
-  watchlist = loadWatchlist();
-  updateFundPills();
-  document.getElementById('etfBadge').textContent = currentFund;
+  loadWatchlist();
 
   const ok = await loadDates();
   if (!ok || !DATES.length) return;

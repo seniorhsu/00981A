@@ -6,7 +6,15 @@
       "Bash(powershell -Command ':*)",
       "Skill(schedule)",
       "Skill(schedule:*)",
-      "Bash(python -c ':*)"
+      "Bash(python -c ':*)",
+      "Bash(dir \"C:\\\\ClaudeCode\\\\00992A_Data\")",
+      "Bash(dir \"C:\\\\ClaudeCode\\\\*.json\")",
+      "Bash(dir \"C:\\\\ClaudeCode\\\\\" /b | findstr \".json\")",
+      "Bash(python3 -c ':*)",
+      "Bash(python \"C:/ClaudeCode/download_00981A.py\" --help)",
+      "Bash(where python3:*)",
+      "Bash(where python:*)",
+      "Bash('C:\\\\Users\\\\senior\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe' -c ':*)"
     ]
   }
 }
