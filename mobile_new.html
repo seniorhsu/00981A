@@ -806,10 +806,12 @@
   </div>
   <!-- Filter tabs -->
   <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;" id="crossFilterRow">
-    <button class="cross-filter active" id="cf-all"    onclick="setCrossFilter('all')">全部持股</button>
-    <button class="cross-filter" id="cf-both"   onclick="setCrossFilter('both')">✅ 兩檔都有</button>
-    <button class="cross-filter" id="cf-a_only" onclick="setCrossFilter('a_only')">🅰 只在00981A</button>
-    <button class="cross-filter" id="cf-b_only" onclick="setCrossFilter('b_only')">🅱 只在00992A</button>
+    <button class="cross-filter active" id="cf-all"      onclick="setCrossFilter('all')">全部持股</button>
+    <button class="cross-filter" id="cf-both"     onclick="setCrossFilter('both')">✅ 兩檔都有</button>
+    <button class="cross-filter" id="cf-a_only"   onclick="setCrossFilter('a_only')">🅰 只在00981A</button>
+    <button class="cross-filter" id="cf-b_only"   onclick="setCrossFilter('b_only')">🅱 只在00992A</button>
+    <button class="cross-filter" id="cf-add_both" onclick="setCrossFilter('add_both')">🔺 同時加碼</button>
+    <button class="cross-filter" id="cf-dec_both" onclick="setCrossFilter('dec_both')">🔻 同時減碼</button>
   </div>
   <!-- Sort pills -->
   <div style="display:flex; gap:6px; margin-top:6px; flex-wrap:wrap; align-items:center;">
@@ -917,7 +919,11 @@ let appMode = 'time'; // 'time' | 'cross'
 let crossDate = null;
 let crossData981 = null;
 let crossData992 = null;
-let crossFilter = 'all'; // 'all' | 'both' | 'a_only' | 'b_only'
+let crossDiff981 = null; // compareHoldings result for 00981A (curr vs prev)
+let crossDiff992 = null; // compareHoldings result for 00992A (curr vs prev)
+let crossDates981 = []; // 00981A date list
+let crossDates992 = []; // 00992A date list
+let crossFilter = 'all'; // 'all' | 'both' | 'a_only' | 'b_only' | 'add_both' | 'dec_both'
 let crossSort   = 'wA';  // 'wA' | 'wB' | 'code'
 
 // ── Force fresh load for LINE / in-app browsers ───────────────────────────
@@ -1806,6 +1812,8 @@ async function populateCrossDates() {
       fetch(`00992A_dates.json?t=${Date.now()}`, { cache: 'no-store' })
     ]);
     const [dates981, dates992] = await Promise.all([r1.json(), r2.json()]);
+    crossDates981 = dates981;
+    crossDates992 = dates992;
     const set992 = new Set(dates992);
     const common = dates981.filter(d => set992.has(d)); // ascending，交給 buildGroupedOptions 反轉
     const latest = common[common.length - 1]; // 最新日期
@@ -1833,12 +1841,20 @@ function onCrossDateChange() {
 async function loadCrossData(date) {
   document.getElementById('cardContainer').innerHTML = '<div class="empty">載入中...</div>';
   try {
-    const [data981, data992] = await Promise.all([
-      loadFile(date, '00981A'),
-      loadFile(date, '00992A')
-    ]);
-    crossData981 = data981;
-    crossData992 = data992;
+    // 找各基金的前一日
+    const prev981 = crossDates981[crossDates981.indexOf(date) - 1] ?? null;
+    const prev992 = crossDates992[crossDates992.indexOf(date) - 1] ?? null;
+
+    const fetches = [loadFile(date, '00981A'), loadFile(date, '00992A')];
+    if (prev981) fetches.push(loadFile(prev981, '00981A'));
+    if (prev992) fetches.push(loadFile(prev992, '00992A'));
+
+    const [curr981, curr992, prevData981, prevData992] = await Promise.all(fetches);
+    crossData981 = curr981;
+    crossData992 = curr992;
+    // 計算各基金的加減碼 diff（與前一日比較）
+    crossDiff981 = prev981 ? compareHoldings(curr981, prevData981) : null;
+    crossDiff992 = prev992 ? compareHoldings(curr992, prevData992) : null;
     renderCross();
   } catch(e) {
     document.getElementById('cardContainer').innerHTML = `<div class="error">載入失敗：${escHtml(e.message)}</div>`;
@@ -1848,7 +1864,7 @@ async function loadCrossData(date) {
 // ── Cross-fund: filter ────────────────────────────────────────────────────
 function setCrossFilter(f) {
   crossFilter = f;
-  ['all','both','a_only','b_only'].forEach(k => {
+  ['all','both','a_only','b_only','add_both','dec_both'].forEach(k => {
     document.getElementById('cf-' + k).classList.toggle('active', k === f);
   });
   renderCross();
@@ -1874,21 +1890,37 @@ function renderCross() {
   const allCodes = new Set([...map981.keys(), ...map992.keys()]);
 
   let rows = [];
+  // 建立加減碼張數 map
+  const diffMap981 = new Map((crossDiff981 ?? []).map(r => [r.code, r]));
+  const diffMap992 = new Map((crossDiff992 ?? []).map(r => [r.code, r]));
+
   allCodes.forEach(code => {
     const a = map981.get(code);
     const b = map992.get(code);
     const status = a && b ? 'both' : a ? 'a_only' : 'b_only';
+    const d981 = diffMap981.get(code);
+    const d992 = diffMap992.get(code);
+    const lots981 = d981 ? Math.floor((d981.sharesA ?? 0) / 1000) - Math.floor((d981.sharesB ?? 0) / 1000) : null;
+    const lots992 = d992 ? Math.floor((d992.sharesA ?? 0) / 1000) - Math.floor((d992.sharesB ?? 0) / 1000) : null;
     rows.push({
       code,
       name: (a || b).name,
       weightA: a ? a.weight : null,
       weightB: b ? b.weight : null,
-      status
+      status, lots981, lots992
     });
   });
 
   // Apply filter
-  if (crossFilter !== 'all') rows = rows.filter(r => r.status === crossFilter);
+  if (crossFilter === 'add_both') {
+    rows = rows.filter(r => r.lots981 != null && r.lots992 != null && r.lots981 > 0 && r.lots992 > 0);
+    rows.sort((a, b) => (b.lots981 + b.lots992) - (a.lots981 + a.lots992));
+  } else if (crossFilter === 'dec_both') {
+    rows = rows.filter(r => r.lots981 != null && r.lots992 != null && r.lots981 < 0 && r.lots992 < 0);
+    rows.sort((a, b) => (a.lots981 + a.lots992) - (b.lots981 + b.lots992));
+  } else if (crossFilter !== 'all') {
+    rows = rows.filter(r => r.status === crossFilter);
+  }
 
   // Sort
   if (crossSort === 'wB') {
@@ -1933,17 +1965,25 @@ function renderCross() {
     <span style="min-width:40px"></span>
   </div>`;
 
+  const isSyncFilter = crossFilter === 'add_both' || crossFilter === 'dec_both';
+
   const html = '<div class="compact-list">' + rows.map(r => {
-    const wA  = r.weightA != null ? r.weightA.toFixed(2) + '%' : '—';
-    const wB  = r.weightB != null ? r.weightB.toFixed(2) + '%' : '—';
-    const badge = `<span class="${badgeCls[r.status]}">${badgeTxt[r.status]}</span>`;
+    let col1, col2;
+    if (isSyncFilter && r.lots981 != null && r.lots992 != null) {
+      const sign981 = r.lots981 > 0 ? '+' : '';
+      const sign992 = r.lots992 > 0 ? '+' : '';
+      col1 = `<span class="cx-wA">${sign981}${r.lots981.toLocaleString()}張</span>`;
+      col2 = `<span class="cx-wB">${sign992}${r.lots992.toLocaleString()}張</span>`;
+    } else {
+      col1 = `<span class="cx-wA">${r.weightA != null ? r.weightA.toFixed(2) + '%' : '—'}</span>`;
+      col2 = `<span class="cx-wB">${r.weightB != null ? r.weightB.toFixed(2) + '%' : '—'}</span>`;
+    }
+    const badge = `<span class="${badgeCls[r.status] ?? 'cx-badge-both'}">${isSyncFilter ? (crossFilter === 'add_both' ? '🔺' : '🔻') : badgeTxt[r.status]}</span>`;
     const star  = `<button class="cl-star" onclick="event.stopPropagation();toggleWatch('${r.code}')">${watchlist.has(r.code) ? '⭐' : '☆'}</button>`;
-    return `<div class="${rowCls[r.status]}">
+    return `<div class="${rowCls[r.status] ?? 'cx-row cx-both'}">
       <span class="cl-code" onclick="event.stopPropagation();openSheet('${r.code}','${escHtml(r.name)}')">${r.code}</span>
       <span class="cl-name">${escHtml(r.name)}</span>
-      <span class="cx-wA">${wA}</span>
-      <span class="cx-wB">${wB}</span>
-      ${badge}${star}
+      ${col1}${col2}${badge}${star}
     </div>`;
   }).join('') + '</div>';
 
