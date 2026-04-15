@@ -1754,8 +1754,13 @@ function setMode(mode) {
     fundSelectorRow.style.display = 'flex';
     document.getElementById('btnView').style.display = '';
     document.getElementById('btnShare').style.display = '';
-    document.getElementById('cardContainer').innerHTML = '<div class="empty">請選擇目標日期與比較日期</div>';
-    document.getElementById('resultCount').textContent = '';
+    // 若原本有資料，直接重新渲染；否則顯示提示
+    if (targetData) {
+      renderCards();
+    } else {
+      document.getElementById('cardContainer').innerHTML = '<div class="empty">請選擇目標日期與比較日期</div>';
+      document.getElementById('resultCount').textContent = '';
+    }
   }
 }
 
@@ -1770,8 +1775,13 @@ async function populateCrossDates() {
     const set992 = new Set(dates992);
     const common = dates981.filter(d => set992.has(d)).reverse(); // newest first
     const sel = document.getElementById('crossDateSel');
-    sel.innerHTML = '<option value="">選擇日期</option>' +
-      common.map(d => `<option value="${d}">${fmtDate(d)}</option>`).join('');
+    sel.innerHTML = common.map(d => `<option value="${d}">${fmtDate(d)}</option>`).join('');
+    // 自動選最新日期並載入
+    if (common.length) {
+      sel.value = common[0];
+      crossDate = common[0];
+      loadCrossData(common[0]);
+    }
   } catch(e) {
     showToast('載入日期失敗');
   }

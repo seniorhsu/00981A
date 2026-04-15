@@ -1,0 +1,47 @@
+name: Download 00992A Holdings
+
+# 台灣時間 16:35–19:05，每 15 分鐘執行一次（比 00981A 晚 5 分鐘）
+# 台灣 UTC+8，換算成 UTC：08:35–11:05
+on:
+  schedule:
+    - cron: '35,50 8 * * 1-5'         # 16:35, 16:50 TST
+    - cron: '5,20,35,50 9,10 * * 1-5' # 17:05–18:50 TST
+    - cron: '5 11 * * 1-5'            # 19:05 TST
+  workflow_dispatch:                   # 允許手動觸發
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run download script
+        run: python download_00992A.py
+        env:
+          PYTHONIOENCODING: utf-8
+
+      - name: Commit data + log
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add 00992A_Data/ 00992A_dates.json download_00992A_log.txt || true
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+          else
+            DATE=$(date -u +"%Y-%m-%d %H:%M UTC")
+            git commit -m "data: 更新 00992A 持股資料 ($DATE)"
+            git push
+          fi
