@@ -759,6 +759,49 @@
     }
     .disclaimer strong { color: var(--text); font-size: 11.5px; }
 
+    /* ── Trend sheet ── */
+    .trend-sheet {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--bg2); border-radius: 20px 20px 0 0;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.18);
+      z-index: 201; max-height: 75vh;
+      transform: translateY(100%); transition: transform 0.3s ease;
+      display: flex; flex-direction: column;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .trend-sheet.open { transform: translateY(0); }
+    .trend-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 16px 10px;
+    }
+    .trend-code {
+      font-family: 'Courier New', monospace; font-size: 15px; font-weight: 800;
+      color: var(--accent); margin-right: 8px;
+    }
+    .trend-name { font-size: 14px; font-weight: 700; color: var(--text); }
+    .trend-close {
+      background: none; border: none; font-size: 16px; color: var(--muted);
+      cursor: pointer; padding: 4px 8px;
+    }
+    #trendChartWrap { padding: 0 12px; flex-shrink: 0; }
+    #trendTableWrap {
+      overflow-y: auto; padding: 8px 16px 16px;
+      flex: 1; min-height: 0;
+    }
+    .trend-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .trend-table th {
+      text-align: right; color: var(--muted); font-weight: 600;
+      padding: 4px 6px; border-bottom: 1px solid var(--border2);
+    }
+    .trend-table th:first-child { text-align: left; }
+    .trend-table td {
+      text-align: right; padding: 5px 6px;
+      border-bottom: 1px solid var(--border2); color: var(--text);
+    }
+    .trend-table td:first-child { text-align: left; color: var(--muted); }
+    .trend-loading { text-align: center; padding: 24px; color: var(--muted); font-size: 14px; }
+    .trend-hint { font-size: 11px; margin-left: 3px; opacity: 0.6; vertical-align: middle; }
+
     /* ── Misc ── */
     a { color: var(--accent); }
   </style>
@@ -1479,7 +1522,7 @@ function renderCompactList(rows, container) {
 
     return `<div class="cl-row status-${r.status}">
       <span class="cl-code" onclick="event.stopPropagation();openSheet('${r.code}','${escHtml(r.name)}')">${r.code}</span>
-      <span class="cl-name">${escHtml(r.name)}</span>
+      <span class="cl-name" onclick="event.stopPropagation();openTrend('${r.code}','${escHtml(r.name)}')" style="cursor:pointer">${escHtml(r.name)}<span class="trend-hint">📈</span></span>
       ${wtHtml}${lotsHtml}${pchgHtml}${badge}${star}
     </div>`;
   }).join('') + '</div>';
@@ -1611,7 +1654,7 @@ function renderCards() {
         <div class="card-header">
           <div class="card-id">
             <span class="card-code" onclick="event.stopPropagation();openSheet('${r.code}','${escHtml(r.name)}')" style="cursor:pointer;text-decoration:underline dotted">${r.code}</span>
-            <span class="card-name">${escHtml(r.name)}</span>
+            <span class="card-name" onclick="event.stopPropagation();openTrend('${r.code}','${escHtml(r.name)}')" style="cursor:pointer">${escHtml(r.name)}<span class="trend-hint">📈</span></span>
           </div>
           <div class="card-header-right">
             ${pChgBadge}
@@ -1665,7 +1708,7 @@ function renderSingleCards(container, rcEl) {
         <div class="card-header">
           <div class="card-id">
             <span class="card-code" onclick="event.stopPropagation();openSheet('${r.code}','${escHtml(r.name)}')" style="cursor:pointer;text-decoration:underline dotted">${r.code}</span>
-            <span class="card-name">${escHtml(r.name)}</span>
+            <span class="card-name" onclick="event.stopPropagation();openTrend('${r.code}','${escHtml(r.name)}')" style="cursor:pointer">${escHtml(r.name)}<span class="trend-hint">📈</span></span>
           </div>
           <div class="card-header-right">
             ${starBtn(r.code)}
@@ -1778,6 +1821,8 @@ function setMode(mode) {
 
   if (mode === 'cross') {
     topbarRow2.style.display = 'none';
+    document.querySelector('.topbar-row3').style.display = 'none';
+    document.getElementById('statusMsg').textContent = '';
     crossBar.style.display = 'block';
     sortRow.style.display = 'none';
     searchWrap.style.display = 'none';
@@ -1790,6 +1835,7 @@ function setMode(mode) {
     populateCrossDates();
   } else {
     topbarRow2.style.display = 'flex';
+    document.querySelector('.topbar-row3').style.display = 'flex';
     crossBar.style.display = 'none';
     fundSelectorRow.style.display = 'flex';
     document.getElementById('btnView').style.display = '';
@@ -1957,15 +2003,17 @@ function renderCross() {
   const badgeCls = { both: 'cx-badge-both',  a_only: 'cx-badge-a',  b_only: 'cx-badge-b' };
   const badgeTxt = { both: '兩檔都有',        a_only: '只在00981A',    b_only: '只在00992A' };
 
+  const isSyncFilter = crossFilter === 'add_both' || crossFilter === 'dec_both';
+
+  const col1Hdr = isSyncFilter ? '981A張數' : '981A權重';
+  const col2Hdr = isSyncFilter ? '992A張數' : '992A權重';
   const header = `<div style="display:flex;gap:6px;padding:6px 14px;font-size:11px;color:var(--muted);background:var(--bg3);border-bottom:1px solid var(--border2);">
     <span style="min-width:38px">代號</span>
     <span style="flex:1;max-width:110px">名稱</span>
-    <span style="min-width:52px;text-align:right;color:var(--cx-wA)">00981A</span>
-    <span style="min-width:52px;text-align:right;color:var(--cx-wB)">00992A</span>
+    <span style="min-width:52px;text-align:right;color:var(--cx-wA)">${col1Hdr}</span>
+    <span style="min-width:52px;text-align:right;color:var(--cx-wB)">${col2Hdr}</span>
     <span style="min-width:40px"></span>
   </div>`;
-
-  const isSyncFilter = crossFilter === 'add_both' || crossFilter === 'dec_both';
 
   const html = '<div class="compact-list">' + rows.map(r => {
     let col1, col2;
@@ -1982,12 +2030,169 @@ function renderCross() {
     const star  = `<button class="cl-star" onclick="event.stopPropagation();toggleWatch('${r.code}')">${watchlist.has(r.code) ? '⭐' : '☆'}</button>`;
     return `<div class="${rowCls[r.status] ?? 'cx-row cx-both'}">
       <span class="cl-code" onclick="event.stopPropagation();openSheet('${r.code}','${escHtml(r.name)}')">${r.code}</span>
-      <span class="cl-name">${escHtml(r.name)}</span>
+      <span class="cl-name" onclick="event.stopPropagation();openTrend('${r.code}','${escHtml(r.name)}')" style="cursor:pointer">${escHtml(r.name)}<span class="trend-hint">📈</span></span>
       ${col1}${col2}${badge}${star}
     </div>`;
   }).join('') + '</div>';
 
   container.innerHTML = summary + header + html;
+}
+
+// ── Trend sheet ───────────────────────────────────────────────────────────
+let activeTrendCode = null;
+
+async function openTrend(code, name) {
+  activeTrendCode = code;
+  document.getElementById('trendCode').textContent = code;
+  document.getElementById('trendName').textContent = name;
+  document.getElementById('trendChartWrap').innerHTML = '<div class="trend-loading">載入中…</div>';
+  document.getElementById('trendTableWrap').innerHTML = '';
+  document.getElementById('trendOverlay').classList.add('open');
+  document.getElementById('trendSheet').classList.add('open');
+  await loadTrendData(code);
+}
+
+function closeTrend() {
+  document.getElementById('trendOverlay').classList.remove('open');
+  document.getElementById('trendSheet').classList.remove('open');
+}
+
+async function loadTrendData(code) {
+  try {
+    if (appMode === 'cross') {
+      // Load last 20 common dates from both funds
+      const set992 = new Set(crossDates992);
+      const commonDates = crossDates981.filter(d => set992.has(d)).slice(-20);
+
+      const results981 = [], results992 = [];
+      for (const d of commonDates) {
+        const [data981, data992] = await Promise.all([
+          loadFile(d, '00981A'),
+          loadFile(d, '00992A')
+        ]);
+        const r981 = data981.find(r => r.code === code);
+        const r992 = data992.find(r => r.code === code);
+        results981.push({ date: d, weight: r981 ? r981.weight : 0, shares: r981 ? r981.shares : 0 });
+        results992.push({ date: d, weight: r992 ? r992.weight : 0, shares: r992 ? r992.shares : 0 });
+      }
+      renderTrendChart([
+        { label: '00981A', color: 'var(--cx-wA)', data: results981 },
+        { label: '00992A', color: 'var(--cx-wB)', data: results992 },
+      ]);
+      renderTrendTable(results981, results992);
+    } else {
+      // Single fund mode
+      const dates = DATES.slice(-20);
+      const results = [];
+      for (const d of dates) {
+        const data = await loadFile(d);
+        const r = data.find(r => r.code === code);
+        results.push({ date: d, weight: r ? r.weight : 0, shares: r ? r.shares : 0 });
+      }
+      renderTrendChart([
+        { label: currentFund, color: 'var(--accent)', data: results }
+      ]);
+      renderTrendTable(results, null);
+    }
+  } catch(e) {
+    document.getElementById('trendChartWrap').innerHTML = `<div class="trend-loading">載入失敗</div>`;
+  }
+}
+
+function renderTrendChart(series) {
+  const W = 320, H = 100, PAD = { top: 10, right: 10, bottom: 20, left: 32 };
+  const innerW = W - PAD.left - PAD.right;
+  const innerH = H - PAD.top - PAD.bottom;
+
+  // Find min/max weight across all series
+  const allWeights = series.flatMap(s => s.data.map(d => d.weight)).filter(w => w > 0);
+  if (!allWeights.length) {
+    document.getElementById('trendChartWrap').innerHTML = '<div class="trend-loading">無資料</div>';
+    return;
+  }
+  const maxW = Math.max(...allWeights) * 1.1;
+  const minW = Math.max(0, Math.min(...allWeights) * 0.9);
+
+  const n = series[0].data.length;
+  const xScale = i => PAD.left + (i / Math.max(n - 1, 1)) * innerW;
+  const yScale = w => PAD.top + innerH - ((w - minW) / (maxW - minW || 1)) * innerH;
+
+  let svgContent = '';
+
+  series.forEach(s => {
+    const points = s.data.map((d, i) => `${xScale(i).toFixed(1)},${yScale(d.weight).toFixed(1)}`).join(' ');
+    svgContent += `<polyline points="${points}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+    // Dots
+    s.data.forEach((d, i) => {
+      if (d.weight > 0) {
+        svgContent += `<circle cx="${xScale(i).toFixed(1)}" cy="${yScale(d.weight).toFixed(1)}" r="3" fill="${s.color}"/>`;
+      }
+    });
+  });
+
+  // Y-axis labels (3 ticks)
+  for (let t = 0; t <= 2; t++) {
+    const w = minW + (maxW - minW) * (t / 2);
+    const y = yScale(w);
+    svgContent += `<text x="${PAD.left - 4}" y="${y + 4}" text-anchor="end" font-size="9" fill="var(--muted)">${w.toFixed(1)}%</text>`;
+    svgContent += `<line x1="${PAD.left}" y1="${y}" x2="${PAD.left + innerW}" y2="${y}" stroke="var(--border2)" stroke-width="0.5"/>`;
+  }
+
+  // X-axis: show first, middle, last date
+  const showIdx = [0, Math.floor((n-1)/2), n-1];
+  showIdx.forEach(i => {
+    if (i < n) {
+      const d = series[0].data[i].date;
+      const label = d.slice(4,6) + '/' + d.slice(6,8);
+      svgContent += `<text x="${xScale(i)}" y="${H - 4}" text-anchor="middle" font-size="9" fill="var(--muted)">${label}</text>`;
+    }
+  });
+
+  // Latest value label
+  const last = series[0].data[n-1];
+  if (last.weight > 0) {
+    svgContent += `<text x="${xScale(n-1) - 4}" y="${yScale(last.weight) - 6}" text-anchor="end" font-size="10" font-weight="700" fill="${series[0].color}">${last.weight.toFixed(2)}%</text>`;
+  }
+
+  document.getElementById('trendChartWrap').innerHTML =
+    `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;overflow:visible">${svgContent}</svg>`;
+}
+
+function renderTrendTable(data981, data992) {
+  const rows = [...data981].reverse(); // newest first
+  const rows2 = data992 ? [...data992].reverse() : null;
+
+  let html = '<table class="trend-table"><thead><tr><th>日期</th>';
+  if (rows2) {
+    html += `<th style="color:var(--cx-wA)">981A權重</th><th style="color:var(--cx-wA)">981A張</th><th style="color:var(--cx-wB)">992A權重</th><th style="color:var(--cx-wB)">992A張</th>`;
+  } else {
+    html += `<th>權重</th><th>張數</th><th>變化</th>`;
+  }
+  html += '</tr></thead><tbody>';
+
+  rows.forEach((r, i) => {
+    const r2 = rows2 ? rows2[i] : null;
+    const prev = rows[i + 1];
+    const chg = (!rows2 && prev != null) ? (r.weight - prev.weight) : null;
+    const chgStr = chg != null
+      ? `<span style="color:${chg > 0 ? 'var(--green)' : chg < 0 ? 'var(--red)' : 'var(--muted)'}">${chg > 0 ? '+' : ''}${chg.toFixed(2)}%</span>`
+      : '';
+    const dateLabel = r.date.slice(4,6) + '/' + r.date.slice(6,8);
+    const w1 = r.weight > 0 ? r.weight.toFixed(2) + '%' : '—';
+    const l1 = r.shares > 0 ? Math.round(r.shares / 1000) + '張' : '—';
+    const w2 = r2 ? (r2.weight > 0 ? r2.weight.toFixed(2) + '%' : '—') : '';
+    const l2 = r2 ? (r2.shares > 0 ? Math.round(r2.shares / 1000) + '張' : '—') : '';
+    html += `<tr><td>${dateLabel}</td>`;
+    if (rows2) {
+      html += `<td style="color:var(--cx-wA)">${w1}</td><td style="color:var(--cx-wA)">${l1}</td><td style="color:var(--cx-wB)">${w2}</td><td style="color:var(--cx-wB)">${l2}</td>`;
+    } else {
+      html += `<td>${w1}</td><td>${l1}</td><td>${chgStr}</td>`;
+    }
+    html += '</tr>';
+  });
+
+  html += '</tbody></table>';
+  document.getElementById('trendTableWrap').innerHTML = html;
 }
 
 // ── Events ────────────────────────────────────────────────────────────────
@@ -2047,6 +2252,21 @@ document.getElementById('selCompare').addEventListener('change', e => {
   }
 })();
 </script>
+
+<!-- ── Trend sheet ── -->
+<div class="sheet-overlay" id="trendOverlay" onclick="closeTrend()"></div>
+<div class="trend-sheet" id="trendSheet">
+  <div class="sheet-handle"></div>
+  <div class="trend-header">
+    <div>
+      <span class="trend-code" id="trendCode"></span>
+      <span class="trend-name" id="trendName"></span>
+    </div>
+    <button class="trend-close" onclick="closeTrend()">✕</button>
+  </div>
+  <div id="trendChartWrap"></div>
+  <div id="trendTableWrap"></div>
+</div>
 
 <!-- ── Disclaimer ── -->
 <div class="disclaimer">
