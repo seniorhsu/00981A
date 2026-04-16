@@ -253,7 +253,9 @@
       color: var(--text);
       flex: 1; min-width: 0; max-width: 110px;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
     }
+    .cl-name:active { opacity: 0.6; }
     .cl-weight {
       font-family: 'Courier New', monospace;
       font-size: 13px; font-weight: 700;
@@ -473,6 +475,7 @@
       color: var(--text);
       overflow: hidden;
       text-overflow: ellipsis;
+      -webkit-tap-highlight-color: transparent;
       white-space: nowrap;
     }
     .card-header-right {
@@ -1975,35 +1978,34 @@ function closeTrend() {
 async function loadTrendData(code) {
   try {
     if (appMode === 'cross') {
-      // Load last 20 common dates from both funds
+      // 全部日期並行載入
       const set992 = new Set(crossDates992);
       const commonDates = crossDates981.filter(d => set992.has(d)).slice(-20);
 
+      const pairs = await Promise.all(
+        commonDates.map(d => Promise.all([loadFile(d, '00981A'), loadFile(d, '00992A')]))
+      );
       const results981 = [], results992 = [];
-      for (const d of commonDates) {
-        const [data981, data992] = await Promise.all([
-          loadFile(d, '00981A'),
-          loadFile(d, '00992A')
-        ]);
+      pairs.forEach(([data981, data992], i) => {
+        const d = commonDates[i];
         const r981 = data981.find(r => r.code === code);
         const r992 = data992.find(r => r.code === code);
         results981.push({ date: d, weight: r981 ? r981.weight : 0, shares: r981 ? r981.shares : 0, price: r981 ? r981.price : 0 });
         results992.push({ date: d, weight: r992 ? r992.weight : 0, shares: r992 ? r992.shares : 0, price: r992 ? r992.price : 0 });
-      }
+      });
       renderTrendChart([
         { label: '00981A', color: 'var(--cx-wA)', data: results981 },
         { label: '00992A', color: 'var(--cx-wB)', data: results992 },
       ]);
       renderTrendTable(results981, results992);
     } else {
-      // Single fund mode
+      // 全部日期並行載入
       const dates = DATES.slice(-20);
-      const results = [];
-      for (const d of dates) {
-        const data = await loadFile(d);
+      const allData = await Promise.all(dates.map(d => loadFile(d)));
+      const results = allData.map((data, i) => {
         const r = data.find(r => r.code === code);
-        results.push({ date: d, weight: r ? r.weight : 0, shares: r ? r.shares : 0, price: r ? r.price : 0 });
-      }
+        return { date: dates[i], weight: r ? r.weight : 0, shares: r ? r.shares : 0, price: r ? r.price : 0 };
+      });
       renderTrendChart([
         { label: currentFund, color: 'var(--accent)', data: results }
       ]);
