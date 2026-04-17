@@ -1,0 +1,29 @@
+name: Daily Real Estate News
+
+on:
+  workflow_dispatch:       # 手動觸發，排程上線前在此加 schedule
+
+jobs:
+  fetch-and-notify:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install requests pyyaml
+
+      - name: Fetch news and notify Telegram
+        run: python fetch_news.py
+        env:
+          PYTHONIOENCODING: utf-8
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
