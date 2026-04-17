@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout repo
@@ -43,5 +45,6 @@ jobs:
           else
             DATE=$(date -u +"%Y-%m-%d %H:%M UTC")
             git commit -m "data: 更新 00992A 持股資料 ($DATE)"
+            git pull --rebase origin main
             git push
           fi

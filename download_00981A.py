@@ -162,7 +162,8 @@ def save_txt(df: pd.DataFrame, file_date: date) -> str:
     save_path    = os.path.join(DATA_DIR, f"{PREFIX}_{date_str}.txt")
 
     if os.path.exists(save_path):
-        log(f"ℹ️ 檔案已存在，將覆寫: {save_path}")
+        log(f"ℹ️ 檔案已存在，跳過: {save_path}")
+        return save_path
 
     log("📊 正在查詢各股收盤價...")
     prices = []
@@ -223,6 +224,13 @@ def main():
     # 比對資料日期是否為當天
     if file_date != today:
         log(f"⛔ Excel 資料日期 ({file_date}) 不是今天 ({today})，結束。")
+        return
+
+    # 檔案已存在則直接結束，不重複查詢收盤價
+    date_str_check = file_date.strftime("%Y%m%d")
+    save_path_check = os.path.join(DATA_DIR, f"{PREFIX}_{date_str_check}.txt")
+    if os.path.exists(save_path_check):
+        log(f"ℹ️ 檔案已存在，無需重新下載：{save_path_check}")
         return
 
     log("✅ 日期符合，開始解析持股資料...")
