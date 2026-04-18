@@ -1,11 +1,15 @@
 name: Daily Real Estate News
 
 on:
-  workflow_dispatch:       # 手動觸發，排程上線前在此加 schedule
+  schedule:
+    - cron: '0 23 * * *'   # 台灣時間 07:00（UTC+8 → UTC 23:00 前一天）
+  workflow_dispatch:       # 允許手動觸發
 
 jobs:
   fetch-and-notify:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -19,7 +23,7 @@ jobs:
           python-version: '3.13'
 
       - name: Install dependencies
-        run: pip install requests pyyaml
+        run: pip install requests pyyaml jieba
 
       - name: Fetch news and notify Telegram
         run: python fetch_news.py
@@ -27,3 +31,18 @@ jobs:
           PYTHONIOENCODING: utf-8
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+
+      - name: Save sent_news.json
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sent_news.json || true
+          if git diff --cached --quiet; then
+            echo "sent_news.json 無變更，略過 commit。"
+          else
+            DATE=$(date -u +"%Y-%m-%d %H:%M UTC")
+            git commit -m "data: 更新 sent_news.json ($DATE)"
+            git pull --rebase origin main
+            git push
+          fi

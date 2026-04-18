@@ -14,7 +14,20 @@
       "Bash(python \"C:/ClaudeCode/download_00981A.py\" --help)",
       "Bash(where python3:*)",
       "Bash(where python:*)",
-      "Bash('C:\\\\Users\\\\senior\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe' -c ':*)"
+      "Bash('C:\\\\Users\\\\senior\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe' -c ':*)",
+      "WebFetch(domain:reurl.cc)",
+      "WebFetch(domain:more-news.tw)",
+      "WebFetch(domain:money.udn.com)",
+      "WebFetch(domain:ec.ltn.com.tw)",
+      "WebFetch(domain:www.cna.com.tw)",
+      "WebFetch(domain:www.chinatimes.com)",
+      "WebFetch(domain:www.ettoday.net)",
+      "WebFetch(domain:house.ettoday.net)",
+      "WebFetch(domain:tw.nextapple.com)",
+      "WebFetch(domain:news.nextapple.com)",
+      "WebFetch(domain:www.housefun.com.tw)",
+      "WebFetch(domain:www.ltn.com.tw)",
+      "WebFetch(domain:news.google.com)"
     ]
   }
 }

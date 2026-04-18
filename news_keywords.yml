@@ -3,9 +3,23 @@
 # 每個關鍵字最多抓 MAX_PER_KEYWORD 則（見 fetch_news.py）
 
 settings:
-  max_per_keyword: 3      # 每個關鍵字最多幾則
-  max_total: 15           # 整份訊息最多幾則（去重後）
+  max_per_keyword: 999    # 每個關鍵字不限則數
+  max_total: 200          # 整份訊息最多幾則（去重後）
   send_hour_tw: 8         # 台灣時間幾點發送（僅供備註，由 workflow 控制）
+  news_days: 2            # 抓幾天內的新聞（1=只抓今天，2=今天+昨天）
+
+# 直接 RSS 來源：抓最新文章後，標題含任一關鍵字才保留
+rss_feeds:
+  - name: 經濟日報
+    url: "https://money.udn.com/rssfeed/news/1001/5589?type=rss"
+  - name: 自由財經
+    url: "https://news.google.com/rss/search?q=%E6%88%BF%E5%B8%82+site:ltn.com.tw&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
+  - name: ETtoday房產
+    url: "https://news.google.com/rss/search?q=%E6%88%BF%E5%B8%82+site:ettoday.net&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
+  - name: 壹蘋新聞
+    url: "https://news.google.com/rss/search?q=%E6%88%BF%E5%B8%82+site:nextapple.com&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
+  - name: 中央社財經
+    url: "https://news.google.com/rss/search?q=%E6%88%BF%E5%B8%82+site:cna.com.tw&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
 
 keywords:
   房市行情:
@@ -14,7 +28,6 @@ keywords:
     - 中古屋
     - 新成屋
     - 坪數
-    - 成交價
     - 實價登錄
 
   預售屋:
@@ -22,7 +35,6 @@ keywords:
     - 建案
     - 預售案
     - 換約
-    - 解約
     - 紅單
 
   不動產與土地:
@@ -34,6 +46,7 @@ keywords:
     - 危老
     - 重劃區
     - 地上權
+    - 農地
 
   稅務:
     - 房地合一稅
@@ -42,6 +55,9 @@ keywords:
     - 囤房稅
     - 土地增值稅
     - 契稅
+    - 遺產稅
+    - 房屋報稅
+    - 租金收入 稅
 
   政策與法規:
     - 打房
@@ -52,6 +68,20 @@ keywords:
     - 社宅
     - 租金補貼
     - 房貸利率
+    - 繼承 房產
+
+  租屋市場:
+    - 租屋
+    - 租金
+    - 房東
+    - 租客
+    - 包租代管
+
+  捷運與重大建設:
+    - 捷運 房價
+    - 捷運宅
+    - 台積電 房
+    - 重大建設 房市
 
   建商與市場:
     - 建商
@@ -59,3 +89,6 @@ keywords:
     - 豪宅
     - 法拍屋
     - 銀拍屋
+    - 寶佳
+    - 興富發
+    - 遠雄
