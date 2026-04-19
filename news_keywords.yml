@@ -92,6 +92,9 @@ foreign_keywords:
   - 英國
   - 溫哥華
   - 溫哥華
+  - 以色列
+  - 紐約
+  
 
 # 直接 RSS 來源
 # filter_by_keywords: true  → 標題需含任一關鍵字才保留（適合財經廣類）
@@ -99,7 +102,7 @@ foreign_keywords:
 rss_feeds:
   - name: Google房市
     url: "https://news.google.com/rss/headlines/section/topic/REAL_ESTATE?hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
-    filter_by_keywords: false
+    filter_by_keywords: true
   - name: Google財經
     url: "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
     filter_by_keywords: true
