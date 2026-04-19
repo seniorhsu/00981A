@@ -6,28 +6,20 @@
 兩者合併後去重推送。
 """
 
-import difflib
 import json
 import os
 import re
 import unicodedata
 import xml.etree.ElementTree as ET
+from collections import Counter
 from datetime import datetime, timezone, timedelta
 
-import jieba
 import requests
 import yaml
 
-# 停用詞：分詞後排除這些字，避免「的」「了」影響相似度
-STOPWORDS = set("的了是在也都和與及或但卻對於到從把被讓使其這那有沒無不很更最就還")
-
-def seg(title: str) -> set[str]:
-    """jieba 分詞後去停用詞，回傳詞集。"""
-    words = jieba.lcut(normalize_title(title))
-    return {w for w in words if w and w not in STOPWORDS and len(w) > 1}
-
-BASE_DIR      = os.path.dirname(os.path.abspath(__file__))
-KEYWORDS_YML  = os.path.join(BASE_DIR, "news_keywords.yml")
+BASE_DIR          = os.path.dirname(os.path.abspath(__file__))
+KEYWORDS_YML      = os.path.join(BASE_DIR, "news_keywords.yml")
+UNKNOWN_SOURCES_LOG = os.path.join(BASE_DIR, "unknown_sources.log")
 SENT_JSON     = os.path.join(BASE_DIR, "sent_news.json")
 
 TG_TOKEN   = os.environ.get("TG_TOKEN", "")
@@ -44,14 +36,11 @@ def load_sent() -> dict:
     if os.path.exists(SENT_JSON):
         with open(SENT_JSON, encoding="utf-8") as f:
             data = json.load(f)
-        # 相容舊格式
+        # 相容舊格式 {url: date_str}
         migrated = {}
         for url, val in data.items():
             if isinstance(val, str):
-                migrated[url] = {"date": val, "title_norm": "", "words": []}
-            elif "words" not in val:
-                val["words"] = []
-                migrated[url] = val
+                migrated[url] = {"date": val, "title_norm": ""}
             else:
                 migrated[url] = val
         return migrated
@@ -124,8 +113,12 @@ def parse_rss(content: bytes, today, oldest=None, max_items: int = 999) -> list[
         if title_el is None or link_el is None:
             continue
 
-        title = (title_el.text or "").strip()
-        link  = (link_el.text or "").strip()
+        title     = (title_el.text or "").strip()
+        link      = (link_el.text or "").strip()
+        source_el = item.find("source")
+        source    = (source_el.text or "").strip() if source_el is not None else ""
+        # source url 屬性是真實媒體網域，不需跟隨 Google 轉址
+        source_url = source_el.attrib.get("url", "").lower() if source_el is not None else ""
 
         # 去掉 Google News 附加的來源後綴「 - 媒體名稱」
         title = re.sub(r"\s*-\s*[^-]+$", "", title).strip()
@@ -142,7 +135,7 @@ def parse_rss(content: bytes, today, oldest=None, max_items: int = 999) -> list[
             except ValueError:
                 pass
 
-        results.append({"title": title, "url": link})
+        results.append({"title": title, "url": link, "source": source, "source_url": source_url})
 
     return results
 
@@ -158,9 +151,39 @@ def fetch_url(url: str) -> bytes | None:
 
 
 def title_matches_keywords(title: str, keywords: list[str]) -> bool:
-    """標題是否含任一關鍵字（不分大小寫）。"""
     t = title.lower()
     return any(kw.lower() in t for kw in keywords)
+
+
+def is_taiwan_news(item: dict, taiwan_sources: list[str], foreign_keywords: list[str]) -> tuple[bool, str]:
+    """
+    兩道關卡：
+    1. source_url 必須在白名單（來源是台灣媒體）
+    2. 標題不含外國地名（內容是台灣新聞）
+    """
+    source_url = item.get("source_url", "")
+    in_whitelist = any(domain.lower() in source_url for domain in taiwan_sources)
+    if not in_whitelist:
+        log_unknown_source(item)
+        return False, f"非白名單來源({item.get('source', '')} {source_url[:40]})"
+
+    title = item.get("title", "")
+    for kw in foreign_keywords:
+        if kw in title:
+            return False, f"外國地名({kw})"
+
+    return True, ""
+
+
+def log_unknown_source(item: dict):
+    """將非白名單來源記錄到 unknown_sources.log。"""
+    now        = datetime.now(TW_TZ).strftime("%Y-%m-%d %H:%M")
+    source     = item.get("source", "")
+    source_url = item.get("source_url", "")
+    title      = item.get("title", "")
+    line       = f"{now} | {source} | {source_url} | {title}\n"
+    with open(UNKNOWN_SOURCES_LOG, "a", encoding="utf-8") as f:
+        f.write(line)
 
 
 def send_message(text: str):
@@ -184,12 +207,14 @@ def send_message(text: str):
 def main():
     config      = load_config()
     settings    = config.get("settings", {})
-    max_per_kw  = settings.get("max_per_keyword", 3)
-    max_total   = settings.get("max_total", 20)
-    news_days   = settings.get("news_days", 1)
-    keyword_map = config.get("keywords", {})
-    rss_feeds   = config.get("rss_feeds", [])
-    kw_flat     = all_keywords(keyword_map)
+    max_per_kw      = settings.get("max_per_keyword", 3)
+    max_total       = settings.get("max_total", 200)
+    news_days       = settings.get("news_days", 1)
+    keyword_map     = config.get("keywords", {})
+    rss_feeds       = config.get("rss_feeds", [])
+    taiwan_sources  = config.get("taiwan_sources", [])
+    foreign_keywords = config.get("foreign_keywords", [])
+    kw_flat         = all_keywords(keyword_map)
 
     now      = datetime.now(TW_TZ)
     weekday  = WEEKDAY_ZH[now.weekday()]
@@ -203,42 +228,54 @@ def main():
     sent_history = prune_sent(load_sent())
     print(f"📋 歷史紀錄：{len(sent_history)} 則已排除\n")
 
-    seen_urls   = set(sent_history.keys())
-    seen_titles = set()
-    # 歷史詞集清單，用於跨天 jieba 比對
-    seen_words  = [set(v["words"]) for v in sent_history.values() if v.get("words")]
-    news_list   = []
-    DIFFLIB_THRESHOLD  = 0.65
-    COVERAGE_THRESHOLD = 0.70
+    seen_urls    = set(sent_history.keys())
+    seen_titles  = set()
+    seen_norm_titles = [v["title_norm"] for v in sent_history.values() if v.get("title_norm")]
+    news_list    = []
+    CHAR_OVERLAP_THRESHOLD = 0.50
 
-    def is_dup(title: str, title_norm: str) -> bool:
-        words_new = seg(title)
-        for w_old in seen_words:
-            if not w_old or not words_new:
-                continue
-            shorter = min(words_new, w_old, key=len)
-            longer  = words_new if len(words_new) >= len(w_old) else w_old
-            coverage = len(shorter & longer) / len(shorter)
-            if coverage >= COVERAGE_THRESHOLD:
-                return True
-        # difflib 備援（應對極短標題 jieba 詞太少的情況）
-        return any(
-            difflib.SequenceMatcher(None, title_norm, t).ratio() >= DIFFLIB_THRESHOLD
-            for t in (normalize_title(v["title_norm"]) for v in sent_history.values() if v.get("title_norm"))
-        )
+    def char_overlap(a: str, b: str) -> float:
+        """兩個 normalize 後標題的字元重疊率（含重複字，取較短長度為基準）。"""
+        ca, cb = Counter(a), Counter(b)
+        common = sum((ca & cb).values())
+        shorter = min(len(a), len(b))
+        return common / shorter if shorter > 0 else 0.0
 
-    def try_add(item: dict) -> bool:
+    def is_char_dup(title_norm: str) -> tuple[bool, str]:
+        for t in seen_norm_titles:
+            ratio = char_overlap(title_norm, t)
+            if ratio >= CHAR_OVERLAP_THRESHOLD:
+                return True, f"字元重疊 {ratio:.0%}"
+        return False, ""
+
+    def try_add(item: dict, verbose: bool = True) -> bool:
         if len(news_list) >= max_total:
+            if verbose:
+                print(f"      ✗ 已達上限 {max_total} 則：{item['title'][:20]}")
             return False
         url_key   = item["url"]
         title_key = normalize_title(item["title"])
-        if url_key in seen_urls or title_key in seen_titles:
+        if url_key in seen_urls:
+            if verbose:
+                print(f"      ✗ URL重複：{item['title'][:30]}")
             return False
-        if is_dup(item["title"], title_key):
+        if title_key in seen_titles:
+            if verbose:
+                print(f"      ✗ 標題完全相同：{item['title'][:30]}")
+            return False
+        keep, reason = is_taiwan_news(item, taiwan_sources, foreign_keywords)
+        if not keep:
+            if verbose:
+                print(f"      ✗ {reason}：{item['title'][:30]}")
+            return False
+        dup, reason = is_char_dup(title_key)
+        if dup:
+            if verbose:
+                print(f"      ✗ {reason}：{item['title'][:30]}")
             return False
         seen_urls.add(url_key)
         seen_titles.add(title_key)
-        seen_words.append(seg(item["title"]))
+        seen_norm_titles.append(title_key)
         news_list.append(item)
         return True
 
@@ -263,21 +300,27 @@ def main():
         if len(news_list) >= max_total:
             break
 
-    # ── 來源二：直接 RSS feeds，按關鍵字過濾 ──
+    # ── 來源二：直接 RSS feeds ──
     print("\n【來源二：直接 RSS feeds】")
     for feed in rss_feeds:
         if len(news_list) >= max_total:
             break
-        name = feed.get("name", "未知")
-        url  = feed.get("url", "")
+        name              = feed.get("name", "未知")
+        url               = feed.get("url", "")
+        filter_by_keywords = feed.get("filter_by_keywords", True)
         print(f"  [{name}]")
         content = fetch_url(url)
         if not content:
             continue
         items = parse_rss(content, today, oldest=oldest)
-        matched = [i for i in items if title_matches_keywords(i["title"], kw_flat)]
-        added   = sum(1 for item in matched if try_add(item))
-        print(f"    共 {len(items)} 則，關鍵字符合 {len(matched)} 則，新增 {added} 則")
+        if filter_by_keywords:
+            candidates = [i for i in items if title_matches_keywords(i["title"], kw_flat)]
+            label = f"共 {len(items)} 則，關鍵字符合 {len(candidates)} 則"
+        else:
+            candidates = items
+            label = f"共 {len(items)} 則（全部保留）"
+        added = sum(1 for item in candidates if try_add(item))
+        print(f"    {label}，新增 {added} 則")
 
     if not news_list:
         print("\n⚠️  無當天新聞，不推送。")
@@ -310,7 +353,6 @@ def main():
         sent_history[item["url"]] = {
             "date": today_iso,
             "title_norm": normalize_title(item["title"]),
-            "words": list(seg(item["title"])),
         }
     save_sent(sent_history)
     print(f"\n💾 已更新 sent_news.json（共 {len(sent_history)} 則）")

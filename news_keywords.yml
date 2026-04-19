@@ -8,18 +8,101 @@ settings:
   send_hour_tw: 8         # 台灣時間幾點發送（僅供備註，由 workflow 控制）
   news_days: 2            # 抓幾天內的新聞（1=只抓今天，2=今天+昨天）
 
-# 直接 RSS 來源：抓最新文章後，標題含任一關鍵字才保留
+# 台灣媒體來源白名單（domain 含以下字串即視為台灣媒體，直接保留）
+taiwan_sources:
+  - udn.com
+  - ltn.com.tw
+  - ettoday.net
+  - cna.com.tw
+  - nextapple.com
+  - chinatimes.com
+  - anntw.com
+  - more-news.tw
+  - housefun.com.tw
+  - sinyi.com.tw
+  - 591.com.tw
+  - wealth.com.tw
+  - ctee.com.tw
+  - moneydj.com
+  - technews.tw
+  - storm.mg
+  - setn.com
+  - tvbs.com.tw
+  - ftv.com.tw
+  - pts.org.tw
+  - news.housefun.com.tw
+  - house.ettoday.net
+  - www.cna.com.tw
+  - www.mobile01.com
+  - news.ltn.com.tw
+  - www.chinatimes.com
+  - www.cnyes.com
+  - wantrich.chinatimes.com
+  - www.taiwanhot.net
+  - www.ettoday.net
+  - www.ctee.com.tw
+  - www.peoplenews.tw
+  - house.udn.com
+  - www.storm.mg
+  - www.nownews.com
+  - ec.ltn.com.tw
+  - money.udn.com
+  - news.pchome.com.tw
+  - tw.news.yahoo.com
+  - n.yam.com
+  - news.twhg.com.tw
+  - www.ftnn.com.tw 
+
+# 非台灣地名關鍵字（來源不在白名單時，標題含以下字就排除）
+foreign_keywords:
+  # 中國大陸
+  - 北京
+  - 上海
+  - 廣州
+  - 深圳
+  - 杭州
+  - 成都
+  - 重慶
+  - 武漢
+  - 大陸樓市
+  - 中國房市
+  - 中國房價
+  - 中國
+  - 大陸
+  - 香港澳門
+  - 香港樓市
+  - 香港
+  - 澳門樓市
+  - 澳門
+
+  # 日本
+  - 東京
+  - 日本
+  - 大阪
+  - 日本房市
+  - 日本房價
+  # 韓國
+  - 首爾
+  - 韓國
+  - 韓國房市
+  # 其他
+  - 新加坡房
+  - 澳洲
+  - 美國
+  - 英國
+  - 溫哥華
+  - 溫哥華
+
+# 直接 RSS 來源
+# filter_by_keywords: true  → 標題需含任一關鍵字才保留（適合財經廣類）
+# filter_by_keywords: false → 全部保留（適合房市專屬分類）
 rss_feeds:
-  - name: 經濟日報
-    url: "https://money.udn.com/rssfeed/news/1001/5589?type=rss"
-  - name: 自由財經
-    url: "https://news.google.com/rss/search?q=%E6%88%BF%E5%B8%82+site:ltn.com.tw&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
-  - name: ETtoday房產
-    url: "https://news.google.com/rss/search?q=%E6%88%BF%E5%B8%82+site:ettoday.net&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
-  - name: 壹蘋新聞
-    url: "https://news.google.com/rss/search?q=%E6%88%BF%E5%B8%82+site:nextapple.com&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
-  - name: 中央社財經
-    url: "https://news.google.com/rss/search?q=%E6%88%BF%E5%B8%82+site:cna.com.tw&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
+  - name: Google房市
+    url: "https://news.google.com/rss/headlines/section/topic/REAL_ESTATE?hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
+    filter_by_keywords: false
+  - name: Google財經
+    url: "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
+    filter_by_keywords: true
 
 keywords:
   房市行情:
@@ -62,6 +145,7 @@ keywords:
   政策與法規:
     - 打房
     - 限貸
+    - 新青安
     - 信用管制
     - 平均地權條例
     - 社會住宅

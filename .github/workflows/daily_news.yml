@@ -23,7 +23,7 @@ jobs:
           python-version: '3.13'
 
       - name: Install dependencies
-        run: pip install requests pyyaml jieba
+        run: pip install requests pyyaml
 
       - name: Fetch news and notify Telegram
         run: python fetch_news.py
