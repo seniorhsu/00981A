@@ -92,9 +92,10 @@ foreign_keywords:
   - 英國
   - 溫哥華
   - 溫哥華
+  - 加拿大
   - 以色列
   - 紐約
-  
+
 
 # 直接 RSS 來源
 # filter_by_keywords: true  → 標題需含任一關鍵字才保留（適合財經廣類）
