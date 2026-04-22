@@ -1,14 +1,16 @@
-# -*- coding: utf-8 -*-
+
 """
 每日房市新聞抓取 → Telegram
 來源一：Google News RSS 關鍵字搜尋（多媒體聚合）
 來源二：直接 RSS feeds（經濟日報、自由、ETtoday、壹蘋、中央社），標題含關鍵字才保留
 兩者合併後去重推送。
+Telegram 若超過字數限制將分批發送，每則間隔 3 秒。
 """
 
 import json
 import os
 import re
+import time
 import unicodedata
 import xml.etree.ElementTree as ET
 from collections import Counter
@@ -21,7 +23,7 @@ BASE_DIR          = os.path.dirname(os.path.abspath(__file__))
 KEYWORDS_YML      = os.path.join(BASE_DIR, "news_keywords.yml")
 UNKNOWN_SOURCES_LOG = os.path.join(BASE_DIR, "unknown_sources.log")
 SENT_JSON     = os.path.join(BASE_DIR, "sent_news.json")
-
+LOG_FILE     = os.path.join(BASE_DIR, "News_log.txt")
 TG_TOKEN   = os.environ.get("TG_TOKEN", "")
 TG_CHAT_ID = os.environ.get("TG_CHAT_ID", "")
 
@@ -30,6 +32,17 @@ WEEKDAY_ZH = ["一", "二", "三", "四", "五", "六", "日"]
 
 
 # ── 工具函式 ──────────────────────────────────────────────
+
+
+# ── LOG ───────────────────────────────────────────────────────────────────
+def log(msg: str, flush: bool = False):
+    """同時輸出到 stdout 與 download_log.txt（附時間戳記）。"""
+    ts   = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    line = f"[{ts}] {msg}"
+    print(line, flush=flush)
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        f.write(line + "\n")
+
 
 def load_sent() -> dict:
     """載入已發送紀錄 {url: {date, title_norm}, ...}"""
@@ -146,7 +159,7 @@ def fetch_url(url: str) -> bytes | None:
         resp.raise_for_status()
         return resp.content
     except Exception as e:
-        print(f"  [WARN] 抓取失敗: {e}")
+        log(f"  [WARN] 抓取失敗: {e}")
         return None
 
 
@@ -188,7 +201,7 @@ def log_unknown_source(item: dict):
 
 def send_message(text: str):
     if not TG_TOKEN or not TG_CHAT_ID:
-        print("❌ TG_TOKEN 或 TG_CHAT_ID 未設定，僅列印訊息。")
+        log("❌ TG_TOKEN 或 TG_CHAT_ID 未設定，僅列印訊息。")
         return
     url  = f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage"
     resp = requests.post(
@@ -197,9 +210,9 @@ def send_message(text: str):
         timeout=15,
     )
     if resp.ok:
-        print("✅ Telegram 訊息發送成功")
+        log("✅ Telegram 訊息發送成功")
     else:
-        print(f"❌ 發送失敗: {resp.text}")
+        log(f"❌ 發送失敗: {resp.text}")
 
 
 # ── 主流程 ────────────────────────────────────────────────
@@ -222,11 +235,11 @@ def main():
     today    = now.date()
     oldest   = today - timedelta(days=news_days - 1)
 
-    print(f"📅 {date_str} 開始抓取新聞...\n")
+    log(f"📅 {date_str} 開始抓取新聞...\n")
 
     # 載入歷史發送紀錄
     sent_history = prune_sent(load_sent())
-    print(f"📋 歷史紀錄：{len(sent_history)} 則已排除\n")
+    log(f"📋 歷史紀錄：{len(sent_history)} 則已排除\n")
 
     seen_urls    = set(sent_history.keys())
     seen_titles  = set()
@@ -251,27 +264,27 @@ def main():
     def try_add(item: dict, verbose: bool = True) -> bool:
         if len(news_list) >= max_total:
             if verbose:
-                print(f"      ✗ 已達上限 {max_total} 則：{item['title'][:20]}")
+                log(f"      ✗ 已達上限 {max_total} 則：{item['title'][:20]}")
             return False
         url_key   = item["url"]
         title_key = normalize_title(item["title"])
         if url_key in seen_urls:
             if verbose:
-                print(f"      ✗ URL重複：{item['title'][:30]}")
+                log(f"      ✗ URL重複：{item['title'][:30]}")
             return False
         if title_key in seen_titles:
             if verbose:
-                print(f"      ✗ 標題完全相同：{item['title'][:30]}")
+                log(f"      ✗ 標題完全相同：{item['title'][:30]}")
             return False
         keep, reason = is_taiwan_news(item, taiwan_sources, foreign_keywords)
         if not keep:
             if verbose:
-                print(f"      ✗ {reason}：{item['title'][:30]}")
+                log(f"      ✗ {reason}：{item['title'][:30]}")
             return False
         dup, reason = is_char_dup(title_key)
         if dup:
             if verbose:
-                print(f"      ✗ {reason}：{item['title'][:30]}")
+                log(f"      ✗ {reason}：{item['title'][:30]}")
             return False
         seen_urls.add(url_key)
         seen_titles.add(title_key)
@@ -280,9 +293,9 @@ def main():
         return True
 
     # ── 來源一：Google News RSS 關鍵字搜尋 ──
-    print("【來源一：Google News 關鍵字搜尋】")
+    log("【來源一：Google News 關鍵字搜尋】")
     for category, keywords in keyword_map.items():
-        print(f"  [{category}]")
+        log(f"  [{category}]")
         for kw in keywords:
             if len(news_list) >= max_total:
                 break
@@ -296,19 +309,19 @@ def main():
                 continue
             items = parse_rss(content, today, oldest=oldest, max_items=max_per_kw)
             added = sum(1 for item in items if try_add(item))
-            print(f"    {kw}: 抓到 {len(items)} 則，新增 {added} 則")
+            log(f"    {kw}: 抓到 {len(items)} 則，新增 {added} 則")
         if len(news_list) >= max_total:
             break
 
     # ── 來源二：直接 RSS feeds ──
-    print("\n【來源二：直接 RSS feeds】")
+    log("\n【來源二：直接 RSS feeds】")
     for feed in rss_feeds:
         if len(news_list) >= max_total:
             break
         name              = feed.get("name", "未知")
         url               = feed.get("url", "")
         filter_by_keywords = feed.get("filter_by_keywords", True)
-        print(f"  [{name}]")
+        log(f"  [{name}]")
         content = fetch_url(url)
         if not content:
             continue
@@ -320,32 +333,49 @@ def main():
             candidates = items
             label = f"共 {len(items)} 則（全部保留）"
         added = sum(1 for item in candidates if try_add(item))
-        print(f"    {label}，新增 {added} 則")
+        log(f"    {label}，新增 {added} 則")
 
     if not news_list:
-        print("\n⚠️  無當天新聞，不推送。")
+        log("\n⚠️  無當天新聞，不推送。")
         return
 
     # ── 縮網址 ──
-    print(f"\n共 {len(news_list)} 則，開始縮網址...")
+    log(f"\n共 {len(news_list)} 則，開始縮網址...")
     for item in news_list:
         item["short_url"] = shorten_url(item["url"])
 
-    # ── 組訊息 ──
-    lines = [
-        "=====================================",
-        f"{date_str} 早安",
-        "",
-        "🏠 今日房市新聞",
-    ]
+    # ── 組訊息與分批發送 ──
+    log("\n開始組裝並發送訊息...")
+    MAX_TG_LENGTH = 3000  # 設定為 3000 保留一些緩衝空間，Telegram 上限為 4096
+    
+    header = f"=====================================\n{date_str} 早安\n\n🏠 今日房市新聞\n"
+    
+    msg_chunks = []
+    current_chunk = header
+    
     for item in news_list:
-        lines.append("")
-        lines.append(item["title"])
-        lines.append(item["short_url"])
+        item_text = f"\n{item['title']}\n{item['short_url']}\n"
+        
+        # 檢查若加上這則新聞會不會超過字數限制
+        if len(current_chunk) + len(item_text) > MAX_TG_LENGTH:
+            msg_chunks.append(current_chunk)
+            current_chunk = item_text # 另起新的一包
+        else:
+            current_chunk += item_text
+            
+    # 把最後一包也加進去
+    if current_chunk:
+        msg_chunks.append(current_chunk)
 
-    message = "\n".join(lines)
-    print("\n" + message)
-    send_message(message)
+    log(f"將分為 {len(msg_chunks)} 則訊息發送。")
+
+    for index, chunk in enumerate(msg_chunks):
+        log(f"\n發送第 {index + 1}/{len(msg_chunks)} 則...")
+        send_message(chunk)
+        
+        # 如果不是最後一則，就等待 3 秒
+        if index < len(msg_chunks) - 1:
+            time.sleep(3)
 
     # 發送後更新歷史紀錄
     today_iso = today.isoformat()
@@ -355,7 +385,7 @@ def main():
             "title_norm": normalize_title(item["title"]),
         }
     save_sent(sent_history)
-    print(f"\n💾 已更新 sent_news.json（共 {len(sent_history)} 則）")
+    log(f"\n💾 已更新 sent_news.json（共 {len(sent_history)} 則）")
 
 
 if __name__ == "__main__":
