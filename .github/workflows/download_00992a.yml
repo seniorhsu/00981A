@@ -4,9 +4,9 @@ name: Download 00992A Holdings
 # 台灣 UTC+8，換算成 UTC：08:35–11:05
 on:
   schedule:
-    - cron: '35,50 8 * * 1-5'         # 16:35, 16:50 TST
-    - cron: '5,20,35,50 9,10 * * 1-5' # 17:05–18:50 TST
-    - cron: '5 11 * * 1-5'            # 19:05 TST
+    - cron: '35,50 7 * * 1-5'         # 16:35, 16:50 TST
+    - cron: '5,20,35,50 8,9 * * 1-5' # 17:05–18:50 TST
+    - cron: '5 10 * * 1-5'            # 19:05 TST
   workflow_dispatch:                   # 允許手動觸發
 
 jobs:
