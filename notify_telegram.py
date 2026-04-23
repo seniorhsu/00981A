@@ -1,38 +1,36 @@
 # -*- coding: utf-8 -*-
 """
 00981A 持股淨變動通知 → Telegram
-功能：比較前後兩日持股，計算張數增減，並推送到 Telegram。
-優化：自動對齊欄位、移除股價、支援中英文字寬計算。
+當天資料產生後執行，比較前一交易日，推送加碼/減碼前10大。
 """
 
 import os
 import json
+import time
 import requests
+from datetime import datetime
 
-# --- 設定區 ---
 BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR   = os.path.join(BASE_DIR, "00981A_Data")
 DATES_JSON = os.path.join(BASE_DIR, "dates.json")
+LOG_FILE   = os.path.join(BASE_DIR, "notify_telegram_log.txt")
 
-# 請確保環境變數中有設定以下資訊，或直接在此輸入字串
-TG_TOKEN   = os.environ.get("TG_TOKEN", "你的_BOT_TOKEN")
-TG_CHAT_ID = os.environ.get("TG_CHAT_ID", "你的_CHAT_ID")
+TG_TOKEN   = os.environ.get("TG_TOKEN", "")
+TG_CHAT_ID = os.environ.get("TG_CHAT_ID", "")
 TOP_N      = 10
+TG_MAX_LEN = 4000  # Telegram 單則上限 4096，保留緩衝
 
-# --- 工具函數：處理中英文對齊 ---
-def display_width(s):
-    """計算字串的顯示寬度（中文字佔 2 格，英數佔 1 格）"""
-    return sum(2 if ord(c) > 0x2E7F else 1 for c in s)
 
-def rpad(s, width):
-    """右補空白到指定顯示寬度"""
-    return s + " " * max(0, width - display_width(s))
+# ── LOG ───────────────────────────────────────────────────────────────────
+def lg(msg: str):
+    ts   = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    line = f"[{ts}] {msg}"
+    print(line, flush=True)
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        f.write(line + "\n")
 
-def lpad(s, width):
-    """左補空白到指定顯示寬度"""
-    return " " * max(0, width - display_width(s)) + s
 
-# --- 資料處理 ---
+# ── 資料解析 ──────────────────────────────────────────────────────────────
 def parse_file(date_str):
     path = os.path.join(DATA_DIR, f"00981A_{date_str}.txt")
     if not os.path.exists(path):
@@ -41,136 +39,144 @@ def parse_file(date_str):
     try:
         with open(path, encoding="utf-8") as f:
             lines = f.read().splitlines()
-        for line in lines[1:]:  # 跳過標題列
+        for line in lines[1:]:
             parts = line.split(",")
             if len(parts) < 4:
                 continue
             code   = parts[0].strip()
             name   = parts[1].strip()
-            # 假設 CSV 格式：代號,名稱,權重,張數(或股數值)
             shares = int(parts[3].strip()) if parts[3].strip().isdigit() else 0
             try:
                 weight = float(parts[2].strip().replace("%", ""))
             except ValueError:
                 weight = 0.0
-            
             result[code] = {"name": name, "shares": shares, "weight": weight}
     except Exception as e:
-        print(f"❌ 解析檔案 {date_str} 出錯: {e}")
+        lg(f"❌ 解析檔案 {date_str} 出錯: {e}")
     return result
 
-def send_message(text):
+
+# ── Telegram 發送（單則）────────────────────────────────────────────────
+def send_one(text: str) -> bool:
     if not TG_TOKEN or not TG_CHAT_ID:
-        print("❌ TG_TOKEN 或 TG_CHAT_ID 未設定")
-        return
+        lg("❌ TG_TOKEN 或 TG_CHAT_ID 未設定")
+        return False
     url  = f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage"
-    payload = {
-        "chat_id": TG_CHAT_ID,
-        "text": text,
-        "parse_mode": "HTML"
-    }
-    resp = requests.post(url, json=payload, timeout=15)
+    resp = requests.post(url, json={
+        "chat_id":    TG_CHAT_ID,
+        "text":       text,
+        "parse_mode": "HTML",
+    }, timeout=15)
     if resp.ok:
-        print("✅ Telegram 訊息發送成功")
-    else:
-        print(f"❌ 發送失敗: {resp.text}")
+        return True
+    lg(f"❌ 發送失敗: {resp.status_code} {resp.text[:200]}")
+    return False
 
-def fmt_row(c):
-    """格式化每一行持股變動，移除股價，加強對齊"""
-    diff_str = f"{c['diff']:+,}張"
-    wt_str   = f"{c['weight']:.2f}%" if c["weight"] > 0 else ""
-    tag      = f" {c['tag']}" if c["tag"] else ""
-    
-    # 這裡調整欄位寬度：名稱區 18, 張數區 8, 權重區 7
-    col_name   = rpad(f"{c['code']} {c['name']}", 18)
-    col_diff   = lpad(diff_str, 8)
-    col_weight = lpad(wt_str, 7)
-    
-    return f"{col_name} {col_diff} {col_weight}{tag}"
 
-# --- 主程式 ---
+# ── 分割並依序發送（每則間隔 1.5 秒，避免 429）────────────────────────
+def send_messages(parts: list[str]):
+    for i, text in enumerate(parts):
+        ok = send_one(text)
+        lg(f"{'✅' if ok else '❌'} 第 {i+1}/{len(parts)} 則{'成功' if ok else '失敗'}")
+        if i < len(parts) - 1:
+            time.sleep(1.5)
+
+
+# ── 超長訊息自動分割 ──────────────────────────────────────────────────
+def split_message(text: str) -> list[str]:
+    if len(text) <= TG_MAX_LEN:
+        return [text]
+    parts, current = [], ""
+    for line in text.split("\n"):
+        if len(current) + len(line) + 1 > TG_MAX_LEN:
+            parts.append(current.rstrip())
+            current = line + "\n"
+        else:
+            current += line + "\n"
+    if current.strip():
+        parts.append(current.rstrip())
+    return parts
+
+
+# ── 主程式 ────────────────────────────────────────────────────────────────
 def main():
+    lg("=" * 50)
+    lg("00981A Telegram 通知啟動")
+
     if not os.path.exists(DATES_JSON):
-        print("❌ 找不到 dates.json")
+        lg("❌ 找不到 dates.json")
         return
 
     with open(DATES_JSON, encoding="utf-8") as f:
         dates = json.load(f)
 
     if len(dates) < 2:
-        print("💡 日期不足兩份，無法進行比較")
+        lg("日期不足兩份，無法比較")
         return
 
     today_str = dates[-1]
     prev_str  = dates[-2]
+    lg(f"比較：{today_str} vs {prev_str}")
 
     today_data = parse_file(today_str)
     prev_data  = parse_file(prev_str)
 
     if not today_data:
-        print(f"❌ 今日資料不存在：{today_str}")
+        lg(f"今日資料不存在：{today_str}")
         return
 
-    # 計算變化邏輯
+    # 計算張數變化
     all_codes = set(today_data) | set(prev_data)
     changes = []
     for code in all_codes:
-        t = today_data.get(code)
-        p = prev_data.get(code)
-        
-        # 轉換為張數 (假設原始資料是股數，除以 1000 並四捨五入)
+        t      = today_data.get(code)
+        p      = prev_data.get(code)
         t_lots = round(t["shares"] / 1000) if t else 0
         p_lots = round(p["shares"] / 1000) if p else 0
-        
-        diff = t_lots - p_lots
+        diff   = t_lots - p_lots
         if diff == 0:
             continue
-            
         name   = (t or p)["name"]
         weight = t["weight"] if t else 0.0
         tag    = "🆕" if not p else ("🚫" if not t else "")
-        
-        changes.append({
-            "code": code, "name": name, "diff": diff, 
-            "weight": weight, "tag": tag
-        })
+        changes.append({"code": code, "name": name, "diff": diff, "weight": weight, "tag": tag})
 
-    # 分類並排序
     added   = sorted([c for c in changes if c["diff"] > 0], key=lambda x: -x["diff"])[:TOP_N]
     removed = sorted([c for c in changes if c["diff"] < 0], key=lambda x:  x["diff"])[:TOP_N]
+    lg(f"加碼 {len(added)} 檔 / 減碼 {len(removed)} 檔")
 
-    # 格式化日期標籤 (YYYYMMDD -> YYYY/MM/DD)
     d_label = f"{today_str[:4]}/{today_str[4:6]}/{today_str[6:8]}"
     p_label = f"{prev_str[:4]}/{prev_str[4:6]}/{prev_str[6:8]}"
 
-    # 組裝訊息文字
+    def fmt_row(c):
+        diff = f"+{c['diff']:,}張" if c["diff"] > 0 else f"{c['diff']:,}張"
+        wt   = f" {c['weight']:.2f}%" if c["weight"] > 0 else ""
+        tag  = f" {c['tag']}" if c["tag"] else ""
+        return f"{c['code']} {c['name']} {diff}{wt}{tag}"
+
     lines = [
         f"📊 <b>00981A 持股變動</b>  {d_label}",
         f"<i>vs {p_label}</i>",
         "",
-        "🔺 <b>加碼前10大</b>" if added else "🔺 <b>加碼：無變動</b>",
+        "🔺 <b>加碼前10大</b>" if added else "🔺 加碼：無",
     ]
-    
-    if added:
-        lines.append("<pre>")
-        for c in added:
-            lines.append(fmt_row(c))
-        lines.append("</pre>")
-
-    lines.append("\n🔻 <b>減碼前10大</b>" if removed else "\n🔻 <b>減碼：無變動</b>")
-    if removed:
-        lines.append("<pre>")
-        for c in removed:
-            lines.append(fmt_row(c))
-        lines.append("</pre>")
-
-    lines.append(f"\n<i>共 {len([c for c in changes if c['diff'] > 0])} 檔加碼 / {len([c for c in changes if c['diff'] < 0])} 檔減碼</i>")
+    for c in added:
+        lines.append(fmt_row(c))
+    lines.append("")
+    lines.append("🔻 <b>減碼前10大</b>" if removed else "🔻 減碼：無")
+    for c in removed:
+        lines.append(fmt_row(c))
+    lines.append("")
+    lines.append(f"<i>共 {len(added)} 檔加碼 / {len(removed)} 檔減碼</i>")
 
     full_text = "\n".join(lines)
-    
-    # 執行輸出與發送
-    print(full_text)
-    send_message(full_text)
+    parts = split_message(full_text)
+    lg(f"訊息共 {len(full_text)} 字，分 {len(parts)} 則發送")
+
+    send_messages(parts)
+    lg("完成")
+    lg("=" * 50)
+
 
 if __name__ == "__main__":
     main()

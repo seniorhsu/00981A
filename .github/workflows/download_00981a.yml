@@ -50,7 +50,7 @@ jobs:
           fi
 
           # 再加入 log，一起 commit（有任何變更才推）
-          git add download_log.txt || true
+          git add download_log.txt notify_telegram_log.txt || true
           if git diff --cached --quiet; then
             echo "Nothing to commit."
           else

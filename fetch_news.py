@@ -36,8 +36,8 @@ WEEKDAY_ZH = ["一", "二", "三", "四", "五", "六", "日"]
 
 # ── LOG ───────────────────────────────────────────────────────────────────
 def log(msg: str, flush: bool = False):
-    """同時輸出到 stdout 與 download_log.txt（附時間戳記）。"""
-    ts   = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    """同時輸出到 stdout 與 News_log.txt（台灣時間時間戳記）。"""
+    ts   = datetime.now(TW_TZ).strftime("%Y-%m-%d %H:%M:%S")
     line = f"[{ts}] {msg}"
     print(line, flush=flush)
     with open(LOG_FILE, "a", encoding="utf-8") as f:
