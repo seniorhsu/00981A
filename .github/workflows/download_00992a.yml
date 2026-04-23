@@ -39,7 +39,10 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add 00992A_Data/ 00992A_dates.json download_00992A_log.txt || true
+
+          # 先 stage 資料檔，再加 log，一起 commit
+          git add 00992A_Data/ 00992A_dates.json || true
+          git add download_00992A_log.txt || true
           if git diff --cached --quiet; then
             echo "Nothing to commit."
           else
