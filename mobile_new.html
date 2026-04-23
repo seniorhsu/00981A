@@ -1332,44 +1332,33 @@ function buildShareText() {
     lines.push(`新增 ${cnt.new}　增加 ${cnt.add}　減少 ${cnt.dec}　出清 ${cnt.out}　不變 ${cnt.same}`);
     lines.push('');
 
-    // 淨增加前10大（新增 + 增加，排除張數變化=0，依 weightDiff 降序）
+    // 淨增加前10大（張數 > 0，依張數降序）
     const netInc = allRows
-      .filter(r => {
-        const lotDiff = Math.floor((r.sharesA ?? 0) / 1000) - Math.floor((r.sharesB ?? 0) / 1000);
-        return (r.status === 'new' || (r.weightDiff != null && r.weightDiff > 0)) && lotDiff > 0;
-      })
-      .sort((a, b) => (b.weightDiff ?? b.weightA ?? 0) - (a.weightDiff ?? a.weightA ?? 0))
+      .map(r => ({ ...r, lotDiff: Math.floor((r.sharesA ?? 0) / 1000) - Math.floor((r.sharesB ?? 0) / 1000) }))
+      .filter(r => r.lotDiff > 0)
+      .sort((a, b) => b.lotDiff - a.lotDiff)
       .slice(0, 10);
     if (netInc.length) {
       lines.push('▲淨增加前10大');
       netInc.forEach(r => {
-        const lotDiff = Math.floor((r.sharesA ?? 0) / 1000) - Math.floor((r.sharesB ?? 0) / 1000);
-        if (r.status === 'new') {
-          lines.push(`${r.code}${r.name} +${(r.weightA ?? 0).toFixed(2)}%(新增${lotDiff.toLocaleString()}張)`);
-        } else {
-          lines.push(`${r.code}${r.name} +${r.weightDiff.toFixed(2)}%(+${lotDiff.toLocaleString()}張)`);
-        }
+        const wt = (r.weightA ?? 0).toFixed(2) + '%';
+        const tag = r.status === 'new' ? '🆕' : '';
+        lines.push(`${r.code}${r.name} +${r.lotDiff.toLocaleString()}張(${wt})${tag}`);
       });
       lines.push('');
     }
 
-    // 淨減少前10大（出清 + 減少，排除張數變化=0，依 weightDiff 升序）
+    // 淨減少前10大（張數 < 0，依張數升序）
     const netDec = allRows
-      .filter(r => {
-        const lotDiff = Math.floor((r.sharesA ?? 0) / 1000) - Math.floor((r.sharesB ?? 0) / 1000);
-        return (r.status === 'out' || (r.weightDiff != null && r.weightDiff < 0)) && lotDiff < 0;
-      })
-      .sort((a, b) => (a.weightDiff ?? -(a.weightB ?? 0)) - (b.weightDiff ?? -(b.weightB ?? 0)))
+      .map(r => ({ ...r, lotDiff: Math.floor((r.sharesA ?? 0) / 1000) - Math.floor((r.sharesB ?? 0) / 1000) }))
+      .filter(r => r.lotDiff < 0)
+      .sort((a, b) => a.lotDiff - b.lotDiff)
       .slice(0, 10);
     if (netDec.length) {
       lines.push('▼淨減少前10大');
       netDec.forEach(r => {
-        const lotDiff = Math.floor((r.sharesA ?? 0) / 1000) - Math.floor((r.sharesB ?? 0) / 1000);
-        if (r.status === 'out') {
-          lines.push(`${r.code}${r.name} -${(r.weightB ?? 0).toFixed(2)}%(出清${Math.floor((r.sharesB ?? 0)/1000).toLocaleString()}張)`);
-        } else {
-          lines.push(`${r.code}${r.name} ${r.weightDiff.toFixed(2)}%(${lotDiff.toLocaleString()}張)`);
-        }
+        const wt = r.status === 'out' ? '出清' : (r.weightA ?? 0).toFixed(2) + '%';
+        lines.push(`${r.code}${r.name} ${r.lotDiff.toLocaleString()}張(${wt})`);
       });
     }
   } else {
