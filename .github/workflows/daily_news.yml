@@ -41,8 +41,8 @@ jobs:
           if git diff --cached --quiet; then
             echo "sent_news.json 無變更，略過 commit。"
           else
+            git pull --rebase origin main
             DATE=$(date -u +"%Y-%m-%d %H:%M UTC")
             git commit -m "data: 更新 sent_news.json ($DATE)"
-            git pull --rebase origin main
             git push
           fi
