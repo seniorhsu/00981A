@@ -337,6 +337,8 @@ def main():
 
     if not news_list:
         log("\n⚠️  無當天新聞，不推送。")
+        save_sent(sent_history)
+        log(f"💾 已更新 sent_news.json（共 {len(sent_history)} 則）")
         return
 
     # ── 縮網址 ──

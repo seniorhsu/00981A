@@ -48,9 +48,14 @@ jobs:
           else
             DATE=$(date -u +"%Y-%m-%d %H:%M UTC")
             git commit -m "data: 更新 00992A 持股資料 ($DATE)"
+            pushed=false
             for i in 1 2 3; do
-              git pull --rebase origin main && git push && break
+              if git pull --rebase origin main && git push; then
+                pushed=true
+                break
+              fi
               echo "push 失敗，第 $i 次重試..."
               sleep 5
             done
+            $pushed || { echo "❌ 3 次 push 均失敗"; exit 1; }
           fi
