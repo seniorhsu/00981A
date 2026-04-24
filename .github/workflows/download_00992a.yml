@@ -9,6 +9,10 @@ on:
     - cron: '5 10 * * 1-5'            # 19:05 TST
   workflow_dispatch:                   # 允許手動觸發
 
+concurrency:
+  group: git-push
+  cancel-in-progress: false
+
 jobs:
   download:
     runs-on: ubuntu-latest
