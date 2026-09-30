@@ -1,272 +1,4 @@
 {
-  "https://news.google.com/rss/articles/CBMia0FVX3lxTE81TTNUQ3YyZ3RENjdwMkMwQ3dBenZ6VGhWbFdjcmlZNUlLdTFHV1ZaVTRvUXJ2c2U2MWxNS1E3V19nVTA1WDgxTjZFakhrZDNZOGY1alpDdTFmWDZaTFlYaktYb05YR2tDTnd3?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "新北大都會公園周邊房價驚驚漲"
-  },
-  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE0tbFBZU1p5cTNrb0czVUZtRGlYNklXeW81ekVuV0tlczB0eWxJSVdCeGNvUWVuZ0NBX211Tkd0ZTc2NnpZN1p5blpRTFVlVkFU?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "換屋推案迎轉機仍有兩大隱憂央行鬆綁房市活來了"
-  },
-  "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5EZ3FvQ2FHRDRwOW5vcUFoNXd5NWN5c0VCYmFHMlRkdVVOWEFRWGlyUE5RRl9rMWFVUmVwZ2stQUdNYU9ldlQydUNleGZCT1E?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "台北居大不易這5區成買房新首選人都跑來了"
-  },
-  "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5EcjJxRVdBZzNrc2Z6M3JSQUdVcDdZOVNabmFfdlByanNQWnNjWmdqSURHS2ZIVzFMSzJ4dWZkOGpVRF9TcENzUExaRFVscEXSAU5BVV95cUxPNWI1bG01T1I5T2VTNUM1UnpFMlVzZTVVRklJY3RnTk1tNnRtSVdDNW9wTkdCY3dhZ1pyMFRYQVdoOS1hN29NSDJzWU5CX1E?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "信用管制鬆綁迎生機帥過頭預言明年房市2劇本"
-  },
-  "https://news.google.com/rss/articles/CBMibkFVX3lxTE9OSTlsd19DNjRVQ2hnd2FhNzFkTmFGQk12RjUwM2c0M0YwZUhycXl1S3JtUWJPZzBGeGxsQTZMSkdPVm1TcXFZcGZkaVdfOHczR0hyTy1XX3pqU2dMc2pzTEVPemFpMGZBbU41R3BB?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "央行鬆綁先別樂房市面臨4大壓力真正考驗在後頭財經"
-  },
-  "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBmYzFoR1pxcWY5OThBbl9TTE1fN2dlbGN1WGo0aFpkQTZHaUdhM0dJZWlzdHNHc3FIN29ZZmE3ZmZIUGNDNHlnLTVwdnZoMmE5SG1lVTZxR05SZw?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "專家帶路中低價產品躍市場焦點不動產投資房市"
-  },
-  "https://news.google.com/rss/articles/CBMiT0FVX3lxTFB2bVI3cDFUVWt4aGdjNmFFTzNZelFjY0RwOVE3bEtzMGdrZEJJRThCSkNqMkRERnFDSE41a1RzczJEdGV2RHhicmJoWVM0RnfSAU5BVV95cUxNb094Y0MzaDJjNVAwa29uYWNsWFRDY3EycE0ta1hTQmRPdjBrX3FRX1cyVGlKdnI4NkFERy1jRDZWTzRidS04di0zbWQ2bEE?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "無懼交通黑暗期高捷黃線還在蓋1站房市買氣旺"
-  },
-  "https://news.google.com/rss/articles/CBMia0FVX3lxTFA3TDFucHVEZlhoTEdSRkk3ZlNxaFdJZWlXWWpuYXRmdDQzaG4xcnh5NXZqbG1pd0w4WjhwNllXQkN2Yk44Si1ZTmpnRDlFekNDQ2M3RGpGR3hJeUwtSmpNazF4Szh2UE5sS0ow?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "高雄房市高醫生活圈成熟機能熱點"
-  },
-  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE84Ylo5S1RqRzNxaGs3RndaLTlhZTd6Q1ZIanlBekdLbkxNcmZrV3V5QXhnZG5wSnRCUmJ0a1NldTJXbDFSZEFwbHloTEw5b21q?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "房市要飄寒意美房貸利率升破7近七成家庭買不起屋主有降價壓力"
-  },
-  "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBBcHVkZkkzdUxmRW92YmZxcUpNV2xtN0tHcy1fMi1OdG92Y19HRzZZVlFxZnR6ck5CcDRNcUVVOUJqN0t3ZWhIcjRISDAydEt4UWUwWklFOXhTd9IBX0FVX3lxTE00VEdFdl8wNkNfa192VTlwOHZJLWU3OFVTSTVhMUFKbWpTbTdnUC1YWGJIemh4eS1CUWk0R2pMemduLWFhVUpCajk2M2V6VXZ0OW9tbFpEZWRIYUphU3Yw?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "桃園藝文特區商圈成熟"
-  },
-  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5SM1o1OVExdHBkR2RTXzJ0OXEwUE5JMmg5MWoyTkN6STZTQXlKQkZzdTJ3aFRGRGxWQ1FCLXY2dmZpaWZCdFBIX1FJTHJKYWVX?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "少子化房價真的會崩吳淡如一語道破驚人真相這種房最危險"
-  },
-  "https://news.google.com/rss/articles/CBMijAFBVV95cUxQVHNKZzZLXzBxQWNpVEg2YVdVclFveV9WeGY3UVA4M3d5blpsam1OVHdBQTdRRmZlNy1JVmZseEctSkNweW5pSmFkNnhMVVVXZ2pkei1JMXpmTVdxU2M5R2VIZHA3MG5RWU1zQVFSX1dQellHMUt6N3pVbmNsVXE3Zmd5S0t2RER2Zng0WQ?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "雲林房屋驗收服務交屋前該注意什麼從實際驗屋看見關鍵細節財經新聞pchomeonline新聞"
-  },
-  "https://news.google.com/rss/articles/CBMia0FVX3lxTE5iVTJxX0t5RS1WemFYT2tEbkE4N1NBeTRhSlNZUDJMbURfVVNQcUZldHgxSjFLamxHMFgxanAydmV3ZDdNd3BqS2I1S1BJdUY0M0l5UmJWeU1Vc21LdHZGdjdGTG5JRDNXN2JZ?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "全台重劃區預售屋量縮價漲財經要聞工商時報"
-  },
-  "https://news.google.com/rss/articles/CBMiakFVX3lxTE1FWWxSaXdSMThCTE5tWHh0cUxXeFF6ZENxYUF1VlV1SGQ0enZ3YnBwSDVwbXhRNTFDYnNUdXVfYTdsWkpjRzMyX3h0RV9UZjVsWWFmSHVmS29wcHU0X0ZLekRjOFVUT1hRYkE?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "史上最大離岸風電民參公建案規模逾5千億國際"
-  },
-  "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBmZDRpZ204cUhSalhNbDZEOHB2R3ZJZHFncFEtTFB4WEdwLUJ1Y3M5YzZxM0hvQzVJWWF3eFZlT2dNeFVxNjU5NzdNQjI1MlU?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "32層頂樓外牆施工未繫安全繩台中七期建案遭勒令停工"
-  },
-  "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5YNnZCOWd3YnZjWjVpcXZGcU5xdFlJdlJOQ04wbzhSa0k4ckZFa0xjLTAzVExvZ2g2UXNtSFNDdE0zaHBvTHdLaHAxbFl4eXBVbTMxTlNB?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "高雄建案害鄰房受損建商竟侵占挪用投資人350萬投資款法律前線社會"
-  },
-  "https://news.google.com/rss/articles/CBMiSEFVX3lxTE1FaEhWNzRRUERSb0E4OVloUDUzdXNmekZLblNvbXJlVTREWHYyVTR5Z2FJM0hqVkRDZ3kxZVdfOHFDSWhIZE5wLdIBTEFVX3lxTE9mdWFweFhCSDdnbnJ5VDlGaUNwUURTai1JYVF3cWlNdmNqNDdBZk9WWW84NnJEb0liMHV4d0RESUJ4ZGFvNEJvcHZwbkg?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "現場直擊松江明明建案鄰損害塌陷屋主痛訴警告一個月被當耳邊風"
-  },
-  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE01WHpUNGxVd242S3NtLTlPak5Sc1B5ZUZtSjJLa2FSSWhWVjZrbUM0UEhkQWRvVnIxeEJwOFZRWjlNWEFXRDVRYnJSUk81c0NS?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "原料貴土方貴房子賣不掉營造業未來半年憑什麼逆風暴賺"
-  },
-  "https://news.google.com/rss/articles/CBMijgFBVV95cUxPdU9CQjcxMlRxWW9oQkV6XzlUd0ZhOW5QUjRnWmNIamRSM1ZfdDh2RkpGMUoyaFlGRGVuY1N4dE9yNDFPd0lUQi1aOHItc1g5U19YN280MUc5eVJrSC1ncDNCUldYN3RmRUozZWtIT3pIZHJyWTRrcnhCWlJJRGhNLTVLdjBjSExJcVk4WUN3?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "北北基桃大都會區社會住宅全攻略申請資格房型條件線上流程與五大指標建案解析"
-  },
-  "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBzWUJpQnlTay1KYUxkQW5VbTN5UjJ1OEhHdFF2QWdweFZGQ0Y2LUE2QlE0TE9nY2NUbjlwUktQWkhMUUtIbFYxN9IBTEFVX3lxTE41RVNUX0hHdHI0bGIwdkNYTk1BYnJjZGN4VjVCQ1I5cDNiVHhLVkoteERwZFpsbzItZ2loZHdUSUtGcmtNTVp6VEEtZmg?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "中秋連假首日爆意外台南新建案2工人14f墜落"
-  },
-  "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5YZERYWnVzS0EyVE1vek5mS2FKd0dOTkFNVERleFVhR01yOEp0akJOdmY3SVF4WWd4cWh5d2hVV0w4NVRwLThVX0RDTFpYZl9tSkE?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "收購老屋失敗竟挪350萬填鄰損坑高雄建商判刑1年10月"
-  },
-  "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1yMU5NWDZjYVU0dXBEWjhESHdxalJnQ3JQRWYxVGh4YW5PQnpKdUFWV2NVUUNGeWdRYWhZQVJvZTU3YjAyMlVIRVppRXVGOFVZTTAwZXlDU0MyVmM1dUhTX1ZMX1VGNGMw0gFuQVVfeXFMUEF1ZF8tM3c4LXZ6NFdiWHlGM0J5aFliS3k1MTI4QTFVRWlEX2RJZzNMcUdUNmRsRHI2RFhfRFowMTlEajVuVEZwT0RPdnFjTEY1cGU2VG1BSlRTYS1aRDJfWWFiNG5ScVlrZWNzbmc?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "假和解騙金主撤告建商私挪350萬救建案第一期付完就放鳥"
-  },
-  "https://news.google.com/rss/articles/CBMiggFBVV95cUxPNXNvVmk3bnBZNWxDQnk5dE9QSmpWWW5nOXdoSjNtOXJKLXVvemUwSzBSa1lkNVBNOG5jOW9DSDR6NW5uSUEwRS1GT2hVcHM4QngwSVdfaGdtSnF3elgxRUhmcVlvSXJvS3pEOXRPM3k0dXkzY2VUS1MxMVUzWWtOUzV30gFfQVVfeXFMTTB1cFFGN1RmM3B1YW1PTTY1YmFBMXQzNTViMVVEenRyVUtiX1gtQzBxSnhqY016YURGbUR6b3FqZGpPS3FoWmh5WUY3eTg2WUstUXQ5bGU4Z2x0dFRlNkU?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "名人找個家羅麗芬首重兩價值"
-  },
-  "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1IRUNVVnRtVEItSnBSQzhIbjhDZ0hnR1B5T1FrU0ZSUDlrakh1RHBaTmd5bVVqZjVBb3hwV0FyUFFjVGZtdDBkX0tYNzlXSXBNbmc?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "摩門教會不動產版圖擴張擁逾200億美元資產成全美大地主"
-  },
-  "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9nczQ5QnJad3NnWWI0ZVVBSXhjNHVkWjVoR1I5RkdBbW9tNkRJbUNuS1VkRlNlaHg0SVlIRnVoTnFfNkcwNWN0dW5FWjEtV1NVRUE?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "掌管226億加元不動產艾伯塔投資管理公司延攬前adic高管danteper"
-  },
-  "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBieF8zRVgyaFRIQWhGRDM2S1BsaEJNaW9OTk5tanlBby1vNlMzTng0Q01oWUpZeVJ0eGlxZ2tXNVdPckZ4T0pCbVNxaVo4NDZu0gFWQVVfeXFMTzlralRkcDhHVmhOVFBVY2Q1RWo2U1d5cktrSy0ydTF2MU9PRllCaUNsSGt2SXdfUVVqSjhRM2JhUGxJZ1h5OWJ0a24wTGJhall1bWI2N3c?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "台南10區2萬筆土地地籍圖重測9月30日起公告30天速查權益"
-  },
-  "https://news.google.com/rss/articles/CBMiTkFVX3lxTE9jSHlTekZ1a2ktOVhjU1lfMy1ncE1ta252eG1iRi1rUHRZVDZFbDV3UFViWXNHbG1FWnlWYm1WeElpSzFoUHV5VUNNbkZyZw?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "中秋不只烤肉雲林插土地公拐護農田南投泡麵土地公廟湧人潮"
-  },
-  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9RbzE4MHJFZ2Q5RWxhaHdqMGtyZG5XNTdmaGx6TDZwSDdXRTFxdDdCUU5ieGdIU2xCVXJKa2tUZy14UndWazB6Y1BSbXp4RGcw0gFWQVVfeXFMUGhyd2VkdG9sbFlhQlEtWTYyNG9TNUl0bXRwazhrVWliSG5OQXVJdTR2N19ra2RJTzFFTHlhdWMwTk5Nd0prNS14YUdDenBRd0hjaklLVGc?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "中秋節逢土地公聖誕命理師曝補財庫方法這幾類人別錯過"
-  },
-  "https://news.google.com/rss/articles/CBMi3gJBVV95cUxOdTlDYzFxWDRlOGtWblN5aXlua2diaUNHanV5ZWZCbGlGcFpkcmhIeFg4NFVwYi1FV3doZ3IzOUVob2ZuejdkYkZWTkxRa0pySlpWVFdldi1MM1NhNmozS21iTE9xeVBnQjR3Z1pYeVlXc3hGa3FPcDhDeW1QOTdQc3lzeHBGMTNhUHhSSEZ2SGZyNDV0amRiUVBiZnI4V3FDTVJIQ1F3MGRFaGdDZUtHdXVGaEw4RU02MjNHVFZKOFdvTE9Xa3A5TFIyYms0OEMxUlRERGMxYVExNmMwUlpJMkNwUzFxV0x4SkpRSFlHTDZ4eEphOVF2TllEck5nSkpUbzlqTUNucFhoY0ZCR3hqU0gxX1N0LXZzX043djhqMW54amduVFNuVzAyS0hoQXhjZFMtcnh2YkQ5TDF0clB0c3RGUGR3Q0NWMkdnUDdBbGtIM0lXVEFyVmgxb3Bqdw?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "中秋也是土地公得道日半個月內上萬神尊回來作客"
-  },
-  "https://news.google.com/rss/articles/CBMixgJBVV95cUxOLUJELWJXNEVzNnFhd3lqZFB4V1FJOFFuNXk1WTRqNnV0N1ZzSEg1b0FwVnItc1BRNWpHaGZkVHRGVDlNeDNJb01YbHZHS1pucGdkZ0YwemthWk9iVUlPYjR4eGVGTk1PMzFrSnFNUWJxSDVSVlU5ZE5Ub0JhRnh2VEsyZEF3MkVKOXJsVzhIVnZZd3F5ZHdrLWE3TFNzZm03b2ozWURoS0pSbjRaRy1jOVBoaDVEV0tBd3JDTnpVZjRSZmVCM0RyTXR4V2RITVhpb3p6SzM2UmwwRWtfaU9tV0txbHFtaDlDc0N0NE9jTVlzckVjVzBiMDR4TjdmNDhmS080QXdRTlh0eUstOGVleUNsZUE5VWRhbWNwUnpDNjhrOW5JOVJLZHAyQlFVUkwwWWdFdUxNMW5xS3paSFdVLW9fVjVTdw?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "疑涉土地買賣糾紛砍朋友警員林鬧區攔車逮3嫌"
-  },
-  "https://news.google.com/rss/articles/CBMihANBVV95cUxPZ0xJS1ptOVBxQlRmRHExV3lmbXB1Nmo1NUozSkRIN0VuZ1Z2TEs1RXZyWG5mUHUtLXpKd0E5bk5WYTlBTXlDZkVGMEVkY1ZzVkRHaFlnQUlUZ1FXZl9zUEF4QVVwRFpGbndMaFktNHNfdW9rcUhTUk9EclpzT3IwOTgwTnptNDNNajJmaEgtLXA1LVVKeFFTTi1RVl9oVjZRbURFd0NwLTlhdC05T09Na19kdmphS3dpcHAzSjRia29FeG5VcjJmX1JyVktVeTNySER0SWhFTmF6aXp6MDA4WG5VWFVGX0pYYzJBdmNSazNjTktwVmtBTFpkZnVEQVh6RzRmc3NadFU3aTFzWGdGNUlOUzlKc3pqUU1Md2R0ZWRpelVjQmpIaGx6V09GNGR0QlhObmIyd2YzNDR2STd0SlNsVWtuTFpYLUVOTVRaZ2hjcDJDWF9zd05BcmxDcmw5LTVBZlBhcmNnM3JvQ3JxZXd0TlVtaWV4M2tNYzRSZ0pOSnZu?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "中部特色習俗中秋限定土地公拐寓意感恩祝福盼來年豐收"
-  },
-  "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5yLWVEdFhtaEp0SUNZMnNORXpxa3F2d01VMDZlNG9KY2s4c3dWOHY0R0NhNlJPWFhjM3pNYVF3U0UxeHZodXg1V2kxWHo5bVpYaVJrWThR0gFWQVVfeXFMTnItZUR0WG1oSnRJQ1kyc05FenFrcXZ3TVUwNmU0b0pjazhzd1Y4djRHQ2E2Uk9YWGMzek1hUXdTRTF4dmh1eDVXaTFYejltWlhpUmtZOFE?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "台中首例烏日清代古廟土地終回歸盧秀燕贈匾土地公給我的任務"
-  },
-  "https://news.google.com/rss/articles/CBMixgNBVV95cUxPTm1nWGlIcHhmLXhDdHRsT215dzVBMW5yZ3FZWEU4SWxQMHlRTnRpbUFwUzFaQlRwUC1NNXU5NDhEUDFFWkVlSEN2VTRuM1E2enBfYUNoMnBqQmI1aWVrUWNId0liNmtIbTVXY291UWRQQmtuX1h1NURWX2JBUGxEZExzeFVBYlU0MTBqblBoQTZRY0dqTDByXy1jTmtzS3Z2QW5MZno4YjROazBOZE1OWnNhNUJVSFA1dGNONElVMWFlbFJFUXhDR2RoTFE0M19WYnBqTXMwMTdPOXZlNkNEbTZMRUNINlVzX0Y4cnMyMHptcUVSWWhUcll1QlYzdjZpZGY2dkxNY2ZJVnhjYTNYekZ5VzJvZEhJRS0xZWtwOTNIaEtyVi1TUGVENHdUdDJVQk1HaEdIY05Vcmx0MEdZbHBCQWdtbGZrTnpGaGJ5QUM4ZUwzbU9MTU9WS0NkZm8ySkExUUtsS3I0LUk2UzR6ZEp0TFZQWmdMUlRHVFpHQ2s2ZDMzWGNtc19uTW9jbGhrcFFIOEVhYWVGWTFGc0kxLV91NjNkX09ORFBNd1dXTHhVUi1PMGY1NXhaMk1rY0NERDRZVE1B?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "中和中興福德宮與樹林潭底福德宮土地公聖誕民政局長林耀長參拜祈福"
-  },
-  "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBRMTdOblFkSElTbzF0WnhhS3ZhSkdnRmpkcWhqQ0V5aXJxTFJaNV9HZFpIcjNISnY5ZmxFY2l1Tmx6V1lBUWtHQ0FubHRRNUtCMnczSm1n?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "中秋甩肉猛男土地公廟前爆汗健身台中里長參選人出奇招2026九合一選舉"
-  },
-  "https://news.google.com/rss/articles/CBMi7AJBVV95cUxNajBabHpyRnpXTnBWM0gwdlg3dmtSYTcxb1Nwcm9iakZCdFViV1YtaDBtQlVaTTdueWoyaVhHVWc5ejNIYXRpZklFSmJGREdMQ01xWm00N1BZbFkweW1jekRqdnRlbkluMGJwc2huek1HNldER3lXaTg5cEVoUXBsczI1SGNOanVvS0pja0VJV2xaMWRuc0dfYXAxVFlHLUViWFgxZkRMcEJTa0FudDUwT2FlWDNGSkVsNnpKQkZDTVpSaUlfZ2dNOUNmUDVCdzdOeGpOZjMyRm5qZzc5c0h2N18wR2lTbUN3N1JxQ0hEYVlOd0RVZ3lrem1MdXZtZDF0UnV3Z1ZxQk9ZMDRsdWJjeGVOcGtKM2Vqc3oyb0RsUHNfOXpRQk96TVF0NWVyNmJ2STFpaUZfTmQ4Q0NlNFBTY3o4QUR1bG5JV3ZtandEQUVEdjBvQm5laWlsY2tWaVlMVWNhUngwaWVPcm1Q?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "中秋節中部特有習俗農民製作土地公拐插田裡鏡新聞"
-  },
-  "https://news.google.com/rss/articles/CBMicEFVX3lxTFBJcGlLdGZ0elVzTXBuY3FCUzFUTXpEakxaSURxLXZXbkRPa3h4QjRfbTNWSzBVeDRkMlcySHpkRWFaT2FUcFBQVFU4WlZxUzJnZzhoT3kteEtoaEZiQmV5YTFiYzRHclo5anhnRk9oaGc?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "土方之亂台北市區車位300萬將成地板價區域觀測站"
-  },
-  "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5TNGhEbnpJOFFVMEh0Y1UxR0hEOVM1QWJ1V2FXTzBhS1Z6aTdzcUhiTEhlUURIS24xcEx4eWNUX3BpTXgxTS03c255WHBpa1g5bFYyQVJubnNHbkNBRGJ6U1dNTGfSAWpBVV95cUxNZUVxOHVhemtleXdTNXJMWmdyWGRIdFFrdjZmS091WklldFA3dHRLNDZCODZjbVZMRmZ1N2lyVWFZRTdQSjdhU2Y0YmNabmllOE1Bb29KMlRSb0twaF9SVFM0eEZfbjgyZVpB?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "土地公生日嘉義市府參拜四城門土地公祝壽"
-  },
-  "https://news.google.com/rss/articles/CBMirgJBVV95cUxQUGdtMjhXa1RUbG1ycWpwQ0FEclR3XzNqSVBuRHJ3MlU1T1Uwa3dhZzEwUHpWMGtKYmxiTjlpVzQxT3BVYWVvX0ZpNmt2SXdNZDVoZ1JxVGthNVhTZ1ZtWENqTEFmZ0hsWWZiM2xGX3A3VHYzdzRCbWlVYVotUGgtMXRKYjVYWW55OVRlblV4aS01aER2Y05EbUFJcjh2UTIzQ1p0R2hlTXplOUlFVTBnZnRUbUVYTFJyNkhPNW1DX21KTjBqOHBET1hBNlYzSUk5N1lSYmVpcGtENndseG9nLTFwUjFlb1NEel9rcGRIc0pNcE9oUTBTWV9Kel9MRk10Rm40ZkFva3EwSHdJTHl3TEZmMTJ1ZFBtVVViMTJtdVF1bnRpMjFuWTBWZmtSdw?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "南投石龍宮千人泡麵土地公聖誕場面熱鬧"
-  },
-  "https://news.google.com/rss/articles/CBMioAJBVV95cUxQenNnRXU5LVlZUnQyU2MyaGtwRVlLZ1lYeUQ0MC15aVpZcjZDOVFpODd0S2ZmNTUzcTBkYklLa2hwS2JZT1piS0l4RjU0S2tRZ3I5dHdvRGNWUnU1TFlCcjJibXBvaXV5YXdZMzhBZHBDSXU4WDA5SFlTb3pqVmdUWDZyUjRhS2xGMWZTTFFSZFBMd0lBelQ0NXJCY2NYREZxblhGMFNGTDZpZkRTX19TZWxCbWhvWjg5NUd0WDhVTXJpVy1GMmh1bk5mYjhvWVRWNmJFVERNMDFXWTF4UWFrYm83cU5pWG9ZNHVoQU9Ya2MwUkNwWFh3S2VTYlh0THNmQjlPX01ZQU5ZWmgzRzlBdGdyVjlJWThPampQODJkVkE?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "舉了舉了健身男教練土地公聖誕秀肌肉"
-  },
-  "https://news.google.com/rss/articles/CBMigwNBVV95cUxOY1h3YzZOWFJFN2tFOVVKNmZjQWZfOHplSE1GTTdhNDNUbjJOa3ZPQkM3eUJONkloanR4LWhkYUVCZ2Fyd19zS0FRZ3VnRjQ2Ymt0U01QZkNqb1pCVVRjZ3ZqbjZnLU0yMzRzR2dJdVUyS0otNkVTdmF5djBUTDVjRDNkc0J4ZUpPWjVaR1ZBSlV6MDZxLXBZcnJYbTdXSWhOeHpaekM2c2t1a3VzZGdZaWRCQll5ZGJhNGZheWluRnQ3UjdOTkNkalBrRDgxaUlpS1lWTURoNVVmX0FHRUp1SGh6S0d4ZGxuV1RZWVlCVHNoZnd3VjZjUURpZkVZUVZDbjVlb1hsaFJ3ck1CWmRPamphTzVqQVpQTU42TTVIenpFS3Y2NDZJVVctV2w2TXVicWRUZUVoOUtidUJoTjNmR1lOOUszRjAzVWZNdmlUWjY1ZkFiUzdlMlJoTUgyNTlHR3J4WXdRTXR3T3BwdTR6SmNxUUpWWGd6UXU0Nk4tTmVEVEk?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "買賣土地引發財務糾紛3老翁持電擊棒痛毆對方被逮鏡新聞"
-  },
-  "https://news.google.com/rss/articles/CBMiXkFVX3lxTE5wOGpCYWRmMy1tZmdsc2s1X0hjVDM0LWxtYVJaX0thVlpnU0hVLW1lVzRaSTdUeFNmY1B5NEZXbGJidDFKcWh2X1FjTzI1QWV0MnRYcV9CTUFxVWoySHfSAUtBVV95cUxQLXBTcUxwb0dBc0xQZFdGdjJ6eVhXaVdqekRQb05UUzMtT1BCOS01THJQTkkzZTE1UC1fSERNSmtUcnVTa2luSXNhR1E?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "土地談判爆糾紛彰化男持刀砍友頭部毒駕逃逸遭逮查獲海洛因"
-  },
-  "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPMUdZS2pxMUt1dE1VM3dkVFNRQ0VITkYwRFgzNExoVHc0Q1lrN19NZTJyc0VtQUp5MG5OOFA1S1NodEM0NnI1Y3NrdXk3OURiRWhrVHo0NFBCTFVQb0NoRHFxbFkwN2R2VkdFRDFKaER1SHBsMjRxVWVYVlJFcU9MWXpmLWxvMmRBZnM0?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "奔走20餘年終圓夢烏日朥月胥福德廟迎回廟地盧市長贈匾福德佑民感謝守護地方"
-  },
-  "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9FZERxVzF5VTNORHduNUFSZzB5LWpyWHVyaG1rM19DdkdQLWhieXNhYm5KMW5MV2dCeXd0U096U2dBNXkyWVhSZTNJX1ZTaHB0UXc?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "從土地到餐桌品客家2026客家大地餐桌10月31日登場邀您共下來食"
-  },
-  "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5LUzFMU2prSDVpQjZxblNta2VscDB5QUEyX0JIaUpIdEhOc3N0QWNTTFRQaG9IcDNPYVJGMDFmakloUFNaQmd1M1NJVjZldVl6VVE?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "八年都更迎來開工利晉崧喆與南松山共築街區新風景"
-  },
-  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9TS1YxWEFlQkhBVmcydGQwXzFXT1BZaENxcHd0MWRaNlhrTUNJMzBpeXdoQ1diYmJNV21WVkFSUy0xWElobHVqdTBqMndUelYz?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "大安區終於有了全國首例危老轉社宅動土94億打造137戶夢幻家園"
-  },
-  "https://news.google.com/rss/articles/CBMibkFVX3lxTE95S3pmdV9UQWZiN1ItTGdLTnFqcDhMNFZqYVBhWWZWTWRDS21mS0RzZWtaWlRnYzNaYktiZ2VsenVBbWM0Z1VxUlJuQ01wTENBTXF1NnlzTml3ekdSSlBMcVBFNWs5cmVlOERGQ2ln?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "騙看農地竟成性侵陷阱花蓮狼機車倒地壓制逞慾判賠40萬"
-  },
-  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9RYVNoYkxVVFNlREtGQ1BOMXZPdVY0QVdYTndEdTNVdlNEVlhZNWVfU010Vk9tQ2pIOTNFSjFQdVRQYVFTRDZXS3JORTkydGZP?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "生前送房子給家人要課遺產稅國稅局曝2種情況免繳想節稅還有4大新制必看"
-  },
-  "https://news.google.com/rss/articles/CBMiX0FVX3lxTFAxVzlJaGhhclZzY2kwWEVrLXpDeGFkY2tabG5QSDBKNjRUTDFCcjZudnJfRW5XWm1fTi1vX2dfRGpwSXk5bXRvb1Z5ald2a29vS1pwY1JJZzl0d0NORTVN?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "房子贈與配偶別大意贈與稅免了這項稅照樣要繳逾期最高加徵15萬元要聞"
-  },
-  "https://news.google.com/rss/articles/CBMiSEFVX3lxTE13blRCN0V1cWhybFFBX1Q5WFJSTVdVeDZrNlJoUFh2anNkMGNOSmp5Wm15aEFVVUpjRUowSXZacFN4RTdKTTZZUQ?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "打炒房又有招囤房稅20拍板通過專欄"
-  },
-  "https://news.google.com/rss/articles/CBMiR0FVX3lxTE12dGU4aUx6R0ZLMk1vc25xellaZVN3dDk3aDV0QjUzOUZXdlpHUzgxcmRqNnNIMmNJSER1Z3pCd1B0LUlKanpB0gFLQVVfeXFMTlR1WHIydnQwczRtTndNcEdqWnJja0lLV0pKYnFKb1p0WU1TTkN4N3JLajhGQmN4bk4zM1Nvc3M5OHFIc3F1ZE83aVRr?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "mygonews售地忘記辦這個請記得後續動作"
-  },
-  "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBTSHdnamd6MWdYX2xGRFZFMlJieUVhX0tsTHpEdUVwMHlqVnZJeENwYWI5Nk9wdGFxVi1oaWF3VFZoQlczZDJmaNIBTEFVX3lxTE5BZ0Z6ZkZ6TzFEMllOaFFITWpPNzA1NUFTYjBRWWVqYUZYQlJkYXJEcmZLZS1TRmpSd1gwZGlyeVhGVFFiUV8tZVpfMDg?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "新聞幕後新青安20排富學者批根本是劫貧濟富一開始就是錯誤"
-  },
-  "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5lZlZHZkw1Uy1VNjFmM3d3dVR4Ql90OGhPdnpPTVA0OGRFNFkycXJnZ3JCNlMyaDhSWVcwVDR1RFRoSnFINjloQkhxdm9wWm8tcmpQRzZmbEhCQlc1bVRj?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "美債承壓殖利率坐五望六日報"
-  },
-  "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5DRzVQbi1VanFIN1JJOWJoaWdxLU14U2hScjBTQTYzcWRqVWVTVzdNWjhSN1oxYnhZUFdsM3RrRk9vaVh6aWVJYnNEU05mMUNnRmU2bF9OWDdxd1ZNU1BJ?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "美債30年期殖利率創22年高房貸利率重返7買債時機到了華爾街這樣選國際"
-  },
-  "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1NckZpTlgyMjR5dUNFNHhreEhncVFFdlgzbnRUOUdmODRfbnZPSEROUHRaYjNNdnNjckdBcVNEQkJHaEU5dXJvNV9sWEszX2_SAU5BVV95cUxPeUNxUjZUN3drRjRnN2ZVa0J3NEZ1U1dLSmFwMDlmUmVIaXFMQVJZOXZGMTk3eWdWUDhyWDNoUDB3bHdLVUVhX3h3VE9tX1E?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "從開學求職季的租屋詐騙陷阱破解假房東詐術之道"
-  },
-  "https://news.google.com/rss/articles/CBMiSEFVX3lxTE5tVXlMZE1yT2xJRjZmRFFTallScnFNNHdrc0pwR0luQ1VZTEM2MExLOExJOExGTlRtdnlnZGJ4X2F6SGZiUEtqYdIBTEFVX3lxTFBXSW5SUUwxblVFQ2JWU0xUSjlmN0dmdEZfUTlJTjFKU2hTLUpINXVLZG1Oa3VEc2ZJbmxFa2oybmVwazlSR194MjZNUzg?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "修法大轉彎租客房東全氣炸3年不漲租急喊卡連租霸條款也沒了"
-  },
-  "https://news.google.com/rss/articles/CBMia0FVX3lxTE4tQVF2WUV5UENRTDVwdnZrRXFsd05PTFVoRW5qdy1MOWxRMC0yN1R6dzd6V25XWW9wRHBPamVZNWtHUjBSdGdLaWtwYnVFRWlYY2hoblEydDNibmZ3bjB6T05Qc1RvZ1Y2WHlB?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "職場達人林睿祺串聯租客打造互助創業聚落專題周報工商時報"
-  },
-  "https://news.google.com/rss/articles/CBMiR0FVX3lxTE1sQTdERjJ5SHBaNVl2ZFg4U1ZTWkhOQUJWZ1A4c2pfUmJYNkJlekZLb3lmOFhnWjZqVFhVVzVBZ0p0dFQwaERn0gFLQVVfeXFMUFhLY3VONWVMSGpLVHNydnN0SGdXY1ZUSm43TnIyQm94OU5oWlgwVFBXd3lUTnVaQ3kycVVHcjlCU2R6dmRjdEJoZGRB?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "汐止被放生鶯歌沾光三鶯線房價猛搭上漲勢列車還有它們"
-  },
-  "https://news.google.com/rss/articles/CBMiRkFVX3lxTFBJNW5SN1I3T3FVMm5xMkxPQTNNMDNsRlBXeUV6eHRMdmRCSHdCeVQ4MlJ3bTRCOXdMXzdvSlVlVk5HV2h5UlE?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "腳尾飯翻版捷運宅成危樓健身房疑童仲彥加工破壞"
-  },
-  "https://news.google.com/rss/articles/CBMibkFVX3lxTFAtUUV4MWhmUWJoZ0NRSkRnN3BtVDM5UlVTeFNwZnk1NFA5Vy0zZFl1VVBJLWFfVEJaQ2xlYUUwUWFjc2RiM19YbFFRNC1OYWthRG9xUzdXVWdFSUswQ3ZQX2VNMVVQR29QbkNYcWVB?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "挪用老屋重建資金350萬賠施工塌陷建商賴帳不還錢慘了"
-  },
-  "https://news.google.com/rss/articles/CBMiUEFVX3lxTFB6WTVaSlh4LXJLS21Hd0QyZE9JSzVlbVlNUTdlTlBRWVYzU3ZRYzk5dlZtZkM5c1V4aUlqV0pmYy00alhQR045dHlIWVJzbG1C0gFWQVVfeXFMTVFGWmJ3MkwxNmR2RU8tU0JFNWNaLTJiNVJ4UkcxTmJhODVDYzdjN3llUWIyZ1FRZy0xOWRqRUZHUWZObXo3d0NCcjBfWjVSdlNkWUZZRFE?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "台中14期科技新貴加持品牌建商積極搶進帶動買氣"
-  },
-  "https://news.google.com/rss/articles/CBMipANBVV95cUxNY0pZRG82Y0hpak5hbVFWRy1YaGkyVmQxVHQtWjFQcEd2eDlBYjVldllwa1cxT0l5R2ZXbkQ1RFNFb1BsaVBmVGlZQXQxRUNidUtNYmhJNXJHN1JTQkh4N3Y5OGRPZmZ4ejNLdFItamdQZkxpYnVGNl9RYmlrTUc3d2Vad2U5UkNyZ0dtT1RXUjVGdFlNSnd6azk1Q0VmOV9JdU15REVhMGtMV3Z6d2ppalBsVTltR0lfcUlqRXhORkkxQURwaXRRUU5POVVrY01wUDBMTDloanNxN0p2QmRKYnc3amVPTXo2ZmpkNWNfdU42ajI5cHMzeGNGWDN4eEtCenc4d3dDU0pUZUszeXpiQnBjNTlVcWpWYy0tMmdEWThKRnZEWGpqOC14bExDTWJUeDZ0V2ZydXVMZEl1anFIQ2kyNjk4OGlKTTZrc29ORmVMdFBOWmRWcHhkR29YM3dXVkNxc20wd2hXTFRyaVY4OVRKd1laX3VYbWdsUlhDVE8zeUN0cmNYRWVXV3BieWh4Rmh2Xy1yUlljWDNzTzBIZW9qc0I?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "告別好萊塢安潔莉娜裘莉不惜砍價拋售洛杉磯豪宅賣掉了"
-  },
-  "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1oVEkzWjBlWWRBdmNhbWZyVHhVV0MtdXhQLUh2ZzNUNVBEdFlqMlEzVXJaZFVKZ3dQaUpaVC1wS1NaZE40azlfX0xOUG1yZEd6NVlHU19ydDh6Z9IBX0FVX3lxTE9icjByMmtyVjBaUHJWVlIydmY1MXBqbzdiYnM1VTJwOUJMZmxrZHZWMlRUNUpqQUo3c3ZuNWpXVUVyam0xQmNvMmxsd0dfT3prOVdYN2YyellvUVIyMEx3?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "北市皇翔御琚寫下今年行情紀豪宅最貴車位要價950萬元"
-  },
-  "https://news.google.com/rss/articles/CBMiT0FVX3lxTFByZ0dsNzBOSldwbzczamtheVJtT2ttTEtjQ1RpZ0hSM2Z1eVg1STZzSW9HdjZXSk5ZbENwSlFWejBXZ095dHhkMVRlcHQ5NmPSAU5BVV95cUxPR3NDa0FwckluVWhadXZSMkJZajN4SkNydEY2SkkxMmxpck9oTm5tU3Fqb0QwR240WE1yclh1b1pXb2hmbzBWNS1sNnVlU3c?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "比陶朱隱園貴信義區中古豪宅1個車位要價950萬"
-  },
-  "https://news.google.com/rss/articles/CBMiigFBVV95cUxNWEQtSjhHT2YtYXlmNE1XMmRJVXJ3Mi1ubEV0TDhsWk5mcXk3M3FoREpkWmNuS0NJelpISVJCSHlGUkJ3T0JDNG9KVlFRVk05Zk52cGthS00tUXlTSWFsQ0ZYdElKX0lCaWxIZVhWa1A0d0R2am4yLWk5UXp5MVJvdGVVanBDMFQ2UWc?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "140萬訂閱頻道說刪就刪韓女星轉型性感彈琴曾買40億韓元豪宅如今吐心聲真的想哭"
-  },
-  "https://news.google.com/rss/articles/CBMiR0FVX3lxTE8wTENoTm5wZmJUTUR5aUUxMXRzWUE3R09wR2tTVUpkSGFTeXpqUU9lck9WN0ZlT3lTb0NXZXkxbkh0NWlYaGww?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "用三太子降房價2600萬法拍屋打6折仍流標房產"
-  },
-  "https://news.google.com/rss/articles/CBMiSEFVX3lxTFA5aXJIaDRYOGU4Qk8xQjlQczdLV0c3MlRPY01yYlVCcXdfVDJwY2xhaUUyRW02QUdlU3ZlbGZxeHp0ZXRiSVRZUdIBTEFVX3lxTE1ObzhrQXBXd2lacjY4WXNUU0hJR0cxcmlvSEZBeW5KOXR3QTNCVDZxR0x5WS1aZUZKOGEtTl9YaVMzaVNOQ3ZUSnFFaVE?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "獨家住家15億法拍邱復生樂觀談人生租屋就好我還要開創自媒體"
-  },
-  "https://news.google.com/rss/articles/CBMiR0FVX3lxTE44M0ZTaWVnU3FWUzN3VVpQdV9vcThfS2RGVGtvbHlxRWFDMzFCRlhtLWx1cEFzSXhLS2YzWHpxS205NWdQT1BJ0gFLQVVfeXFMUFctVm5UT2RtWmNBbmNLMFBLY3BCbWVxaEh1S3VQUUpaSFh5Rk5Dc3ZHRTNyV0ZEaS1tRHp6TXZYeF91dm94U29HYzU0?oc=5": {
-    "date": "2026-09-26",
-    "title_norm": "不怕夜晚小別墅興富發買林口a7土地"
-  },
   "https://news.google.com/rss/articles/CBMixAJBVV95cUxOd2N2VXJOUzZBY1FaVFFWQ2dQeElHcHFLVGw4a2lkLW9RSHJwa2htSFE5ZkJUQmFRWjVaXzg3VHBDZ1pTc1h4ZEtfdDhTX2UyTktmOFEybmFybU4yLTJ5b1JmVVgzZ2Y1UTVyTG1ET2MzMEY3QVk0YWVEME9zYklWWllCRDhUYmw1cTRFcy1qQ0UtYk9LUnVOTzdsQl9KRS1vRTJMZFlEYnNxWlBpaEtvSVJ5T0w2YjZCZEUxbmFBMm9xcmIzVEItazlHamJHeV9tMmFfdm1vb1VFYXc3SWdwX0hRRkZFREZYYms5NHRpYXdOTG0yUUsyZTMwQWRxZ2FnWWhyTk8xcDctUDlwR0FsaDg2Q1VhU3BPQlM1VHA2MXZELUlLRWRHVzJBY1J2ZHdXQTFpMVhmQkpuRjdPaUlUdVdqeGg?oc=5": {
     "date": "2026-09-27",
     "title_norm": "房價多一個0少一個0都揪出台南ai檢核14萬件實價登錄"
@@ -1102,5 +834,441 @@
   "https://news.google.com/rss/articles/CBMiT0FVX3lxTFAyYWVQVENBOEhGTHdtSW9RajJlbHVVQ3JGRVdUb3dYSU5KU09xRm80RzlpVHpPeHltYW9Gb3FCNnBfeDBaM3JpZTkzMXB2aDg?oc=5": {
     "date": "2026-09-29",
     "title_norm": "影音假送貨真踩點亞馬遜快遞員洗劫加州豪宅偷走屋主傳家寶"
+  },
+  "https://news.google.com/rss/articles/CBMi_AFBVV95cUxOUXFnMkdnSm5nS2EtQi11RnRZc2lYUHVWYnVQekF6QVl6Tk5Wajg3Qi16U3FKTnhBeVZ3ektKeDJ6aWZMbm5nOVYtVkVZN19LODU1Z1haTW9LVVdsNFJRTTcxYlA5WW1xdmZDVWtVcTByWm1wR3VoMm5yUHBQR1ZRXzJpa1AtdURjRS0tUlRBamNydEZvUW92OHQ3RGRfMGp2YkhwMUxmUGtlejdoUEdIc2YxNUJMLUZLRHJ4aWV5UlY3MTdySDVxQWNPSU1Vb2hVbUJ1ZG1PdUVtOU1PT0tpdXNOSnpxRS1SSHp3bjlVdEk5N29hUUZoSWlWQ2w?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "高雄住宅供給量大房價指數下挫"
+  },
+  "https://news.google.com/rss/articles/CBMijAFBVV95cUxOcTRJX0NiMnktVGNOZDhZX3hvb0UwbDdLZk1vdmlnNVJxTnRkelotZjlKekpNNnJwbWZJcG9fU2FjN2JDLUxUTGFpVmdKRTREQ1diLVlLYURJSGZVb2kxdnZrVE53Qk1DODlubDFpSEo1YmxLV3BfcDFtckdUMldfMElOdWVtaUw2QVR4Zg?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "臺南7月房價微跌003交易量回升876市場仍處盤整"
+  },
+  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE41NjNVdjVzQjB6ZkFBaklGRUJNNGF4WF83ODVSd0xrb3IyZlJGcjNoMVRXbkRBd0xnNXhDbWVmVGNLdURsSlRnQ2pJT1pIdFUt0gFWQVVfeXFMT3BoWjE0ZmVRTE84cGlmNHBna1p4OHZrOHJFYkpNa2ZUdzBRbDIwNGZWaVNnZUVEWVJrRzMyWGlOak5VUDE0dU8xclNZVWN0VmtiSU5vZUE?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "下一站11分鐘房價腰斬苗栗高鐵特定區建案推新竹工作苗栗居住"
+  },
+  "https://news.google.com/rss/articles/CBMi9gNBVV95cUxQcHFMS0tfcldOQkNSejc1LTR6QjFlX1AwMzl5NnBFUE1xTFVGZGN5M3BMbnBPQVVFLTJLeXE3S0gwY0RjM3lRS3FGMlE2MVJFeW1VOHQxMFd4REV2LUZzWnc4ZkdJbGtEWG9JcTNfSnRsUS1QclVXa3VELVJNUWRnaUhhSHpuckp3LVNfeFRERjJMU0pJTlJ6ckE0X0lfdzl3OGVVUUs3NGtDTEk5VlRFZkhQa1lfZ25sbWtMSlFyTHNIMXVqSUh4RExNak1vNk1iUXB1eGQ4X04zaE5sN01qcnpCbEthVlJpMDVtbDFUbkd0SEFQZ2pZVnZoakRjNFJ2NzZsZHdnTmVHZnR4N09LMXFjekQ0aVRsVjdWNmpWTDQzcG5BZ3NmbFpOS2lpWEwtWGxLVzVuS3U1WWdnS0ZUNzFJVUJaZFNvTXctajlHb0RQWEZmNG1WYS1GX1ZrSUEzcnZYa1Y0Xy1PU05IQmg4eGNtOEh4RldQUTBnaWU3Q0M3cUdNZ1BFVGRtYnkyWWFCOG1GbWg5bGdRcUtWS3ZZTFIwMS1NYjJTZjdBbDZJR2IxVkNsTkxBQmtPVjlVbWNVWW1GdDIyWXhMenZLN3owT0VmUjNyeGJ2bG9iajA5aHpoSnhfeVNMYV81RU9nNmJKcVdyNDh3?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "七都十大交易熱區出爐桃園中壢搶下冠亞軍專家低房價交通吸引通勤族"
+  },
+  "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE14aWdyUEwzWElZQklGaEVmdFpyUHVPUzU2SFRHSi1tUDhNV0pRRzZ4YkNWMlJQRTl2WVVOenNKMnlXZ3ZzNkJPSHJvd09BZ2VXNG9ZeHZrdlRpVm8wMUtSRlRmNmhucG8?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "慘房價崩盤後消費降級逢甲公益路商圈齊租金崩盤腰斬"
+  },
+  "https://news.google.com/rss/articles/CBMigwFBVV95cUxQWFpEX2NkaUUwc0hqTzk5UWowR01MamMzZDM0SWVSR3RrN3d0eUVtM09WdVBXSHJ3ZVh5R1NGNE1vZjNQc3k0NHBCbFZQdlA3c0NPbkt3Sk5wSm9RR3N6cnphd2JQcDhYYWF2WThjM2RNNDFxOTVjV0JiTmFCTVg5R1NOYw?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "北市小宅坪數房價豪宅化每坪220萬元總價守在7000萬元門檻"
+  },
+  "https://news.google.com/rss/articles/CBMia0FVX3lxTE5GaGJWaEVKNUdJMmZRYkpnakRfV1ZXZjhxQjc2S2JkN1A3NjAtSlFXOWlhazN4b0gybENQeG1nMUtvdmxrYzViVF9yVW00TjRNenRFRW95V3dtdl85cjItSjlIWjVsWkdHNUxj0gFwQVVfeXFMT2Q3UVhaczNkMmRPQU9FOWRCdE5lWnZScnZsRXRhZmduZkI1V2xjdnRzYndxSWduWG9ZX2Y0OFBUYUFJOWlwdkxDUmNzWWFVZDJxci05QmRkMHpmcEdUaERqZnNHZUppdy1BejhYSHN5bA?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "通勤換房價能省多少錢全台8大就業區比一比最大落差打23折"
+  },
+  "https://news.google.com/rss/articles/CBMijwFBVV95cUxNelo1MWNUSW4yMkxOdDFvQk9MX1o3TUZnZ2pTLVJuSzYza0tSeFc4eWh4dHBzWnFhcGs2Rlc3UHNMa2RlRTBkc2dxdG8xNTlHeUxObnZVTEpPWGlwTDlLdkNqUHc2bDVnVDNaRTdIZnBydzJ6TlB2elA2MWpYZy05SDZIdWEtdE5qUHFZNldjNNIBYkFVX3lxTE9qWEJHa3BVZENJeFJ0OUJyYzZpWnRCek43Q29SMVFYX2c2MDlxNXJhSEVXUElZUk1zX0xucDEyVnFGREFSTEZMdDdjT1ppVWpGM1g2YWN2RlQ5eWZmR0pCZ3Jn?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "房價負擔連5季減輕是假象自備款膨脹成首購族最大死穴"
+  },
+  "https://news.google.com/rss/articles/CBMi7AFBVV95cUxNLXdUcHpIeEZqaEN1ZGJQV1AzNkJlNV8xaGZibXlDUnhnTFl1U2xieGYwejY0VEZXS0RudGlnbW12NWFXUGpRTlhEYUp2aklDUXh0UjBjeWo2V2NkVTI5SmtTSW5LQWUxRWF4a2dna0R6dzgxRU9aZEcwRWltcW1hUDVxVWxTbEtoYlNfNnIxdXNzMG9KeUdpbzl2X1pFOVk1V3J6OVRwQTFRcmxKMDUwanBpbFRBNFVEWXRtMWgzZHRweHk0VmkxVUpRTWR2SWh2ZFpjSjlHZkFZVjdkcERXWlQ1amFIckZxeGxOcQ?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "最新民調642對解決低薪高房價沒信心653認兩岸關係變壞"
+  },
+  "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBDTWdvelFpSXhNb0NtekRjd2dZUEotUjJPTmd4clBuODdYWmwzelBEX0NMa0ZjYThzQzRzYjBQLWdQajI5WXI3Y3VUM2lsUnFIamJHSXJVc2Nxdw?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "永慶房屋板橋中和靠交通機能突圍市中心住宅買氣不墜"
+  },
+  "https://news.google.com/rss/articles/CBMia0FVX3lxTE81d2JSTTl4MUpmcmpIeTVrTXJiRHdaQ1lFNXRPcWhOTy1fWkRmZVVzNFJEMG41bXhJNHBfN1N6eG9Od1c0ejU0cDV4Q2NpTDVVZlBiSGtZSUh1blpuMXpwRUZwVV9EaUhNeDZn0gFwQVVfeXFMTm8yOWtkbm5lWVgwN0ZTVXpjckgtT2NHai1MNmFyOVZUZ2MzNV80ZnVXUHJpRHJsOVpHSTQySlVaQ0JPNGZqSVg2MUZYR29yWVN6SHMwbXVxcHVheWFibnRIYzJhZUttQUlidGtiVnJCQQ?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "台南市7月住宅價格微幅波動延續盤整格局"
+  },
+  "https://news.google.com/rss/articles/CBMihwFBVV95cUxPd0ZKdTllUG5kM1dxMWRFamo0WjIyejdsSTU2dWFKdmN5VlJ5bHAzZW5GTE5Kdlk0b2ktbG5ITmxTS2k3dm5FRGdHWmFzRW9TNE14WVJad0JCVVZnYzhzMFpUOUlkUFRiT2FFRUFWeWZtNjBSUE9zdExoY2Y1Y1VWS1BwbjN6d1k?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "新北中古屋熱銷榜揭曉永慶房屋淡水汐止強勢包辦7席"
+  },
+  "https://news.google.com/rss/articles/CBMia0FVX3lxTE9SRVFVTEFmdmZfWXUzXy1sYVgxS1REMlNRSk9rSllhUm9hVTRJallUU1Z3TkZURmh4LVh1ZW9YTFRYdkFpRENpZGoxSTlxOHpsQmdOUF9UcTZGYU80ZWRISlZIRTAzTzBmcG9F0gFwQVVfeXFMT0RqWTVBWG1POXFKVzBUclZNOXp6MWU2VUxFbkp3bkJOM3lnTnZ2NjZicWtHSnpNTEw1WTI0YTNHUFpoTXFLdzVLUmhyRXFPb01CSkRtQUpnMThHUmxDUDBIZ01EYnhEdTRzQk1hZl93Vw?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "天龍國小宅成交破五成晚一年買每坪貴118萬"
+  },
+  "https://news.google.com/rss/articles/CBMijwFBVV95cUxPVXZlS1VSR0JVYm1admZsTmhHc2xmSjhHdjJXa2RkeFpRS3BFZ0R2bGY0QXl3R3VYelBCMmVvR2tkNUVhcDBQeHdCejBtR25LOERSYmJPVldwVnA4N2xqc1lTcnhtbk4wa2lSNzZRYk5Ca2lUcGNUdkdNQVdqY0NkeUtDNm9KNW0zMDM5Y0pTa9IBYkFVX3lxTE5uMFdmdk5ycGhBTUw3VUVpcm1aaF92RWlZSnNLNl9NV1NzVDRTVmZaXy1CQWUtM3N0YjJxWnJyM1BBdGxsci0ySjQ1bkJudEZmU1NiUGU3ODVHOXRSMHdMOUln?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "赴日買房別只看高投報專家點包租6是常見話術一戶建隱形成本高"
+  },
+  "https://news.google.com/rss/articles/CBMiT0FVX3lxTE02c1h2MUdvWlB0WEhyQ3EwSlg1SnJVVk9JRlRJMWFnNHVHMzBYRUJ0UFJaTHNDeng5QjI0NFlVdlgtSGo0cHJoei1ZWkhhNTTSAU5BVV95cUxNb3dBX0FRY1phcV9CQlRrLXc4aFVyNy1WTGFUTVJsanBVU3ZhZ01KVjJUaU5RZEFXSGpyWG8tc05EcGVOLTRKN3JhUTVYU0E?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "中秋連假房市出乎意料新客沒變多一類人成買盤主力"
+  },
+  "https://news.google.com/rss/articles/CBMiTkFVX3lxTE0yMnVJTUZDeFhfYTNsX0lZN2d3eHlZSFVyXzBFRk5sdTJlSEJCbVlaZkJJeGhvOXlfaHpOdlh3SjB0VjFZalUtX2h4eFV5QdIBX0FVX3lxTE9RaHZ2cnhhWE1sRVgwZ0Zyck5rM0lacFNabW5yOXJqTzYtajRfS1VZT0d4QzhVZ3hCTXdTcHlzb1c2eXlpV01PM0tDUUlnTkZFem9lQjJBMTI4aHlNNFhZ?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "房市信心反彈創18個月新高周鶴鳴曝2大原因台股央行鬆綁限貸令"
+  },
+  "https://news.google.com/rss/articles/CBMid0FVX3lxTE9hTEVKTUZBWXpRSFNHUG5WR1V4TXZyY2IweUdPWlVPMGt4WERtYVREYUdsQjZQZFlDZ3VBd2daRTF2SjM5cW9oNGdpWUUxdVptX05MQjFHZ3FwZFNSYXN0b3ZqREdxVlVxMzVQdGVRRG9UT0hoVzBV0gFiQVVfeXFMTmQ1dWxnak93eUxLOEsyTnBnZVIwdnZISDRlazNZRndiSXE5M1FRZ1VvRHRxNzFqM2wzY1l0eVljRGVWa1F3X0JnR2hzVG5DYklFUjdEN0U3akdkV3dsWnJnNlE?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "台積不倒房市不會好帥過頭直言全民炒股下場房地產被抽乾"
+  },
+  "https://news.google.com/rss/articles/CBMilwNBVV95cUxPZlFLa24zNlE5bV83dEV2a1VyVUFBRnNsNDNxQkdHbWNqRXlxRXBxY2dvTXFCLVAxWGl5M2MtLTRJQk5FSnI4OVk1Xzd1RTBlSHR5WlVTNTdfV1FyVm50SWdRTnhlZkFNZi0xYjJOa0VBODEyNC1PX1A3dnlwNnNTLXVFeUluRVN5YVAwUEs5Zm92cER0OW95SExOMGt0eTlsUURZY1RSYXd0U25yQTJzWGlzaDZrc3NCN2IxMERvUGhrV2pSUlAyTUdVNm5najhYX2JpYnM0MHQ3NVh3WUtXcG9ZNEYwYXkxSXVibG9LY1BycEtBTjh5ZGFFdTM3WDBmXzU1WDBidnQ4TDhuSEk4d2I4RnN4MHpEMzl3QWJXckJGZGt1NW14cmVjU21JT25GeC1mUTZJRkxlLXh4LWprZGlLeGNrX21pX2w5SzFEZjZWQUZfYWxCdS1OdEFmS2lpNXl6YXVqTzZmTlRPMy1WYUJVOFU1YS1VbjcwdW5ueVBSVmpjaVpaMWFvZy14WUtyTWdLVTBWYw?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "房市買氣難擴張寒風吹向產業鏈7成業者工作量剩不到一半"
+  },
+  "https://news.google.com/rss/articles/CBMia0FVX3lxTE9pbW9pXzZhcWtVQWVBQWVabFQ5bjc1UWpBalhTb25WR21sekg5Q1pqU3JtQUJKZUQ3SzlfMm5idDdNNFVGTnIwOEFtMXNLQjA2N3dYLVJkVERHMVc3SzRnTFJfWXotVF8wOGw40gFwQVVfeXFMUHRJSjdVODFqU3J1UTRrRjlyQjZmZm0yaGVIeWJMcFRIczVRbTRNVnh5UFBKSk9zc0NQWWNKZFFaRHdIWXVvNVNwc0NpRVh5QXh5TXZvaUlfd0FxejRIOUpVeDFwTkFrajNTcTlBTTJPcw?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "房市重回過去的狂飆年代無差別打房風向轉變"
+  },
+  "https://news.google.com/rss/articles/CBMif0FVX3lxTE9fQ2hMeVh6c0I4dXR2cnI3VnlpamJlblZ6ZWIwWk9oV3RLbk9BRW5TWjNycVAzNlJVUXBZRFFoMDM0cXJiS2EtanFOSlBjZmJqd3FQZmpCWHQ3d1NzY0dVUFAtREQzZmZzZ2lFdXUwRVhxSkdEOFNRSzZqYmRKZ1nSAWJBVV95cUxOSVRRT0dEck43ZUZzRUpkTk41eEt6NGM4UjhWdTZkSWhIUGpQcWxPQzVsR1l5QXpGSVJpZHVTTkJLQTBiR3V5NjNtbVRzaVdNZHJJOGdtWmMwcU5vZlR3UWthUQ?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "房市高點買房崩盤沒人能跑阿宅揭生存法則死最慘的永遠買這區域"
+  },
+  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1oLU55b2VNSExNQWRUa2laVnFmYXVFVGZLTEM1ZGNNVEZYZjQwVTNkckhZamw3VVlnc0d3alM0ZDBGUHBWMEc3Ri1xcFM3d29S?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "錢終究要回來的專家點出終極置產密碼台灣人最愛還是它"
+  },
+  "https://news.google.com/rss/articles/CBMiTEFVX3lxTE9pQm1hbmpVenlRc0N2M1h6WXBYdzE4UXM3LUpMV3hZWmNINjhmRWJFV1ZfZllycy1MU3M5dzg1OWJ3NzZRZzJaWloyWnbSAVJBVV95cUxPNVRiRHF4Y0RvblU5a2ZONFF4elExZlp3QWhzUk9FeFc4b0l5dWtmS1BJakdpZXVaX1JrVm5ndFdtX2ZPbEpSYWxPdTZxd2txNmZB?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "房市台北核心區預售市場小坪數豪宅化崛起"
+  },
+  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE0wQlo0RzBDNTZGSHc4LWpNRUFRdjBrMWlsS09DM0xRejhSMmVkbnF4YTNyd0ktR3pEYTcwQ0ZCYTlfaVVkRkNoZzNKSHBHZVBT0gFWQVVfeXFMTUp6TUk2M0I4NEF1RWh0X3lmLU1YeXhMQmRrSkdNclR5RGVydEp0WmpUc0hDRUZzZ3dSRklDcVQ5RV9jV3FtNHpmbkVnc0p5Nk5mU05VX0E?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "滬房市新政強化監管保障購房權益"
+  },
+  "https://news.google.com/rss/articles/CBMi8AJBVV95cUxPOU1Kc1E5NERrWUZMQUF2Z2FJZzQxWVZTZkdKaFRsU1FRZjNjV0tfS2NqRmpucEZyT2JGTEdrUWVWSFBvMlZQZG0zcFF0QlUxLUl5RVUxWWxaRTltamFwbVlrRmJzeWowbjc2NkRuSW5qallVUFhQVmgtWkRlaVlfbXRMazFBNFl0UG5xRmVDYmtfR19MeVVteHRDSDVxbVlFSFBEajJtX1dmVVN2UGoyNUd5SzRFS0txYnlZcmpkSDgxWFloT3dHeUtlWC1WNmdFMzYxMzh0alRFVEtFaGxQRjlBcjZaaGhkQTVHX2hPSF9yMms5bExXa0RzZ2FOSnJwektxVm5FQXpKZG9TaWZJSGdmV25IUVNmSEQzNE4tcC1aVm9iN1RDdDMzeXlIYU5PQVgyYlJaU2NVaGxBWDQ2SDhQNUdLV016VndrV0NfVVF4ZUEyaTlKZW9BSmpnM2g4NmhOek9JdnpsSTJkY3pZTw?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "房市超悲觀流動性危機化解了投機炒作更難存活"
+  },
+  "https://news.google.com/rss/articles/CBMirANBVV95cUxNTl9DNXlwMHY2MUc1V0l6enc5aDAySkp2Q1VtTnpWbTNqVzEwZGlJUnNRekpYdlFxLU9hVVRYekZoQzFZM29kbjUyaWU0cjNlazhhLWRSMWJEU0tNcTZtVlprYlVEUGVBUGlXVkUtb0lSazJfVXdwRFpkQUtILXowdHpYMEFVeUhqZnZ5Ujhfc3JoeENJbmg2X2Z4TU9hUXhjU1dRLWFQUXJpQXFpWVRXeTl2ZlY1YjNHdmRqalA2bTNEanZHcWZtQmJnbC0yRW9vbS1KZlBVTFhnWHJISGRwdzlzZWU4eWVpN2ZYcVFQTmRjZm5uVEN5RWtpTWYxQnlReEUyZjhRcjRPSmFXSmYtdGVWLXRjTXlnZkI1bTZtMW9nSW9kZURfdGlGbEdsTE5MMjh4clNGeWs1bndIQWJ6eUV2ZnVkeXo2QWRGMWRNLU1ReU8yNmRIenk2bkNOQ2NCMmNDdnp1RW9DS0lJYXk2UXFETlkxOGZEdzVXZmQxY1JrenBRNEJqX1lZa2lsOEY1a3hMYUh4b3hzREdNT2lSTW40ejZoV08zclpkOQ?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "央行政策放鬆房市有救了專家喊話別太樂觀只是防爛尾樓"
+  },
+  "https://news.google.com/rss/articles/CBMiTEFVX3lxTE45d2lQOVJQMTZ4QlR3c2ZRS3gtQ0R5c3ZYUS1LUGtzOXJjY2lRRDJIeU1jSkZzek5jUGNtcEJRNTJGWHhEcHhJWUNVS3TSAVJBVV95cUxPNWxNUFZlakRXSUtoeTBfYkJ4MU1ORzE0clVvc0lzVGVXR0R1NWJTc05fUG5SNWRPVWNGYmM1eUc5MGNEeUgxSGhnUDhOZTNEX2JR?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "房市北市表揚不動產從業人員信義企業集團4人獲獎"
+  },
+  "https://news.google.com/rss/articles/CBMiWkFVX3lxTE8wbEFlVG9jbTR6X0pFeDBRa19EeU1NYzNCUS1FV3B0MGJ6M3NJcjBFM0FXR3oxeWhPR0d5NFh6Vy1EVjhTaldsempsQUhpX0xJWU1YQXh1a1J5QdIBX0FVX3lxTE9HZGJrWnNMbEZiSS1Iak9VcWU1SVJNVWtDd2hFMXVvelVwUkgwMmI0ZFkzb2g1YklkUU9KY3ZvY00tWmc3UEhDdDZyYlg2dzBLWkNRbW9YVTZfSVduNVZr?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "資金股轉房購屋信心反彈9月指數升至9884攀18個月高點"
+  },
+  "https://news.google.com/rss/articles/CBMikgFBVV95cUxOM2tHQmdELXVqakNSdzdSZXFFTEh0WV9CR1Q3M3pxWHRBa0YxS3FTZTNlT3Yyd2wwbjZBbnROSEFJWFZxNU95bFp4elJLTGUwNWVMMzJ3SF9rMnNObDNiOWxyWTFnWlBYNzZUVnlYeVNhMmctTV9sMTVKcTFRc1BicE1pYlA1NXVEbFZoX3RMc09CUQ?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "陸總理適時調整貨幣政策研擬穩房市促內需舉措新聞"
+  },
+  "https://news.google.com/rss/articles/CBMif0FVX3lxTE5Dck5YRy12SDJZcXZKNVJWSGdtVktKNnVUUWxra0ZQeFlZNjBiSzVoemZNQnVmbUZldEZPSmRmNUc3dFowUjlWajhXdVhtaGRVTG5TNjlqZ2lfSmg5UGR3d0NCUHNKQVVXeDNGYk9xVW5GbHpfcXVZOHg2YkFEcUk?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "購屋信心18個月新高周鶴鳴已有民眾獲利了結轉進房市房產新訊"
+  },
+  "https://news.google.com/rss/articles/CBMia0FVX3lxTE1LOEVlTzhxTDJFWTFrbmJ2QUc3Q1Fwa1RMeEhvMW9YQTJfUEY1QzA0THhxb2JPcE93MmZEekFDdlZzSXV6RGNBdGM0QmdVb1FfOENBdkV0TUhhejM4bFhwNTNPTWoza1JkLUhn0gFwQVVfeXFMUEc4RmRTTUdia2J2dGx2ZzEweHFZa2JwZDJCOV9VOW9JYzhSbWgzalVaSDNrQ0owRkRpd3JMNGhBZkdnME9FRkdfN1pZOW9NbzZQVUZVVzZheFZaV2FRU0JsdGNxS2VtdkhQVUYzemZsOQ?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "嘉義科技產業版圖大擴張無人機園區6859億元動土嘉科二期擴建1928公頃房市新熱區浮現"
+  },
+  "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBWTjA4Z1ozS0d1azc5WnBKSHV0Yjl6Tkk3al9PQ3lIWVZxc0xpM0RGUnp1Nlc5SEtlU3FvT285S0o5NjZLMS1RTHljUGh5eDk2SE4tcHVqYmJ5X0pWVlE1UVZfbTPSAWRBVV95cUxQVk4wOGdaM0tHdWs3OVpwSkh1dGI5ek5JN2pfT0N5SFlWcXNMaTNERlJ6dTZXOUhLZVNxb09vOUtKOTY2SzEtUUx5Y1BoeXg5NkhOLXB1amJieV9KVlZRNVFWX20z?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "近1年新北市前十大熱銷中古屋社區三芝1字頭休閒度假社區竟入榜"
+  },
+  "https://news.google.com/rss/articles/CBMiTkFVX3lxTE16WVVKRlNZTkwtTzU2aXZIdGk0TG15QV9kdS1odGR2c3hvdkJ1elFTSG91a0V4YWdoVG82M0lnMWlYV2lneTdxMjUteWRlQdIBX0FVX3lxTFBmM09hR0tSdDRVdE1fMi0zSTJyT3NzRWxmX184d1BnaDVlbnhranJDU1FkbnJaMHlxSnB3aEhsTmduSmU5MGtqaXlUSmhXV3dPUXJXYUFRYzBKUnFuN2JB?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "新北買賣十大熱門社區出爐汐止包辦七席淡水這社區一原因奪冠"
+  },
+  "https://news.google.com/rss/articles/CBMiqANBVV95cUxNTV9wckpXbkJZbUlKeFk0Y2V6VnYyS3hEYWV6eWZxMkFwaDZxQ0JVWmlmeUFlUjVtR19xRHc3U1hRdnZLcGJ3X3R5ZWtIczBrZTk1VWFxUDZ4M2JjRldtR1g0ZXRwSlJLTkIzZUxna3l6MGY2Zmw0ZFQ1d0hSZzdsckpTWFlyanRPOU9NWTl5ZEUyLVY5R3g3VXQ3dThHd0w0N1Njd3lDNngyLXdOemtheTNoeDJ3WjYwRVZkeHlmZGdpT2hJZl9vNXhTazJ4LVJaWEJIczd3UnhpOVRtUVhwNE5nR3hfUjMwMlMtcHJZeVlxdXd6bWp2aXZhVWl2S2dhbmVKT0xfSHZNd3MybkRwX0tGTUlIYTJNdXREN0dFaWQ0aFFZMlhKV04wanpiV3JnYnlRTkpRNkhzWExKVkpjWnB1U2d0T0lJMi1QWjhHdlNDRHNsVWNUUW5DRFBxSExiYzVRMDlqYTdMT2J6TE96Zm1uWDlrU2I5QXBtcE5CVkdCTzRGMERJeDhjbjZCaGNYT0ttYW5zUDR3SFZwY0ZuSzUxSEV0eUFo?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "58坪輕奢中古屋大理石玄關展示收納與回字動線實現高質感現代宅"
+  },
+  "https://news.google.com/rss/articles/CBMigwFBVV95cUxNVWt2cFU1ck8xN0s0TDljX1ZkbkRKY3ktY18tMVZCWGwxSDduNHp0WmJOam9jbDRLNU5yQ2c4VE5ENUprZEhFNVlNYWR2TmtnUkJOWUlDY3BrNFhZb1Z5OTB6TG5rQXRxM09Jc005UUl1UWNfRktPNEhQX3VuM2dnb2tFYw?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "台積電退燒楠梓買氣跌4成預售靠遠雄撐盤新成屋單坪15萬極端價差"
+  },
+  "https://news.google.com/rss/articles/CBMia0FVX3lxTE1iWFVIcGJnR180bEtTejJHdXpwZ1NnQW5tZVdmX2NKODJHdjFsTXhHMUF4Q3c2SXI0ZUI2bldidkQ5aHNTdGEwYkRsbmJFQi1vemFzOG10Sjhna1FseDRRVGZKME5kR1Z1TmY00gFwQVVfeXFMTTJPaWhLd1Aza3Izc3A5bW13ekhqcE9GYnAtYkw5UkRSWTNzcGFHYy1XU1FsTXFGN2M0dVJrZDh1ZnFpUzhZeXZBajNkSUtyQTNCWmFBZkRkcXJneTVUOHYxNzVMTU1oWnpLUURiaEtUWA?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "五股5字頭照樣吸客捷運利多太強大耐震係數也躍升"
+  },
+  "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1nUHcwRWFzWnJxcUZabV82N3FfWXZ3Um1fel9neVR4cmZCeEVYWkVIaXo2TVJpQXl0TXUtSnpBMzJ1YWcwUHZOeC1tZl9iMmVBVnhIOS1Za0M?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "天龍國精品宅建案成趨勢單價突破200萬坪數卻不到30坪"
+  },
+  "https://news.google.com/rss/articles/CBMiUkFVX3lxTFB0RUVJTndaMzVJWHRBa2NsSTVrb244NFFSdjZGbC1XRnpLVmNCSExzdDgtT3pCUFZhdU9OZFVSR2JmMURVdnBpNUJ1QkRBY0ZIWnc?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "從房地合一稅的雙標課稅看租稅正義的淪喪國稅局豈能擇重適用"
+  },
+  "https://news.google.com/rss/articles/CBMia0FVX3lxTE44NDA4YlRIQ3NRUVVSRTlWcGk1MFMxa1djeTFjX0FBYVlxZjlmVnBhUGFReUJNSEhBbTlNRU9kM0k3VTQwaVVUaHJaQXU4WnNRdWtSaDdhWHZjek1mQkcwYlJGYzZud3FsaFBZ0gFwQVVfeXFMTmJHalpwWHpOVGdkYVk5dWtnNFp6Ty1PSWptU3FQSWRfc1lfMm54RFR2OE9LN2VYR3dDOWF4TmxaSEdzVjQzX1dMZHM5MTFZeXFVN3hXSVFiUHk3UE9nT3FYa190UTVrdDBRZ1RBdnhZRA?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "剛性需求撐盤重點重劃區與科學園區預售屋單價全面走揚"
+  },
+  "https://news.google.com/rss/articles/CBMia0FVX3lxTE1LU290NnFsYmlQZUpYT2tHcVotZXRjWVcyUGxxWEFEb3RINi1qLVNQZXg4N0paV1QtNlJCREtyaG1QUkUxTGpVUGw4VU9EWk9sQ0VRd0V4T041Mk9XbXpNa2lIR2NnbkczLTBz0gFwQVVfeXFMTVBUdzBrN2ZUU2llaG45YmFDemNOZkxNejAzSmRLQ1RQeUsxclc4eFpkS25KNHhzeXVTa1JEUklWUlQ3V3ZYZDIwSXdPYzBXUEtxdkJtZ04wdHZlTUZKRlp0YWZOY3pYMUYwTnVaVWxoeg?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "南港不動產地位狂躍升大搶有現金流的核心資產"
+  },
+  "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9VSmpVYzdKckVvTkxBZGpzRU5QWnJhaEpncFFMQjNGU0xCa3ZPMFFROWtLUjNxbGxDLTZmV08zOHg2Ynd4VlNEdVp6VWsyTUswbzh3a3NFcC1fS0J6QUln?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "內政部預告修正不動產估價經驗認定助理員納採認政治"
+  },
+  "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBINEdMZzNjOTBjT09IWHpXX3Y4M2x2WmN2RVZxdDRKR0UzS2JtVU54T0Z4cEtkNk5mRHZYR29VcHNkaDVQTzdlV2pBTmtMUjhiSkxUMXFBWk1xczQ0NnM0?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "活化不動產公股行庫搶當包租公日報"
+  },
+  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1nU2Nsek8tbDhma0pWYVB1TVpSQ1I3WHA4TmU0a3ZIX0dqckZiV0l4MFVzakM0ZEcwQjQ0b21LRTRWX0owbFJZWTltWURhTVBV?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "有地有房還能領老農津貼嗎排富門檻一次看這6種不動產直接扣除"
+  },
+  "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5EamczaXRjTTNMZlNJb3BSUjNzcGpxOHJBZXcyY1huSUNhTGVSb0FkMmlzOFlOMF9XUVR6T05VMWgxZ2xyWE40VFFFUUpLTXBheVE?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "投資商業不動產新選擇追蹤gladstonecommercialcorporation股票的etf"
+  },
+  "https://news.google.com/rss/articles/CBMiugJBVV95cUxNdXFpNVEwRGYyQzBhMFIyeGhxUjZkOERDTGtXSFFnNzR0cjM0WVhFbjBlcDM4bjY1Mnh3ZnBCeVd3OEEyRW1OanZPUWVpTmlrXzVxdTBERVZIYmFYclhWbUVmX2JuNlRuLTZ6WVVHMVVkSU9fLUNyemliZ1BMZXRlTV9iRkhCc3g4THQzblRSX20wY3NxN0FkM1B1Qkc2Q0VFSm9wdEExVzE4cEx6Tl9Ma3ZkV2ZPbk9RajZ3VktkbWJlajA1LW02alNOMk5BLVR4YzltcFBlMzlLRVdZRnVNUE1CUEFjV2x4VjBkTmdZOS1CZHRRUTB6bVpjLWZyYUVPWFk4T1F5S3ZRdm5BNXVXMnQ0eEpDbHJiWThZNjBrcGlYcGY3STFBQnhUbjVfSkdMMUFhcjg0emFPdw?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "206億交易寫下新紀錄買下的不只是一棟大樓"
+  },
+  "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBEeUpsTmJCbGE4U0tldlBfc1dUakRIN255NzhPbUNMZ25PSENwTFhOdmpsdXpRek5razU1azBLcjNYcm92cGM4cmtneVBUX1hIMVE?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "科斯塔集團股價挫跌近4美商用不動產市場前景黯淡"
+  },
+  "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5qNm0wY3dVQ296enpDZ3ZwRnZyWVhjOVR3VUd1M3owS1BvM2E3U0h5Rmhta2NidW1LZGVZeU82dzhhd0c1QVE3M1QtX2ozTWZUV3RKeS1sUFkyUQ?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "房貸平均268年創新高專家利率有點貴有錢早點還"
+  },
+  "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBzd25jT2g0QVEtY3d1eFRjR2xnczNVQzF3U2ZERFlPM1RlYXNQTWZHb2ZMZkk5LXJ6X2NVU1AxQ29WU0VqV2hfamlOb0haelc4ZUE?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "房仲業唯一信義房屋獲網路口碑之星綠色仲介防詐聲量雙增"
+  },
+  "https://news.google.com/rss/articles/CBMiUEFVX3lxTFA2LW1DdHcyOGlac25CeU5ZaTBjX3Y3N2dNUk5ncndQN3c1WjRGOW5OenlfM21VcjRGOE9vTExTcGNNNGVfMVdUajZuOXJ4NnE0?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "豪砸206億凱基人壽這次買下的神秘大樓連輝達都在裡面"
+  },
+  "https://news.google.com/rss/articles/CBMia0FVX3lxTE9vaE5PSlgwdGp3YkpFMWJyOUc2b1JGSF9lX3VfYjBlWjYtX1BOdWxMOEVObkJRWGFMeW9tUUxEeGJPeDBiVlFLeWRqaWM3M1k5NlRfRlpYNkpqTTA5UUVGSEFqc0wzM3lvUnBR0gFwQVVfeXFMTnc4Q21Tb3NxUDM4MzVzdEF3WHpRa1BSUWVNVFFUbzBRUDNrV1N6X3lSd0x3Z3I0cVhNR19iak8xQ0pvb2lOVFFEc0NYVUJmUW9TckpPR3hqRDJLSzhMQ2VwRHRISUcyQmwyakg2Q1Fwbw?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "男賣千坪地土增稅高達1700萬竹市稅務局這招幫省163萬"
+  },
+  "https://news.google.com/rss/articles/CBMihAFBVV95cUxQRmk1OEJmWFpiZXlGRTBnZ1ZoUDVpRzZ0dGZMc1JqQVg2eGpURV8wNGw4TklONVhvWURtR2szYi1nSjE0am9OOThxQ0Fmclh6REJDdDRFZTR4R1hkUng4R3dwVUd2UUtkallyazUyM0dvV2hoZFFkbENmUXlfaVZiYUZsOXU?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "嘉義縣環保局加強查緝非法棄置地主土地管理責任不可忽視"
+  },
+  "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBCYmliUFM5ZmJmR0I0LVQ2aUJBVWROUldkcnlnb0ltYzd3a2NkUTBlaXIzY1R4dEtDeG9sOWE2SDBFQmpYN2MxbWduZE9QcHJvTVE?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "災後一年土地重新萌芽東華師生與邦查農場共築地方韌性"
+  },
+  "https://news.google.com/rss/articles/CBMi4ANBVV95cUxQdU40SElGTFJjeEZnUjFxWTJhTUVuVHBvZ19NX3RUX3NyX0QtQWdaOHVXWGtpcEZKSFhNRDhrTmlBdHh0aWdoTUhrRjdLdFhkUzZxSUFSMHE3S0pVMndWQUdvUzBRNUdMdzZNVGpBSkU4R3lrQjRQR191U1VSamw0SFV5LUM4OWxTWkRGUjdvTWsteXV6Y0p1SVBlSGN5VmRBM1JXRDlwclVZWllFVnVCSWF4S2taNWR0M0dOTDVmNzRERXdLNEhhcDVGYVk4ZVpiMUx6ejRoZHR2Q3ZySHQzNUdUX1F5SEFfcl9EMFExMmdBQlFiSXFDSjJINzcyemxMdHhPQ3d4eEoyU3lPbmtrLU0wNk43NGpzbUYydkdrd3UtYXZGbGhyODBlRm9HejZmTUtHQkNfWWFIdHlEUk9HMEVrVlZOTm5tTjh3b21haVZ3SjV3UG5RTUhMOXFnVy1XS2xlVnJaa2NjVC1XUVFDWW8tVWJOS1NRVnJ4bGJPZFhmcjZsQnByVXJ6emFKSDBSTkpSZ3R3TE92c3FnUDhWVFhVV2hjbW1GcHdpV29BS3ZYYmNVSFBPM0VvalRkV2Nhcy1zWWk4S2FSblZaeVdOUFVOSXYyWlRrNndXYldfT2Y?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "會勘古坑鄉水碓農村社區土地重劃區滯洪池排水營造衛生優質鄉親生活環境"
+  },
+  "https://news.google.com/rss/articles/CBMizgJBVV95cUxPSDdpU1dSQTNjaFp4T295czYtXzh6MnlBWGQ5OFUzVDFrbmdOVVZyYlNydTQ0cENwcjJBbTlTT3ZwXy1yeDczOEF4emRQR3I0eDFRQl84ZkI4cXQ5SWtaNkhFZ0xjZzRzZjB6VkhZbi1SRDhnd0RNSlZPZ2RMMFRCejRfRlpyNk1oeF9rZnhxTUdXalRzcEJUT1hmT09DaV9KOG11bWFfRDU3VWtQMzg1WWtLbVhQMzdYTVhFMzBCd1pYMzZzT2hKSmNhT1pKMndfWmFJRjl3VlNMUy01VFNfNmNERG1GOU1sMDU3amQzdWFxZ05jRTg0ZXIwNk9XelBITWhjdFhGRjFDMVhHNjROQ3hBR1JYWHRlQlpNMlhfUWhqcHZyX1g2QVo1a2dvNm4xd2Q1QkhJakZrd01xcEJCWTRIaTVPamdxQXpDMC1B?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "台大醫院新竹湳雅院區擴建土地取得採有償撥用"
+  },
+  "https://news.google.com/rss/articles/CBMiWkFVX3lxTE8wYzAyZHcwVDdWeS1ZUlRrMm5wbnc3cUM4SHFWVzVOeGZFUmE2bE1oekIwc1VMU1JKcTYyUGRGanZjejFlMEZCa3FwUkwteWJGaFJqQkJYTmlWUdIBT0FVX3lxTE1kZFg5QXBxTUJpcEQzUWFTMHNuZEpha0V3VkRxLXJmUGlNT3h3SmZiUV9LdU91Ti1fSnJyU2tKc1RQYjZNMDBOYXNjSFBUWlk?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "台中土地公出手砸30億元攜手萬豪打造日月潭新地標"
+  },
+  "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1kak5SbjkySUpBRDgxTmlHMHNWS2ZmQ0xYNTMxVW93dXJfQXd6MEU0aHBJd1dCbC1hZ1NNU2JSYWpTZlVZVG4tTzhxVGdzb1N5U3c?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "土地公文化館月圓祈遇記乞龜闖關手作認識信仰與文化"
+  },
+  "https://news.google.com/rss/articles/CBMiQkFVX3lxTE4tWnBvcjFobU1FbW5uZHNEZl84Qml5VUZUams2dnJMWVNiVWg2ckQtOTZYa2ZsT2ozSHdHdWJDeGR6UQ?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "中市115年度地籍圖重測成果930起公告提醒土地所有權人維護自身權益"
+  },
+  "https://news.google.com/rss/articles/CBMi9wJBVV95cUxNam5XeWE3a0tiWWZuX2h4UjZYUGR4SHBXQ2NzNkw1UlVJem5NekRubGVwbzlNYXMwOWZIWlczTF9Za0diX2ZUdEVBUWdyRFhYaWVGUzlSQ0FSdkQ1LUpLSnRJMlJuUVJGcmNqSFpRRWZ0Yk8yWmpoTVBHOXBuSGJzOUdaQXVRNWcyaUVTdFVPSEVYRE15TmgyOS1QVVJrU1dWOFNSSzFQUHg1TldaVFpVeUlyMXpGeng2VzI0RE5UM1JQdmk2QXFZSzFkTkx5MFdhZm10bHhBOXQ3U29IS0hMVGswUEV6aU5mVTF6RlhwclpKTzlkOU1QRkV4RThMUkxDbC1jUUpFRzJJanphQzhUSWhxcGpPRHhMSEdkRDhGc0xnSG53NUNSWWZjR2oxeHhDdExEb3VhcHZOZTlmTU1ZMjByNmxsbWJ4cVgyT0ZLLWJHc1ZkUEhQdnVJMVMwTVNwQmVYNVdZUVhXcEJBN1Q2bWVtbUdQYm8?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "台南東區225公頃黃金地招商串聯軌道建設打造副都心門戶"
+  },
+  "https://news.google.com/rss/articles/CBMihAFBVV95cUxObEdubHpOQk1XWGRNZXdoMVRzbnhSOGQ1Wl9xTGVLeEFGQnpDRmE3T3VXVW9fOTA0cDhzLThVX3Q3ZFZGNXZBQjM2MHRTOG8wbVJRZUhOZ1dJU1p3ZzZrQzl1WWZncG5jVFpHY1F5cE5oNmFSTnJmOUhrUlp1aWxtdzRtZ3k?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "翁章梁訪義竹朴子宮廟參香祈福贈匾祝賀神明政府消息新聞"
+  },
+  "https://news.google.com/rss/articles/CBMiakFVX3lxTFBRNGticS1XeDZJS1VIekxjdjFyMk9YWEE2LVp0SElkZVdEWTZ1MU1wN3dyb3hkYnlzRFcwS3dWcXRPa2Fkb3VNWTlFb2haai1HRWVPOE8xMlhGS3Y4WFFzeWpDWm45cDZnamfSAW9BVV95cUxQRVFSeEpKWGhVUWx1TnBuenRXQmNwU0d5TWpMaEJtbEJmTzJLMGF1V0pHR0p5QUN0WG42V2RGaXJsRGktRGYzSmNnVVZPTHJkOXp0R3BxZVRhMnoyMWx0bGJncU45VGhYcmlxbVVNeFU?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "獲贈甘蔗竟丟廟旁詹凌瑀酸蔣萬安土地公沒那麼好騙"
+  },
+  "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBROTNlcDQ5MWNZVU9XRnR1QVh1R1NBR1VfSTBxaE1xRUZMSExXdGlJdkZOX3R3SUVNYmVldzVoZkV3TlFBa3JORWNzMVI4Tl9LZFE?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "從桃園山林到青埔城市pulima雙展從土地長出藝術風景"
+  },
+  "https://news.google.com/rss/articles/CBMia0FVX3lxTFB2VHEwdWtNUG16WDVVMkZQbF9pMTVfMzFkbTZrVmRmVGdoZmZKVUpteE9meE1XWDN5OGN0MWEtQk1uTzJhc2FYU2djSEl4NFBqUlhHSjFVUXNlX2I4U0JCUkpBLXZKdHhEZWFF0gFwQVVfeXFMTXBGaHNxZTZ1NVNPTVZrcEZJa0dqRFN2WHBmUmZ6OFNQOW1sUm1fYXBtRnNyNS1Gc1hzYnQ3ZmpKNEZsZlQxVkNOdnFmNDBUWGxJN2VqZHlIbUQ0d1RuaklDZlUwckc3OTdPVDNNbUNyMA?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "三重衛生所升格新北聯醫三重院區改建都審通過"
+  },
+  "https://news.google.com/rss/articles/CBMinANBVV95cUxOczFnMEdFV0h2OG1TOGs4TjFrUHcweDJDYkFfOHVNM0pwSC1PVnd3cmx4VlI1eERvS1Y4bGlXNFhXVlhTOHJMbU1abzM4LVc2MHBDR3dVNkJ0VWRXVHJiY3Vkc0Q5bzFqR1JtNzNPTmhwY19LM2ZST3Vwb3lsUlNPWUNkWVpsMHllUEJqUmZfU3RvN2VoVm1RREJDVldBQTZReFQ3b1dqWVdSb1ZVWmtNSUdVQTlKQWl4Vm1RVlExNEgzVDhlM1J2clk3WkRVNzhRbU1rVDhkRHZXS3ppWVoyUm1mQThlOFNVdTRDSnZMNnItcThhanYyY002R1o4bGVFZ19aUTFoTkFJZlNBMlZLSXV3RHVMQmtuYjh3V0F4U3VrbmNzdzJZQ1Z4N0tENFJaSHJxTW13YjRuMng4bGZmY2s5dUhTUmtKck9tNVFzQ2xGSkhnMlZuazBXeHk0NmhfUmVYTkgwb09yTjZjZWZ1MVRXSDNDbFAtOVVZck5WZTc5YnZoQUxjajZUNE5PbHBxZkdETjVjeVlBQU8z?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "李四川誓言親督都更5夠力加速翻新老中和優先推進中和光復線"
+  },
+  "https://news.google.com/rss/articles/CBMihAFBVV95cUxQRkx1d0NzQ1NkUVdSQnY5dmJGbkVKZUZtR0kzLWpvMzdYNUkzWF9XM3JwVU4xY3k3aWlMbEd6bnJhZGgzZkFyMkJMeVpBVEdOUzU2VzJseVRHSWVPcHRtbTVlVGpzeDdWSXN0SWI3bzJlcGZ4c1FOSTBaZ1JvXzBYeDVCbkM?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "2026opengreen綠生活節歡喜鬥陣行動綠政府消息新聞"
+  },
+  "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9idVMwR19iZTg5bWdTSEF1T2FpSzg4ZXhqQXJrSHBHbGZ0X1JKd3hOc0VQWEN6T1FCbFc2em8yVmVWdGNIa3FyZElVUlp6TGhkcjlkYWdzNkRWZUFOYkRTMHdR0gFiQVVfeXFMT2J1UzBHX2JlODltZ1NIQXVPYWlLODhleGpBcmtIcEdsZnRfUkp3eE5zRVBYQ3pPUUJsVzZ6bzJWZVZ0Y0hrcXJkSVVSWnpMaGRyOWRhZ3M2RFZlQU5iRFMwd1E?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "老宅延壽是治標不治本阿宅批假專業真私益害怕口袋裡的業務被搶走"
+  },
+  "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9aRXJFLXY5X21PZHMwenBmNVN0TzVXMG1McFRkcmVrbmJDU1ZfOHZ0d0R1ZE9IVXZ1WUJqZ3VuRllmcHZBUlpEdWlnbjlIYWZOM0E?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "引領建材新潮流輕量化石英馬賽克磚打造綠建材新選擇"
+  },
+  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5kYkRxTzZETUU3VVVtTHVzMi1fZjhZYzBFYmgwRVdPR3VKSFJZTGFtVnFJdUs2RElEbWNGWGlmb0VKRnJvQzRGQlJJZ0xDRmI3?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "央北吸引置產買盤的關鍵曝光江陵集團一條龍服務穩住買方信心"
+  },
+  "https://news.google.com/rss/articles/CBMibkFVX3lxTE9SdlVGTTlSWUpzMk1GbHl6YlBVYTlLd19BWEx6MjJWRWdYLU5SNlYyZFE1UnFza3NWNklTSnplSkgtTUVXc0l5MF9tV0xIVFZDQUtaQXpBUGtLUXRJeHNUV1lFcHM0NVRIa20yLWVB?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "雲林水碓重劃區告別惡臭縣府斥資410萬改善滯洪池排水"
+  },
+  "https://news.google.com/rss/articles/CBMiW0FVX3lxTFBKMjYwalgwZ3pLNEhuZzlpMGpObEZmb2JmT1hhMXZuQ1ozc2hjemVrY0JPSTQtYUlNWGtHdUVoSkZFeURjT2x3aWVzM3pKWmVTX216dGIxLVZyUFXSAWBBVV95cUxPZkppVEJDaE4xTHJnS0xlakgxZDFvLXZ5clVJbjNhU0drc1BwTVZzZ1hCMXRYbldxQjNKdTU3THM2Mkh2c21RWUE4X0JXNTFNVHJoSVZ5TFY0MUJCVWFBLUo?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "農路改善黃偉哲8年完成逾1900公里"
+  },
+  "https://news.google.com/rss/articles/CBMia0FVX3lxTE1QUVUxUmpoQWlqQWVFdGZPSkRHWVNMMS01Y3JBTkhqSk5fYmktX1UwandUNHRsWDlBd3E5RUxjUllORC02WGVZeksxVmg2dXpKWlJVaFk5bENTQUpNSS1XTldjdGpWeUJ4TUVV0gFwQVVfeXFMT3ZQdUJTZzFFVlAwZm1xWk9kQmxHdERIYlh3Z2VYeVNEX0lGQ3AwRzk3ODUxWWFFQnBpTlJhaUw4ejc3VVZNTHBXM0dpZWtkLTNTVGVVRUZvQ2ZZVE1sN1RTRkNQTEphYmRpRVRlSTRBOA?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "瘋狂獵地擴產桃園觀音到底在紅什麼科技置產客都跑來了"
+  },
+  "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBUMXQwcDFwckJOQm56RUNqOEFBRWtDT0tpalJ4Q21fWVlsNkEtNXJLRkxrVEJ5WDJ3bExiclg2ZkJuUGpobldjd3FhVWY3RVlfYlE?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "臺南農水路改善居全國前列黃偉哲視察新化知義工程"
+  },
+  "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBFSTUtQlAxeW94NEFFNjNmNFBmMEEya291MnM0TXBfQjl2SzZ3Mk5faHJ0REFrbERJM1VNZXZldkExNmZOQ0MyUUVsV1VTNkY2ZXdXcjJWSmNKeGR1VGx3?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "臺銀土銀開發模式鎖定大面積設地上權日報"
+  },
+  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1hTlkwTDFHVGtfZndGa3lFWllJanJIYm9RZlpyVmVnOHVzMThqdG5EVFhGVzZhTjZwUWlRb19tbnd2NTI1NnY1bDNYSUpETGdt?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "年齡性別無法辨識高雄橋頭農地赫見乾屍周邊留1機車警方比對身分中社會萬象社會"
+  },
+  "https://news.google.com/rss/articles/CBMiTEFVX3lxTE16Z3duU1NnRURRVmRYSHp6M0hucGhHTTZCa0NXTUt4Z0IyTWZnZW9nc3l1aHgwOGxValdIWEJLblU0ZmdYbU10NmJDeHLSAVJBVV95cUxOZjRJOVVKQ2xsUVh2djQzR0RRd1FiVk02WDN6Y0tTTDZuRHQ5UXRtMG5pcUFFa2dWMl9DYS12WUNkdHV4WHpQZ1Y3TDNXb0lKV013?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "跨3鄉鎮竊農地設備里港警破案嫌犯遭羈押"
+  },
+  "https://news.google.com/rss/articles/CBMixAJBVV95cUxPWE96UVdNb2ZTLTNYWUdkNWptQ01kemNkR3RmNmVZcnZPOFhzdUI0RU1rVk1sUGFUUENHVUpqbXVrVGl2N1FxZ1FrcHdMWFNaWWc0RGMwdG5lMUd5QkV1SnhiWXhRX2xFd0xkbllNXzVXS0VGQnE4RE9lZGpXWDZHTTQ5UzRQR1lmN3NuWDBEOE9oaEpUVkNiRDAtbkI0MGNhdlA3NHdVYzJkVkVMR29wUGFDaHRDS0drT3JLeDZzNUVEWkc3cUhhelQ5bXphMGpqcVd6d2RXMVRXQldCeEZHM1l2bVEzVWxzSER6bzlXcnljMHlaQkhIVGlOZlJ5U1F2dTNETnZHNGZkMlRGcVlvYVFuazNwR05qbWRZbFZQaEJTdU9SNFk3NzU4a3NCNmlIZGl1eldfbVhZMkFBLTNtZzdyOTk?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "生態給付計畫奏效瀕危草鴞進駐高雄燕巢農地"
+  },
+  "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBadEpjcDJSTzBlSk1WY19NX0I2UENsaUpNYUhreTduLUVYblJ1SGhObEo5RG90M0lwakpDTTNpTDJJamF3ZmJiNFpZT2lBOTByODRWLUp5RVB0RTZfX3fSAUtBVV95cUxPLXh4Qm5tZU9JRUQ3aDB4SHRMTHY2ODhfc054eWR0SUxYcE85QW5USGY0ZDBDNVViYmpyZ1NHai1lQVRhMFU4dFlZMlk?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "專偷農地水池抽水馬達屏東慣竊9月犯8案狼狽落網被收押"
+  },
+  "https://news.google.com/rss/articles/CBMif0FVX3lxTFBHN0dOcHZQWE5nWC1ZRTZwSXptaGdQUXZXSlZ0V0NOQkt6NDJuMkhiVHFOa01QNnBsVk1SdUNuMFBMSGE4UTJpM3ZENG1nWGRLaVJBcEt1cEFWNUc1WV9OekNSTkVXeEsxNE9yajJKTElJalZjRTNmeEozQ3F4eE0?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "專偷農地養殖場抽水馬達里港警逮涉案8起慣竊持續擴大追查"
+  },
+  "https://news.google.com/rss/articles/CBMiR0FVX3lxTE1YU2loYmd4ZjFoUTQyZHZfcW9sQWZJRnhuLWF0ZEVmcFZ6TEFuNzNrdTBENlBOSEVvV3dyVjR5d0c2Sk00VTJB?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "這原因出售2年內房產房地合一稅可打折房產"
+  },
+  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9tYWliNUtUX3dhTEhGSTVJTzBJaThRWE9yNWs3NWt5R1FHR3hxaE5zcmVmR25pUzhUVUVIWERIQ0xFbkZTUWdwX3BvM1U0S20t?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "買房繳契稅別漏這張加做1動作房屋稅享12優惠"
+  },
+  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5idVM3d1d0X2F4R1pGNVJOVGJpZjZ0eWF2SE0wVnZtS3BYOGg3bjlXVTBZQWZVVVYxYksyNHlHMkRGZ1I1QVdweXZqbmNZdVVY?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "陳先生傻眼出資幫兒子蓋新房想節稅卻慘遭追補稅加罰款"
+  },
+  "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1NdE02NzRfNTZvM19zN3VsZE1FZXppMEVXSnJwb3dMZi0yelhPNENTUklYYUxzVzhMYnlKTHYxdHNLWU9iNHc1dktDYnk0UQ?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "買房不成功也要報稅賣家違約他爽賺百萬違約金未申報國稅局找上門了"
+  },
+  "https://news.google.com/rss/articles/CBMiSEFVX3lxTE16WFVmWGpDbHFoYWkyWGxPczROWjJEdndqZXBOeC0xZ3BreFJGTkZwQlJkSThBMDg4QThvdmVzcWtyTWREcE9zUw?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "囤房稅20上路桃園市稅率調整預估全市損失9千萬元專欄"
+  },
+  "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1BMXlNLXJhemRnbEQyTHZsTW42MHBjc3BBaVFjRU85NUU1a3hSbzA5eGVBaUh0MklvZ2dwX3pWR0tWb1R1NnJvTHJMYlZBb1gxNTg1QUVaQy1JUdIBX0FVX3lxTE9tSTRVUEg1Rkh4VHNfV2pqNWJVYVVnUXJkWTY1NUxoM0hmTEQyNVg5R0plVGFVeWlLcVdsWUVYckVBQlQyMlc4RjRsMTVfU1kwbzduQ2ZvTkh5YU0wY2g0?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "生前債權要課遺產稅"
+  },
+  "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1waXR3UEYwNTRnbS1DZllQSk5xcjVMRGZwTl9zN1VEX3ozVWphblBZNWZTRC1leXZNTXdwZ0l1a3libHcyV0VsbHNaX29vWlhyN2FnQWxFcDk1RW010gFiQVVfeXFMUFBYV3Q4OWpSV3g3UUZmRTBMQ1c2aXJvQWtDVHNoTHhDZW50Smt0SFdOYU1zNVJ5NWdYTkJWYW1ZSklRZ3FYaHdKZHNxVHdSTGtyMFhyVmxuM2I2NU1RX3p4dGc?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "媽留兩千萬老宅給我三百萬遺產稅卻差點逼死我手足一句房子都給妳背後別拿透支的晚年去賭一棟無法變現的冰冷磚頭"
+  },
+  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9YQ19jdTc5NGN1Z2U5YjAtSmZPSWExUXdZLWhLaEhySnQxSFp6dk1VUk9CbFlqcVR6S0o2Z2RyRjRYZ1J0SFl5QVl1bnpPbXo3?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "一年內贈與子女2300萬完全不用繳贈與稅國稅局教1招不怕超過244萬免稅額"
+  },
+  "https://news.google.com/rss/articles/CBMiakFVX3lxTE9IRlVZTVJZNXFDZXdXcW03MmlEZ2d6SkxVZC1BaVhhbURrZXFuT0tER090ck9tT2pCY2M3NUhFaWdtekhCMU1uN00tMDRoVkd2Mmp0N1FsRjh4VXJtOWtrNFNRd0pnUlo3YVE?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "金融減輕購屋負擔農安貸款利息補貼延長至6年"
+  },
+  "https://news.google.com/rss/articles/CBMiX0FVX3lxTE93bE9YSGhOcDhyanVNZ0hQRXVGWDRTVXRYX29FcndBRTlTQkdBNnhRVDROVUluUFg4OVllQXlhQTNuQUJZSm01b3ZCNTlLS3JwaC1VeXk4UWFmQ0xYMlBR?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "9月消費者購屋信心回溫房地產市場迎溫和復甦"
+  },
+  "https://news.google.com/rss/articles/CBMibkFVX3lxTE96RGVwaVpyczJqU0lPLTR6dTg5enlkSDNmMlRGSTdneE1XZVY5TWtBaWtCMEUtMnh1N1VFYzJuQTFUTkpRVG1ma3dJdjNCRTh1c05HRDBwOWl6YVpwOFNRX2dJMUVOcmJMRVVaRjBR?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "寄居蟹風波嚇壞房東包租代管還能碰嗎專家曝1指標避雷"
+  },
+  "https://news.google.com/rss/articles/CBMiowJBVV95cUxOM3Y4M0lYLWhHTTZOeEFOa2t2XzNGbEpBTTRUOWMzWXR2V3A2NEtQTGltY1YxR1VVSk1NNWp6Si1lSmFvaU8xOTljNElqeTNvRFNha3Fhb2VEcUFGcnJsUXhZX2NwdWZxNFFCY0lCdzhZR1RFWFN4dy0wM0hFVjYzZzBjLWFPcUFUNTkxTUFOdEVCMTN2TmtjM3dhNWc2clcwa09YaWtCNUFpZVR2eERvbmxwdjFELXg0SEdUXzdVYUFmTDdFbkxiVGhlTDQwMmpEVGs1enMxcndYUjFSMWZSUkpYcXF5QWVDUng4UDRzTjc1TV9US3lKQVJsWWlXYzBaaHpBd1FZdTB3QjRLRWxkb1Z6M3M0Qlc0dXUxTGdHRS1mU0E?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "臺東銀髮據點助攻69歲長者獲聘社宅清潔"
+  },
+  "https://news.google.com/rss/articles/CBMiUkFVX3lxTE4zT1NiOTVmbjR6NFBpZHZqSWhkNnV1MTdQTVRjN19fb1FXZUtnSUEwQjRtM3BmNlk5WWNZOGRrTzFmdTA2azlUZTBxQ0djTXhsYWc?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "西班牙房貸利率重破3新房貸數量銳減35"
+  },
+  "https://news.google.com/rss/articles/CBMia0FVX3lxTFA2YlZKYUx1R3ZaNUtwNGk2dE43UWpvblN4M1AyRElIU0I0SE5QWVVNUHBzWnZIZzYzOU1YWkp3YXUybWhYMGtvem82SzkzaGFjZ0RsY01wOVdZak90bXRiZTU2VHFWSWZyMVlj?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "救樓市陸首推房貸利息補貼兩岸新聞旺報"
+  },
+  "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBPclVFWHh6R0twWnJ4eTQ1VHl3bGs3NDAwb0ctZmRXLVJwa2FNdjFVbEtVclpINWVfdGxOcGJkZk9WcGtVWjk4T3R1VXhMMTg2WHc?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "瑞銀報告多倫多房市逆轉曾最強如今淪全球最弱"
+  },
+  "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1tRkNHamFzU0h4VDhRdGxzSzMtZDhEQzFiSDd2QzFfdS1lYVQ3YU1UQUhfeTU1Uklzdlg3bjZTbWkwNzFOT0h2bzZnVUw0SF95Vk9ScENtODNWR0tMejBsN3JHX2EyMmdK0gFuQVVfeXFMTW5qLUNudmQzR2pXY3NmWV9OLW5lY0VGdldxTnA4OUNNSE9BUkxFOGRiQzFzQmFmNVp5dS1SSDhVcG03SmJkT2RfUHM5NVlGSzRRWG5oUjl5YlhVam0tZ3RHdy1mT0RwMmZFT2poTHc?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "宛若毛孩煉獄女租客過年棄病犬獨鎖公寓活活餓死"
+  },
+  "https://news.google.com/rss/articles/CBMibkFVX3lxTFBlaXNEZ0JEOVE4MUY0MVBnWjd5MTdTZktWNUU2c0h4UVIxZThtQzNXcDV6WmlBbjY1dkNiNThnRS1fdnJZOFhYSm1KTk5iR1VidnFSMFQ4MWVRazExVi1fNmpYVHFGa3VXZzBqZFpB?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "隋棠老公餐廳爆積欠租金爸爸掛董事長遭疑切割娛樂"
+  },
+  "https://news.google.com/rss/articles/CBMiS0FVX3lxTE5YTWI0MV9qdHFzOTZYazhlTjAtMzB0RERhZ2RzWnV5NzhwQmlrU1RzamZ4Y1JaMlhaWFA0WFFIVEcyTDNsR21Ndy1Ndw?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "隋棠尪餐廳爆房租爭議被揪出全掛爸爸名下出事就緊急撇清"
+  },
+  "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1FSTlnOWVsMTZpdndFaXBPY1lCSGFSbklEWFRsU2wySF9WTFppd2QzYlpDWmxkME5LRHlnTndHR0N3YVlsMEFyQkZiX2t5S0HSAU5BVV95cUxQWGhsMGZfelV2bmw4b1BZM2U4aHlqMEpSQmdHU2dUS080WlBxYS1xaDBoYmlBa3ktMVdfazJHWjhzR285OXBVQzJHSmtJNHc?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "劉媽媽逢甲店面慘養蚊月開58萬求租網諷誰租誰撞到"
+  },
+  "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5mV0t3eHBGNGIwQnRKYWV4NHpfeER1ZGRjVklzOE1PLUtSOUwxOUs3R0JSN3JkbFpUYlV6QkdtYW9ORjlBWjRmSDJhYmxNX0XSAU5BVV95cUxOeFpiVTh5RmEyT3ZfN1pEcG5uYV9RTnRIODhEQkQzUWJwM0ZScjFTSDNGcjItR1VBRVVZekNQbjZVMDg2dVAwSVdQQ3pkVHc?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "高雄老字號ktv突熄燈租約未到神祕新租客已出手"
+  },
+  "https://news.google.com/rss/articles/CBMiTEFVX3lxTFBfdWcwdUFuMDRCaVNscjhnQ1JEdHk0QWNxcjJKTFZhYkF3bHJDdERIb196SnU4YlptZHVFRFpaRTl0RWhrMjRfa0NZZkvSAVJBVV95cUxNR25SX3JVWXVCWVBxclZtQXlsUUcwWU51Rlc0UWY2N1EzeUhiQkZJUkdsZExxQmh5NlJrd1M0bzd1LU1vNEcyTEFaTGhHQjVuTGFB?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "台中民宿突加價77萬11萬房東喊會虧硬漲一查是非法秒停業"
+  },
+  "https://news.google.com/rss/articles/CBMiSEFVX3lxTE5tVXlMZE1yT2xJRjZmRFFTallScnFNNHdrc0pwR0luQ1VZTEM2MExLOExJOExGTlRtdnlnZGJ4X2F6SGZiUEtqYdIBTEFVX3lxTFBXSW5SUUwxblVFQ2JWU0xUSjlmN0dmdEZfUTlJTjFKU2hTLUpINXVLZG1Oa3VEc2ZJbmxFa2oybmVwazlSR194MjZNUzg?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "修法大轉彎租客房東全氣炸3年不漲租急喊卡連租霸條款也沒了"
+  },
+  "https://news.google.com/rss/articles/CBMiX0FVX3lxTE42RDNDMFNXMkYza2RkLWxTbTVOc3NoUENWRXJnQ1FIX1Fjd1VQV1dFSWY4aUNOU0QxUU5oeDBmaXF6SU1TZUxmWmVRTWp2cVZWcUdvUkNGSDl0NTQwSWdn?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "房貸卡關遭建商索賠15專家揭延後過戶切結書成勝負關鍵房市"
+  },
+  "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5zV05KVV9FTkJRVFhzR0tyM1NoYnhPNTR3d3FjV1Q3LTRtel8wTUk4b1Jsd0RDQWdMUkhWX1d1V1NVWm5oWDdvWFRfNzF3clJBbkt1ZDhOcHZvVHpYaDFR?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "南台灣品牌建商中秋出招活動串起鄰里住戶情房市"
+  },
+  "https://news.google.com/rss/articles/CBMigwNBVV95cUxPbkQ1QWM5Z18zUTZDakFmU2hWNkQzalM1QWV5bGphT2JQQnFzaTNNTG1OaVdSbHIzOVNkODh3LVF4QmpES0plS2RueFBZNGNpbzFNMV9qUzAwSWtXOWZ3ZmN3cnlaX2NOMlNpLUJ2SmlLX3ZrZzJZbnJ1M3QyN09nSVp6ekw0ZW1BX2MzMUR2ZWxmSjhBdUVtN3NzSzEya0tjeWZ6YWVwb1Z0UlA5OGpnUGxBU2ZPWUY0WlZSZEhKbC1paDgtUzF0TjhZNFM0cTJZcS1LYnh0QzQ4SlI2OUhjR1lLbEx2dmZ5RVgtTEZWV2kxbWNoLTYxSFhSOXhrdWRWcklGLWEzdFdsMXRDX3MxZndVX3YyMW9KVWh2MHViYmNpMk8xcWNKRUMzUFNhU0hOdkJ6RFdtSkVWamxhR0pHR2xwYnVKSjYyRlJzcEtxRHQ2V1JyTHpoakhGZTIxcC1GdG5WckM5Z0dlbkZmaHVWTURScUoxQW5zU2JsdWtBbDI4bms?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "昔奪釜山美食5金牌食品名店爆欠鉅債台中七期豪宅淪法拍"
+  },
+  "https://news.google.com/rss/articles/CBMiX0FVX3lxTE85c2E3aVJrV2FoSE5BU3FnMXhuYUFIaHJRTV9NOUNVVExnWHhXTkVUc0k3TUtEbDNzTjJqNWF6cllFcmludG9Zd0FFUkdTWVpHYkdYRWxqM2dQemtGNEdZ?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "億元俱樂部豪宅成交案例遍地開花近一年半除天龍國之外以台中大境雲深173億元最高房市"
+  },
+  "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5zc0t3cmdUVHJsQVNsUjFPblo4MEd6RWhBNlBIN3ZmTzRPdTYybnNhTWdzRmhtdHE3UTBxa0lUU0tWbHg0ZWtOMW9UTklpVmxt?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "陶朱隱園輸了這豪宅一個車位近千萬飯店級規劃曝光"
+  },
+  "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9TbHlRSEo4VG9sejZobWs0QmQ0RWpuazN5eUkwWEpQRHdUVVZoN0txbEg0eE5KTnlzX294dEdNaUxFQkFGZlRBcWhpOU5xTXVaNWc?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "第二戶房貸回升7成換屋族善用政策利多把握買房讓利選成屋"
+  },
+  "https://news.google.com/rss/articles/CBMiigRBVV95cUxNbll5Z2llQUhTTnN2d0FfeUZoczE1TEFtaGJTalRDZ293V0tpU093R1d1amxfby03eE9rMlU3N3NNaXhpUlVQZl9yc2RGN1g3WmlYUkZlbzhydjFiYXB0SC1PVDZGOUJwNTRycF93TkhDMzd6c2hJSEZnZndTdjk4VTZTZTlUbWNfbmNua3N4TFM3UjRycnBjVHNZREJDcGRBYk1NV0dXNWctS2NGWGZwWl9WOWJsUm1yY2t0ZldzbVk1LWI0ZmFCSnY5bXZ0N3VMRU5PLXNRWFVwN2pTUkI5aWRyOHYtcjhYbW5iSC12ZEs2cklXV3V2RUtMQXpFZXoxVzJvSXJ0NVB4NzJLd2RlZnYzX0NxSEpkUV9hVkIzeG16MFBRZDRFNkpOQlZhd3dPMV9CbVdKNTk5WDV4NVJIQWJsNXlSWjh3VHVDV243YS1zMGh2TXFUempKbDZ5Qno5a1Ewalk4aHV1Sl9ycXJfTFBzdlhJX0hnajdnN09fcTQ3R0kxUHNuT0RzOFdNR0tiZnZYb1VkNmh6elN6N0N4MUZIWllCODdjMm51UllLS0d1cTlsY09LNmdyS1UybFZjcEEtMGFlT0lNaHY3QkVrZXlUYUFtOEM5NVF2cVpvSG9IdE82QmsyUkxpZmVXNTdINncwTDk0MmJRU0JaZWpzRElLakY4ejM5SVE?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "慈濟10億疫苗詐欺案開庭她搬數百萬送豪宅竟稱不知情庭上驚喊我也是看新聞才知道"
+  },
+  "https://news.google.com/rss/articles/CBMiUkFVX3lxTFAxdko5U2FkU0F6WFFvSnRKRGJjcUNKNk5wSjhXWTZnMG5kQWxIYkMxVDA5ejZ5dkVGQVhCNGM3b1BXdXp3QnRsaWF1VkNwcWFINnc?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "鬼降靈改編越南百年華家鬼宅傳說怪病女兒慘死成厲鬼豪宅驚傳靈異事件"
+  },
+  "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBRNG9OU2YtSllFUndVRE5xenFQNzVGbVBibUl1NFZ6YjNweER0NE9kQ3RCbUpaTFZhLTEyOXVwbThmeGtWUG9vMGw5bWdiZmlENGfSAVBBVV95cUxOZUpQUktweGhzX0t6ajhGX1VsaEllUW41THY0blpaS3F6OGUzVjdWamFLVENnS2VmeHVCbGUyUWVsODhaLWRLZ01TbkRZYlJvOA?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "永慶房仲網推出高資產專區整合七都高總價物件"
+  },
+  "https://news.google.com/rss/articles/CBMiSEFVX3lxTE4xNjl3UGJyeUNBbkYxRXVudGtlSEc5Wmhxc3JDbUxtUUotdW9yc2lLUmN6MUtfMHVXbTcxb3g1ZUF4N0haUzVKb9IBTEFVX3lxTFBvVm1WUWN5YkhyZDgyTVlXQXQyNFlkaFBzWkhydk5vMm9kNXNWd2lzQTVVWW5oRlV4OFFDVVpaaXZ2Z0JwcWdzQVdVY28?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "睡6人還有劇院新世代電動露營車根本行動豪宅"
+  },
+  "https://news.google.com/rss/articles/CBMiTEFVX3lxTFBUUElPeUdfWXVNb3k2ZzNKMUwtTXAyNTliMzIwdDZVNkpSWTF5aWQ3elB5YzBXeWs0ME9kSXVqVnFHeUlHTG15R2Y4X0nSAUxBVV95cUxQVFBJT3lHX1l1TW95NmczSjFMLU1wMjU5YjMyMHQ2VTZKUlkxeWlkN3pQeWMwV3lrNDBPZEl1alZxR3lJR0xteUdmOF9J?oc=5": {
+    "date": "2026-09-30",
+    "title_norm": "買800坪法拍規劃42車位點交見鐵樓梯傻眼男拒繳管費下場曝"
   }
 }
